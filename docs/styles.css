@@ -31,3 +31,13 @@
 .quarto-color-scheme-toggle:focus {
   text-decoration: none !important;
 }
+
+/* For Firefox */
+.quarto-color-scheme-toggle::-moz-focus-inner {
+  border: 0;
+}
+
+/* For Safari */
+.quarto-color-scheme-toggle {
+  -webkit-appearance: none;
+}

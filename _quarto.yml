@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"  # Explicitly state which files to render
+  resources:
+    - ".nojekyll"  # Add this line to prevent Jekyll processing
 
 website:
   title: "Akshay Prasadan"
