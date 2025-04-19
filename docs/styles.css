@@ -11,12 +11,14 @@
 }
 
 .quarto-color-scheme-toggle .bi {
-  display: none;
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 /* Add permanent crescent moon icon */
 .quarto-color-scheme-toggle::before {
-  font-family: "Font Awesome 6 Free";
+  font-family: "Font Awesome 6 Free", FontAwesome;
   font-weight: 900;
   content: "\f186"; /* Crescent moon icon */
   font-size: 1.2rem;
@@ -24,20 +26,26 @@
   line-height: 1;
   vertical-align: middle;
   text-decoration: none !important; /* Remove underline */
+  display: block !important;
+}
+
+/* Firefox-specific styling */
+@-moz-document url-prefix() {
+  .quarto-color-scheme-toggle::before {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* Remove underline on hover */
 .quarto-color-scheme-toggle:hover,
 .quarto-color-scheme-toggle:focus {
   text-decoration: none !important;
-}
-
-/* For Firefox */
-.quarto-color-scheme-toggle::-moz-focus-inner {
-  border: 0;
-}
-
-/* For Safari */
-.quarto-color-scheme-toggle {
-  -webkit-appearance: none;
 }
