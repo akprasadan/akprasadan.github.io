@@ -4,19 +4,22 @@ image: media/ghibli_profile.jpeg
 toc: false
 about:
     template: solana
-    image-shape: rectangle
-    image-width: 17em
+    image-shape: round
+    image-width: 20em
     links: 
-      - text: Google Scholar
+      - icon: book
+        text: Google Scholar
         href: https://scholar.google.com/citations?user=006HWpcAAAAJ&hl=en&oi=ao
-      - text: LinkedIn
+      - icon: linkedin
+        text: LinkedIn
         href: https://www.linkedin.com/in/akshay-p-a91373156
-      - text: Email
+      - icon: envelope
+        text: Email
         href: mailto:aprasada@andrew.cmu.edu
 ---
 
 Welcome! My name is Akshay and I'm an incoming Postdoctoral Fellow at [Simon Fraser University](https://www.sfu.ca/) (SFU) in Vancouver, Canada. I have just completed my PhD in Statistics \& Data Science at [Carnegie Mellon University](https://www.cmu.edu/dietrich/statistics-datascience/index.html) (CMU) in Pittsburgh, PA, which is where I also grew up. I have an undergraduate degree in Mathematics and Economics from [The Ohio State University](https://www.osu.edu/).
 
-My PhD thesis was about minimax optimal shape-constrained mean estimation, with extensions for sub-Gaussian noise, adversarial contamination, and non-parametric regression settings. During my PhD, I also worked on survival analysis techniques (multistate and joint models) with applications to a novel blood cancer immunotherapy, as part of a [CMU-Novartis collaboration](https://www.cmu.edu/dietrich/news/news-stories/2020/june/greenhouse-novartis.html). I'm also a statistician at the [Karikari Lab](https://karikarilab.org/) at [UPMC](https://www.upmc.com/), where researchers are exploring the use of blood-based biomarkers as diagnostic tools for Alzheimer's Disease.
+My PhD thesis was about minimax optimal shape-constrained mean estimation, with extensions for sub-Gaussian noise, adversarial contamination, and non-parametric regression settings. During my PhD, I additionally applied survival analysis techniques (multistate and joint models) to cancer immunotherapy data, as part of a [CMU-Novartis collaboration](https://www.cmu.edu/dietrich/news/news-stories/2020/june/greenhouse-novartis.html). I'm also a statistician at the [Karikari Lab](https://karikarilab.org/) at [UPMC](https://www.upmc.com/), where researchers are exploring the use of blood-based biomarkers as diagnostic tools for Alzheimer's Disease. For more details, check out the [Research page](research.qmd).
 
-My non-statistical hobbies include researching and investing in individual (value) stocks and video games---lately Escape from Tarkov and following competitive Advance Wars by Web matches.
+My non-statistical hobbies include researching individual (value) stocks as well as video games---playing Escape from Tarkov and spectating competitive Advance Wars by Web matches.

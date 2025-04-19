@@ -12,6 +12,8 @@ website:
         text: Research
       - href: publications.qmd
         text: Publications
+      - href: industry.qmd
+        text: Industry
 
 format:
   html:

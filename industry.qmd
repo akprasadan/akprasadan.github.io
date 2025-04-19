@@ -1,0 +1,16 @@
+---
+title: "Industry Experience"
+format: html
+---
+
+## Novartis PhD Fellow
+
+See [Multistate and Joint Models](research.qmd#multistate-and-joint-models) for details about my 2 years of collaboration with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models.
+
+## Statistician at UPMC
+
+At the [Karikari Laboratory](https://karikarilab.org/) headed by Dr. Thomas K. Karikari, clinicians are studying the use of biomarkers in the blood as diagnostic tools for Alzheimer's Disease. I'm one of a few statisticians helping design and implement statistical methodology to explore this fascinating biological data.
+
+## Data Science Intern at Highmark Health
+
+In the summer of 2022, I implemented a bi-level linear programming algorithm recently developed by a CMU PhD. The goal is to devise a health insurance network that can optimize patient utility while simultaneously minimizing costs.
