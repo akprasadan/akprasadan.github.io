@@ -5,11 +5,11 @@ format: html
 
 ## Novartis PhD Fellow
 
-See [Multistate and Joint Models](research.qmd#multistate-and-joint-models) for details about my 2 years of collaboration with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models.
+See [Multistate and Joint Models](research.qmd#multistate-and-joint-models) for details about my 2 years of collaboration (Jan. 2021 through May 2022, then March 2025 onward) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models.
 
 ## Statistician at UPMC
 
-At the [Karikari Laboratory](https://karikarilab.org/) headed by Dr. Thomas K. Karikari, clinicians are studying the use of biomarkers in the blood as diagnostic tools for Alzheimer's Disease. I'm one of a few statisticians helping design and implement statistical methodology to explore this fascinating biological data.
+At the [Karikari Laboratory](https://karikarilab.org/) headed by Dr. Thomas K. Karikari, clinicians are studying the use of biomarkers in the blood as diagnostic tools for Alzheimer's Disease. I'm one of a few statisticians helping design and implement statistical methodology to explore this fascinating biological data. I've been working here since January 2024.
 
 ## Data Science Intern at Highmark Health
 
