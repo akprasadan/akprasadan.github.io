@@ -1,1 +1,33 @@
-/* css styles */
+/* Hide the default toggle */
+.quarto-color-scheme-toggle {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin-right: 15px; /* Add space between toggle and search icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important; /* Remove underline */
+}
+
+.quarto-color-scheme-toggle .bi {
+  display: none;
+}
+
+/* Add permanent crescent moon icon */
+.quarto-color-scheme-toggle::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f186"; /* Crescent moon icon */
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+  vertical-align: middle;
+  text-decoration: none !important; /* Remove underline */
+}
+
+/* Remove underline on hover */
+.quarto-color-scheme-toggle:hover,
+.quarto-color-scheme-toggle:focus {
+  text-decoration: none !important;
+}

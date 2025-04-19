@@ -14,6 +14,9 @@ website:
         text: Publications
       - href: industry.qmd
         text: Industry
+    right:
+      - text: ""
+        file: _navbar.html
 
 format:
   html:
@@ -21,8 +24,7 @@ format:
       light: flatly
       dark: darkly
     css: styles.css
-    toc: true
-    page-layout: full
-
-
+    include-in-header:
+      text: |
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
