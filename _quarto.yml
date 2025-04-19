@@ -14,9 +14,6 @@ website:
         text: Publications
       - href: industry.qmd
         text: Industry
-    right:
-      - text: ""
-        file: _navbar.html
 
 format:
   html:
