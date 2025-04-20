@@ -156,12 +156,12 @@ ul.task-list li input[type="checkbox"] {
 <p>Moreover, we want an estimate that is <em>minimax optimal</em>. This is a very conservative but important benchmark for assessing the performance of an estimator. In this context, we want to produce an estimator whose average performance in the worst-case choice of <span class="math inline">\(\mu\)</span> is minimized. I said ‘average’ because there is randomness in the data generating process for <span class="math inline">\(\vec{Y}\)</span>, and worst case because <span class="math inline">\(\mu\)</span> could, in principle, come from anywhere in <span class="math inline">\(K\)</span>. In the simple Euclidean vector case, this might be of the form: <span class="math display">\[\inf_{\hat{\mu}} \sup_{\mu \in K} \mathbb{E}\|\hat{\mu}(\vec{Y}) - \mu\|_2^2,\]</span> where <span class="math inline">\(\hat\mu\)</span> ranges over the set of all estimators evaluated on my random data <span class="math inline">\(\vec{Y}\)</span>.</p>
 <p>In this work, we devised minimax optimal techniques to estimate means when the underlying set was <em>star-shaped</em> (see below), a generalization of convexity. We extended this work to a non-parametric regression setting, i.e., observing <span class="math inline">\(Y_i=f^{\ast}(X_i)+\xi_i\)</span> and trying to find <span class="math inline">\(f^{\ast}\)</span>. We also allowed for adversarial contamination of some fraction <span class="math inline">\(\epsilon&lt;1/2\)</span> of the data. In each of these problems, we generalized our assumptions on <span class="math inline">\(\xi_i\)</span> to permit sub-Gaussian noise, which is a rich class of probability distributions whose tails are ‘lighter’ than Gaussians.</p>
 <p>This thesis was ultimately one of many sequels to my advisor’s original 2022 paper which studied a convex-constrained mean estimation problem<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The framework continues to inspire work, including applications in heavy-tailed noise and density estimation with contamination.</p>
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="media/star_shaped_set.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Illustration of a star-shaped set</figcaption>
+<figure style="text-align: center;" class="figure">
+<img src="media/star_shaped_dark_mode.png" alt="Star-shaped set illustration" width="60%" class="figure-img">
+<figcaption class="figure-caption">
+An example of a star-shaped set, an unknown mean <span class="math inline">\(\mu\)</span>, and a noisy observation <span class="math inline">\(\mu+\xi\)</span>. We say a set <span class="math inline">\(K\)</span> is star-shaped if there exists a center <span class="math inline">\(k^{\ast} \in K\)</span> such that for all <span class="math inline">\(k \in K\)</span> and <span class="math inline">\(\alpha \in [0,1]\)</span>, the point <span class="math inline">\(\alpha k + (1 - \alpha) k^{\ast}\)</span> also lies in <span class="math inline">\(K\)</span>. Here the literal center of the given shape functions as the ‘center’ in the star-shaped definition.
+</figcaption>
 </figure>
-</div>
 <section id="selected-publications" class="level3">
 <h3 class="anchored" data-anchor-id="selected-publications">Selected Publications</h3>
 <ul>

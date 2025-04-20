@@ -24,8 +24,14 @@ In this work, we devised minimax optimal techniques to estimate means when the u
 
 This thesis was ultimately one of many sequels to my advisor's original 2022 paper which studied a convex-constrained mean estimation problem^[M. Neykov, *On the Minimax Rate of the Gaussian Sequence Model Under Bounded Convex Constraints*, IEEE Transactions on Information Theory, vol. 69, no. 2, pp. 1244–1260, 2023. https://doi.org/10.1109/TIT.2022.3213141.]. The framework continues to inspire work, including applications in heavy-tailed noise and density estimation with contamination.
 
+<figure style="text-align: center;">
+  <img src="media/star_shaped_dark_mode.png" alt="Star-shaped set illustration" width="60%">
+  <figcaption>
+    An example of a star-shaped set, an unknown mean $\mu$, and a noisy observation $\mu+\xi$. We say a set $K$ is star-shaped if there exists a center $k^{\ast} \in K$ such that
+    for all $k \in K$ and $\alpha \in [0,1]$, the point $\alpha k + (1 - \alpha) k^{\ast}$ also lies in $K$. Here the literal center of the given shape functions as the 'center' in the star-shaped definition.
+  </figcaption>
+</figure>
 
-![Illustration of a star-shaped set](media/star_shaped_set.png){fig-align="right" width="70%"}
 
 ### Selected Publications
 
