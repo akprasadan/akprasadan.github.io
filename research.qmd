@@ -1,9 +1,13 @@
 ---
 title: "Research"
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
 ---
 
-This page summarizes some of the recent research I worked on during my PhD with my advisor [Matey Neykov](https://mateyneykov.com/), and continue to on the side as I transition toward my postdoctoral research.
+This page summarizes some of the recent research I worked on during my PhD with my advisor [Matey Neykov](https://mateyneykov.com/), and continue to on the side as I transition toward my postdoctoral research. A full list of the resulting publications can be found on my [Publications page](publications.qmd).
 
 ## Shape-Constrained Mean Estimation
 
@@ -18,7 +22,8 @@ $$\inf_{\hat{\mu}} \sup_{\mu \in K} \mathbb{E}\|\hat{\mu}(\vec{Y}) - \mu\|_2^2,$
 
 In this work, we devised minimax optimal techniques to estimate means when the underlying set was *star-shaped* (see below), a generalization of convexity. We extended this work to a non-parametric regression setting, i.e., observing $Y_i=f^{\ast}(X_i)+\xi_i$ and trying to find $f^{\ast}$. We also allowed for adversarial contamination of some fraction $\epsilon<1/2$ of the data. In each of these problems, we generalized our assumptions on $\xi_i$ to permit sub-Gaussian noise, which is a rich class of probability distributions whose tails are 'lighter' than Gaussians.
 
-This thesis was ultimately one of many sequels to my advisor's original 2022 paper which studied a convex-constrained mean estimation problem. The framework continues to inspire work, including applications in heavy-tailed noise and density estimation with contamination.
+This thesis was ultimately one of many sequels to my advisor's original 2022 paper which studied a convex-constrained mean estimation problem^[M. Neykov, *On the Minimax Rate of the Gaussian Sequence Model Under Bounded Convex Constraints*, IEEE Transactions on Information Theory, vol. 69, no. 2, pp. 1244–1260, 2023. https://doi.org/10.1109/TIT.2022.3213141.]. The framework continues to inspire work, including applications in heavy-tailed noise and density estimation with contamination.
+
 
 ![Illustration of a star-shaped set](media/star_shaped_set.png){fig-align="right" width="70%"}
 

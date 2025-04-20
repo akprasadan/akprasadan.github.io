@@ -18,6 +18,8 @@ website:
         text: Publications
       - href: industry.qmd
         text: Industry
+      - href: teaching.qmd
+        text: Teaching
 
 format:
   html:
