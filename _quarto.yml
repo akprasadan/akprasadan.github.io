@@ -1,13 +1,13 @@
+---
 project:
   type: website
   output-dir: docs
   render:
-    - "*.qmd"  # Explicitly state which files to render
+    - "*.qmd"
   resources:
-    - ".nojekyll"  # Add this line to prevent Jekyll processing
-
+    - .nojekyll
 website:
-  title: "Akshay Prasadan"
+  title: Akshay Prasadan
   navbar:
     left:
       - href: index.qmd
@@ -20,7 +20,6 @@ website:
         text: Industry
       - href: teaching.qmd
         text: Teaching
-
 format:
   html:
     theme:
@@ -28,6 +27,7 @@ format:
       dark: darkly
     css: styles.css
     include-in-header:
-      text: |
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-
+      text: >
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        rel="stylesheet"/>
