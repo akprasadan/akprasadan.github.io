@@ -19,4 +19,4 @@ format: html
 - P. Sasan, A. Prasadan, and V. Q. Vu. *Computationally sufficient reductions for some sparse multiway and joint matrix estimators*, 2025. In submission.  
 <br>
 
-- M. Dresse, A. Prasadan, et al. *Plasma biomarkers to identify brain AT(N) abnormalities in a dementia-free population-based cohort*, 2025. In submission.
+- M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, T. K. Karikari. *Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort*, 2025. Under revision with Alzheimer's Research & Therapy.

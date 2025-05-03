@@ -7,9 +7,9 @@ format:
     number-sections: false
 ---
 
-All of the below experience occurred during my PhD at Carnegie Mellon University. Teaching assistant responsibilities typically include grading and holding office hours. Occasionally, I was involved with preparing homeworks/exams with their solutions or proctoring exams. It isn't listed but I was also a private tutor for another PhD student in statistics in the fall of 2021.
+I gained valuable experience as both a teaching assistant and instructor during my PhD.  Teaching assistant responsibilities typically included grading and office hours. Occasionally, I was involved in preparing homeworks/exams with their solutions or proctoring exams. I TAed a total of 11 semesters (listed below), and I was awarded an *Outstanding PhD TA Award* for the 2024-5 academic year. I am the assigned instructor for 36-315 in summer 2025, an undergraduate course on data visualization. I also privately tutored a fellow Statistics PhD student in the fall of 2021.
 
-I consider these teaching opportunities very valuable: it forces me to learn material I might otherwise skip over and reveals gaps in my own knowledge I didn't even know existed---the creativity with which students craft questions never ceases to surprise me. Moreover, I built valuable communication skills by working with students whose background ranged from high school to PhD level.
+I consider teaching opportunities very important: they force me to learn material I might otherwise skip over and reveal gaps in my own knowledge I didn't even know existed---the creativity with which students craft questions never ceases to surprise me. Moreover, I built valuable communication skills by working with students whose background ranged from high school to PhD level.
 
 ## Teaching Assistant
 
@@ -42,6 +42,6 @@ I consider these teaching opportunities very valuable: it forces me to learn mat
 - **Guest Lecturer, 36-401: Modern Regression**  
   *Spring 2025*
 
-- **(Upcoming) 36-315: Statistical Graphics & Visualization**  
+- **36-315: Statistical Graphics & Visualization**  
   *Summer 2025*
   
