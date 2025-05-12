@@ -18,7 +18,7 @@ about:
         href: mailto:aprasada@andrew.cmu.edu
 ---
 
-Welcome! My name is Akshay and I'm an incoming Postdoctoral Fellow at [Simon Fraser University](https://www.sfu.ca/) (SFU) in Vancouver, Canada. I have just completed my PhD in Statistics \& Data Science at [Carnegie Mellon University](https://www.cmu.edu/dietrich/statistics-datascience/index.html) (CMU) in Pittsburgh, PA, which is where I also grew up. I have an undergraduate degree in Mathematics and Economics from [The Ohio State University](https://www.osu.edu/).
+Welcome! My name is Akshay and I'm an incoming Postdoctoral Fellow at [Simon Fraser University](https://www.sfu.ca/) (SFU) in Vancouver, Canada. I recently obtained my PhD in Statistics \& Data Science from [Carnegie Mellon University](https://www.cmu.edu/dietrich/statistics-datascience/index.html) (CMU) in Pittsburgh, PA, which is where I also grew up. I have an undergraduate degree in Mathematics and Economics from [The Ohio State University](https://www.osu.edu/).
 
 My PhD thesis was about minimax optimal shape-constrained mean estimation, with extensions for sub-Gaussian noise, adversarial contamination, and non-parametric regression settings. During my PhD, I additionally applied survival analysis techniques (multistate and joint models) to cancer immunotherapy data, as part of a [CMU-Novartis collaboration](https://www.cmu.edu/dietrich/news/news-stories/2020/june/greenhouse-novartis.html). I'm also a statistician at the [Karikari Lab](https://karikarilab.org/) at [UPMC](https://www.upmc.com/), where researchers are exploring the use of blood-based biomarkers as diagnostic tools for Alzheimer's Disease. For more details, check out the [Research page](research.qmd).
 
