@@ -43,7 +43,7 @@ This thesis was ultimately one of many sequels to my advisor's original 2022 pap
 
 ## Multistate and Joint Models 
 
-During my PhD, I joined a collaboration between CMU and Novartis to study the use of flexible survival analysis techniques to model the efficacy of immunotherapy for blood cancers. The treatment itself sounds straight out of a sci-fi novel: scientists bioengineer immune cells to modify their own outer cell structure so the cells learn to  attack cancer cells.
+During my PhD, I joined a collaboration between CMU and Novartis to study the use of flexible survival analysis techniques to model the efficacy of immunotherapy for blood cancers. The treatment itself sounds straight out of a sci-fi novel: scientists bioengineer immune cells to modify their own outer cell structure so the cells learn to   attack cancer cells.
 
 Classic survival analysis can be used to model the literal survival of a subject: the subject is either alive or dead, for example. But what if we wish to capture the dynamic trajectory of patients through different stages of sickness? For example, the patient might first see their condition worsening, then improving, then becoming fully cancer-free or reverting to total treatment failure. A *multi-state model* allows us to model a patient's transitions between different states (of cancer), and thus is a powerful tool for evaluating cancer treatments. 
 
