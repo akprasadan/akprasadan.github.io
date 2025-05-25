@@ -257,7 +257,7 @@ In a default Beamer presentation made in LaTeX (or Quarto), one can find in the 
 
 These are, in my opinion, distracting, and completely pointless. It's unclear what the second pair of buttons does (and what if the presentation doesn't even have sections?). In your LaTeX or Quarto preamble (in the TeX section) you can just add `\setbeamertemplate{navigation symbols}{}`.
 
-## Make page sizes large
+## Make the page numbering bigger
 
 Audience members like to refer back to page numbers with questions, so help them out by enlarging their size. Make sure the page numbers are the actual 'frames', i.e., the set of slides with the same content (hidden until the transition). Otherwise if you add bullet by bullet points, your slide numbers will be unnecessarily large.
 

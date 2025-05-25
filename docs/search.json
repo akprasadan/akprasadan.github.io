@@ -166,5 +166,19 @@
     "title": "First Impressions in Data Science Matter",
     "section": "Transitions should still give audience members time to read",
     "text": "Transitions should still give audience members time to read\nOften times a speaker will include transitions for every bullet point. This is fine, I think, except when the speaker shows the last few points and immediately proceeds to the next slide without giving the audience the time to even read it. It is better to reveal points in batches or at least pause for a moment."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-the-page-numbering-large",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-the-page-numbering-large",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Make the page numbering large",
+    "text": "Make the page numbering large\nAudience members like to refer back to page numbers with questions, so help them out by enlarging their size. Make sure the page numbers are the actual ‘frames’, i.e., the set of slides with the same content (hidden until the transition). Otherwise if you add bullet by bullet points, your slide numbers will be unnecessarily large."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-the-page-numbering-bigger",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-the-page-numbering-bigger",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Make the page numbering bigger",
+    "text": "Make the page numbering bigger\nAudience members like to refer back to page numbers with questions, so help them out by enlarging their size. Make sure the page numbers are the actual ‘frames’, i.e., the set of slides with the same content (hidden until the transition). Otherwise if you add bullet by bullet points, your slide numbers will be unnecessarily large."
   }
 ]
