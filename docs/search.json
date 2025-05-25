@@ -1,45 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Akshay Prasadan",
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "My Blog",
     "section": "",
-    "text": "Welcome! My name is Akshay and I’m an incoming Postdoctoral Fellow at Simon Fraser University (SFU) in Vancouver, Canada. I recently obtained my PhD in Statistics & Data Science from Carnegie Mellon University (CMU) in Pittsburgh, PA, which is where I also grew up. I have an undergraduate degree in Mathematics and Economics from The Ohio State University.\nMy PhD thesis was about minimax optimal shape-constrained mean estimation, with extensions for sub-Gaussian noise, adversarial contamination, and non-parametric regression settings. During my PhD, I additionally applied survival analysis techniques (multistate and joint models) to cancer immunotherapy data, as part of a CMU-Novartis collaboration. I’m also a statistician at the Karikari Lab at UPMC, where researchers are exploring the use of blood-based biomarkers as diagnostic tools for Alzheimer’s Disease. For more details, check out the Research page.\nMy non-statistical hobbies include researching individual (value) stocks as well as video games—playing Escape from Tarkov and spectating competitive Advance Wars by Web matches."
-  },
-  {
-    "objectID": "industry.html",
-    "href": "industry.html",
-    "title": "Industry Experience",
-    "section": "",
-    "text": "See Multistate and Joint Models for details about my 2 years of collaboration (Jan. 2021 through May 2022, then March 2025 onward) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models."
-  },
-  {
-    "objectID": "industry.html#novartis-phd-fellow",
-    "href": "industry.html#novartis-phd-fellow",
-    "title": "Industry Experience",
-    "section": "",
-    "text": "See Multistate and Joint Models for details about my 2 years of collaboration (Jan. 2021 through May 2022, then March 2025 onward) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models."
-  },
-  {
-    "objectID": "industry.html#statistician-at-upmc",
-    "href": "industry.html#statistician-at-upmc",
-    "title": "Industry Experience",
-    "section": "Statistician at UPMC",
-    "text": "Statistician at UPMC\nAt the Karikari Laboratory headed by Dr. Thomas K. Karikari, clinicians are studying the use of biomarkers in the blood as diagnostic tools for Alzheimer’s Disease. I’m one of a few statisticians helping design and implement statistical methodology to explore this fascinating biological data. I’ve been working here since January 2024."
-  },
-  {
-    "objectID": "industry.html#data-science-intern-at-highmark-health",
-    "href": "industry.html#data-science-intern-at-highmark-health",
-    "title": "Industry Experience",
-    "section": "Data Science Intern at Highmark Health",
-    "text": "Data Science Intern at Highmark Health\nIn the summer of 2022, I implemented a bi-level linear programming algorithm recently developed by a CMU PhD. The goal is to devise a health insurance network that can optimize patient utility while simultaneously minimizing costs."
-  },
-  {
-    "objectID": "publications.html",
-    "href": "publications.html",
-    "title": "Publications",
-    "section": "",
-    "text": "A. Prasadan and M. Neykov. Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints, 2024. arXiv:2401.07968 [math.ST]. In submission.\n\nA. Prasadan and M. Neykov. Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint, 2024. arXiv:2406.05911 [math.ST]. In submission.\n\nA. Prasadan and M. Neykov. Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints, 2024. arXiv:2412.03832 [math.ST]. Under major revision with The Annals of Statistics.\n\nA. Prasadan, D. A. James, and J. Greenhouse. Assessing CAR-T Immunotherapy Outcomes using Multistate Models, Pharmacokinetics, and Tumor Burden, 2022. Novartis Technical Report.\n\nP. Sasan, A. Prasadan, and V. Q. Vu. Computationally sufficient reductions for some sparse multiway and joint matrix estimators, 2025. In submission.\n\nM. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, T. K. Karikari. Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort, 2025. Under revision with Alzheimer’s Research & Therapy."
+    "text": "First Impressions in Data Science Matter\n\n\n\nR\n\n\nggplot\n\n\nRMarkdown\n\n\nQuarto\n\n\n\nModern data science libraries make professional presentation effortless. Let’s tackle my biggest pet peeves.\n\n\n\nAkshay Prasadan\n\n\nMay 25, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "research.html",
@@ -70,6 +35,48 @@
     "text": "Footnotes\n\n\nM. Neykov, On the Minimax Rate of the Gaussian Sequence Model Under Bounded Convex Constraints, IEEE Transactions on Information Theory, vol. 69, no. 2, pp. 1244–1260, 2023. https://doi.org/10.1109/TIT.2022.3213141.↩︎"
   },
   {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html",
+    "title": "First Impressions in Data Science Matter",
+    "section": "",
+    "text": "I was recently watching a talk by David Keyes from the Posit 2024 conference on the design of data science reports. He made a point that increasingly resonates with me: design matters. As data scientists, we don’t produce graphics, tables, papers, or Beamer presentations just for ourselves. We do so to persuade others. As Keyes’ explains, putting effort into design makes people perceive your work as both useful and trustworthy.\nIt is unfortunate, therefore, when important work in data science is presented with minimal care. Numbers aren’t formatted. Plots barely improve on the defaults. Font sizes are unreadable. Tables look like they were made in Google Docs in 30 seconds. I am definitely guilty of this in my past work. Now I’m trying to persuade fellow academics, journals, private companies, or even the government of the importance of my work. Design matters for this.\nThankfully, modern data science tools make it near effortless to level up the professional appearance of your work. Even the defaults have dramatically improved in appearance—compare the default base R scatterplot (Figure 1) to a typical ggplot. But we can do better.\nThis post highlights some simple fixes to level up your design while preserving reproducibility. I’m going to focus on topics that arise when dealing with Quarto or RMarkdown documents and presentations, but the concepts should be universal."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#rounding",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#rounding",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Rounding",
+    "text": "Rounding\nHard-coding numbers is the enemy of reproducibility. If you use code to compute some quantity, say a predicted temperature, you should not include it in your report by literally writing “We predict a temperature of 23.4 degrees Celsius.” What if you find a bug in your code? Then the intended temperature changes but your text does not.\nIn RMarkdown or Quarto, we can easily embed numbers using inline R (or Python) code. Assume you saved the value as a variable, say temp_pred, we simply write `r temp_pred` in the text portion of the document. Unfortunately, if you do this, the knitted report will display an ugly, unrounded decimal, like 23.420484762. Unless you’re a physicist at CERN, you probably don’t need temperatures this precise. Instead, write `r round(temp_pred, 2)` and show us a level of precision that is reasonable. If you prefer, you can also specify significant digits with signif."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#use-human-language-not-computer-code-in-your-labels",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#use-human-language-not-computer-code-in-your-labels",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Use human language, not computer code in your labels",
+    "text": "Use human language, not computer code in your labels\nLeaving in \\(y\\)-axis labels like “temp,” or even worse, “predicted_temp” or “df$predicted_temp” tells the reader you did the absolute minimum to generate your plot. Anyone who took the time to actually edit the label would have written it nicely, so the fact you did not tells the reader about your indifference.\n\n\n\n\n\n\n\n\nFigure 1: Please forgive me for some base R."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#dont-overlabel",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#dont-overlabel",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Don’t overlabel",
+    "text": "Don’t overlabel\nThe reader does not need their intelligence insulted: “2004, 2005, …” on the x-axis does not warrant a “Year” label. In school, students are instructed to label their plots or face point deductions, and I believe this causes an over-reaction where plots are labelled to excess. In a similar vein, avoid redundant information in the title and axes. For example, if your plot title is “Median Energy Consumption by City in the US”, your \\(y\\)-axis does not need to state “Median Energy Consumption (kWh)” but something more succinct like “Consumption (kWh)” or even just the units (kWh).\nInstead take advantage of the opportunity to reduce the amount of text on your plot. Enjoy the minimalism of a blank space instead. Granted, if the application is particularly esoteric, it is better to err on the side of over-labelling."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#change-the-colors.",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#change-the-colors.",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Change the colors.",
+    "text": "Change the colors.\nWhen I first learned about ggplot, I was amazed at how sleek the default plots look. But we can do better and generate our own palettes! There are some great tools out there, such as ColorBrewer 2.0 that can produce color palettes based on the type of data while also accounting for colorblindness or printability.\nBut don’t just arbitrarily pick some palette and call it a day. Think about the application of your data. Below I used an example of a plot I made for a class on data visualization. The left-side is default colors, and the right was my choice. The colors on the left mean absolutely nothing. Why is beer red and wine blue? Forget aesthetics: readers will struggle to remember what means what as their eyes scan the bars. On the right, the bars evoke a sense that you are really looking at a glass of IPA or red wine. Admittedly, I was unable to think of a compelling color for ‘spirits’, but blue does remind me of the vivid color of Bombay Sapphire.\n\n\n\n\n\nBland attempt\n\n\n\n\n\n\n\nHues that give you a Buzz\n\n\n\n\nHowever, it is important to not go overboard with colors. Stick to a palette throughout a report. Indeed, my ‘good’ example above is rather jarring to look at given this blog’s theme."
+  },
+  {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "A. Prasadan and M. Neykov. Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints, 2024. arXiv:2401.07968 [math.ST]. In submission.\n\nA. Prasadan and M. Neykov. Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint, 2024. arXiv:2406.05911 [math.ST]. In submission.\n\nA. Prasadan and M. Neykov. Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints, 2024. arXiv:2412.03832 [math.ST]. Under major revision with The Annals of Statistics.\n\nA. Prasadan, D. A. James, and J. Greenhouse. Assessing CAR-T Immunotherapy Outcomes using Multistate Models, Pharmacokinetics, and Tumor Burden, 2022. Novartis Technical Report.\n\nP. Sasan, A. Prasadan, and V. Q. Vu. Computationally sufficient reductions for some sparse multiway and joint matrix estimators, 2025. In submission.\n\nM. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, T. K. Karikari. Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort, 2025. Under revision with Alzheimer’s Research & Therapy."
+  },
+  {
     "objectID": "teaching.html",
     "href": "teaching.html",
     "title": "Teaching Experience",
@@ -89,5 +96,75 @@
     "title": "Teaching Experience",
     "section": "Instructor",
     "text": "Instructor\n\nStatistics & Data Science Camp for High-School Students\nSummer 2023\nGuest Lecturer, 36-401: Modern Regression\nSpring 2025\n36-315: Statistical Graphics & Visualization\nSummer 2025"
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-your-fonts-comically-large",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-your-fonts-comically-large",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Make your Fonts Comically Large",
+    "text": "Make your Fonts Comically Large\nComically. It should make you cringe to look at on your computer. A large chunk of talks I’ve attended over the years use miniscule font sizes on plot labels, math equations, figure captions, etc. A presentation is not the same thing as a report. The audience can’t just zoom in like a PDF or web page. What looks fine on the computer is probably too small on the projector.\nI was a teaching assistant one year for a summer program on undergraduate research. Nearly every student made this same font mistake. So prior to their final presentations, I would often walk the students with me to the back of the class and asked them to read their own slides. That got the point across.\nSo go overboard, I say. Make the text on everything large enough that it makes you cringe. You will likely pre-empt some questions from people who missed critical points hidden in ant-sized text but were too polite to interrupt. Unless your goal is to hide that content from the audience, in which case, why even include it?\nSimilarly, resist the temptation to reduce font sizes just for the purpose of adding more content. Beamer does a decent job of using default sizes appropriate for presentations, but I prefer larger."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#change-up-the-font",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#change-up-the-font",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Change up the font",
+    "text": "Change up the font\nWe’re all tired of the default Times New Roman or Computer Modern. There are enormous catalogues out there of different fonts, and you can use them in both PDF or HTML reports. In a PDF document made with Quarto, for example, you can adjust the mainfont argument in your Quarto front matter. You may have to install the fonts though, and this could make your documents harder for others to use.\nYou can also easily change the fonts of your ggplot plots within your document (see below)."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#fonts",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#fonts",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Fonts",
+    "text": "Fonts\nI highly recommend switching out the fonts in your title, axis labels, legends, and more. This is easy to do with the showtext package. Below I include a code snippet to set the font globally with a font of your choice from Google Fonts. You can also use different font families for different components of your plot, but I wouldn’t recommend it.\n\nlibrary(showtext)\n\n# robo is just a user-defined name you can invoke in your plotting functions\nfont_add_google(\"Roboto\", \"robo\")\n\n# To globally use this font\nshowtext_auto()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Akshay Prasadan",
+    "section": "",
+    "text": "Welcome! My name is Akshay and I’m an incoming Postdoctoral Fellow at Simon Fraser University (SFU) in Vancouver, Canada. I recently obtained my PhD in Statistics & Data Science from Carnegie Mellon University (CMU) in Pittsburgh, PA, which is where I also grew up. I have an undergraduate degree in Mathematics and Economics from The Ohio State University.\nMy PhD thesis was about minimax optimal shape-constrained mean estimation, with extensions for sub-Gaussian noise, adversarial contamination, and non-parametric regression settings. During my PhD, I additionally applied survival analysis techniques (multistate and joint models) to cancer immunotherapy data, as part of a CMU-Novartis collaboration. I’m also a statistician at the Karikari Lab at UPMC, where researchers are exploring the use of blood-based biomarkers as diagnostic tools for Alzheimer’s Disease. For more details, check out the Research page.\nMy non-statistical hobbies include researching individual (value) stocks as well as video games—playing Escape from Tarkov and spectating competitive Advance Wars by Web matches."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#use-great-tables-gt",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#use-great-tables-gt",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Use Great Tables (gt)",
+    "text": "Use Great Tables (gt)\nWhat makes ggplot so useful, in my opinion, is the ease of its grammar. You start with a basic ggplot, add on geometries, give those geometries aesthetics, modify the scales of those aesthetics, and then add on the various bells and whistles.\nThe gt package brought that grammar for tables instead of plots. Instead of the dull, default tables that R spits out like the following:\n\n\n\n\n\nenergy_type\namount\npercent\n\n\n\n\nCoal\n10450\n0.3520889\n\n\nGas\n6680\n0.2250674\n\n\nHydro\n4230\n0.1425202\n\n\nNuclear\n2700\n0.0909704\n\n\nWind\n2310\n0.0778302\n\n\nSolar\n1660\n0.0559299\n\n\nOil\n870\n0.0293127\n\n\nBioenergy\n690\n0.0232480\n\n\nOther\n90\n0.0030323\n\n\n\n\n\nwe can now create gorgeous tables full of color, logos, Markdown formatting, with an intuitive language. Rather than wrangling with a tibble() until you get the data in the form you want, let gt do that work for you.\n\n\n\n\n\n\n\n\nGlobal Electricity Production by Source\n\n\nData sourced from Our World in Data\n\n\n\nEnergy Source\nTWh (2023)\n% of Total\nCO₂ Intensity\n\n\n\n\n🪨\nCoal\n10,450\n35%\n\n\n\n🧯\nGas\n6,680\n23%\n\n\n\n💧\nHydro\n4,230\n14%\n\n\n\n☢️\nNuclear\n2,700\n9%\n\n\n\n🌬️\nWind\n2,310\n8%\n\n\n\n☀️\nSolar\n1,660\n6%\n\n\n\n🛢️\nOil\n870\n3%\n\n\n\n🪵\nBioenergy\n690\n2%\n\n\n\n🔶\nOther\n90\n0%\n\n\n\n\n\n\n\n\nIn a nutshell, the syntax is of the following form:\ndf |&gt;\n  # optional: group_by before this step\n  gt() |&gt; \n  # modify column attributes\n  cols_*() |&gt; \n  # format columns\n  fmt_*() |&gt; \n  # Labels\n  tab_*() \n  # for niche styling\n  opt_stylize()\nCheck out the various tutorials for the gt package on YouTube or the official documentation. Another useful package is gtsummary if you wish to quickly generate professional looking descriptive tables for scientific journals."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#remove-the-default-theme",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#remove-the-default-theme",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Remove the default theme",
+    "text": "Remove the default theme\nThe gray background ggplot uses gets tiring quickly. The first thing I do when creating any plot is to add theme_light() or theme_bw(). This immediately cleans up your plot of distracting elements and lets you customize with your own colors. Even better, design your own personal theme and branding."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#use-high-resolution-figures",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#use-high-resolution-figures",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Use High Resolution Figures",
+    "text": "Use High Resolution Figures\nIf you’re displaying your ggplot figures in a report or presentation, remember that we are going to zoom in and note every little blemish. You’re creating a professional document, so don’t include images that might as well have been screenshots off your cell-phone.\nSave your plots with ggsave to the desired size and increase the dpi argument to 300 or more. You can also save objects as PDFs or SVG files to avoid the blurriness from zooming in (no dpi argument here).\nIf you changed the fonts with the showtext package, you may have to also specify showtext_opts(dpi = ...) so that your fonts are also of high resolution."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#beamer-remove-the-navigation-bar",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#beamer-remove-the-navigation-bar",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Beamer: Remove the navigation bar",
+    "text": "Beamer: Remove the navigation bar\nIn a default Beamer presentation made in LaTeX (or Quarto), one can find in the bottom margins a series of navigation buttons.\n\n\n\nDefault navigation buttons\n\n\nThese are, in my opinion, distracting, and completely pointless. It’s unclear what the second pair of buttons does (and what if the presentation doesn’t even have sections?). In your LaTeX or Quarto preamble (in the TeX section) you can just add \\setbeamertemplate{navigation symbols}{}."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-page-sizes-large",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#make-page-sizes-large",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Make page sizes large",
+    "text": "Make page sizes large\nAudience members like to refer back to page numbers with questions, so help them out by enlarging their size. Make sure the page numbers are the actual ‘frames’, i.e., the set of slides with the same content (hidden until the transition). Otherwise if you add bullet by bullet points, your slide numbers will be unnecessarily large."
+  },
+  {
+    "objectID": "posts/2025-05-24-data-viz-pet-peeves/index.html#transitions-should-still-give-audience-members-time-to-read",
+    "href": "posts/2025-05-24-data-viz-pet-peeves/index.html#transitions-should-still-give-audience-members-time-to-read",
+    "title": "First Impressions in Data Science Matter",
+    "section": "Transitions should still give audience members time to read",
+    "text": "Transitions should still give audience members time to read\nOften times a speaker will include transitions for every bullet point. This is fine, I think, except when the speaker shows the last few points and immediately proceeds to the next slide without giving the audience the time to even read it. It is better to reveal points in batches or at least pause for a moment."
   }
 ]

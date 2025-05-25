@@ -20,6 +20,8 @@ website:
         text: Industry
       - href: teaching.qmd
         text: Teaching
+      - href: posts.qmd
+        text: Blog
 format:
   html:
     theme:

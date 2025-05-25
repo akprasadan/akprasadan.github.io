@@ -16,5 +16,11 @@
   },
   "teaching.qmd": {
     "teaching.html": "9f18a510"
+  },
+  "posts.qmd": {
+    "posts.html": "2866570d"
+  },
+  "posts/2025-05-24-data-viz-pet-peeves/index.qmd": {
+    "index.html": "3fb4af64"
   }
 }

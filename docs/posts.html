@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Industry Experience – Akshay Prasadan</title>
+<title>My Blog – Akshay Prasadan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,13 +70,71 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -104,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./industry.html" aria-current="page"> 
+    <a class="nav-link" href="./industry.html"> 
 <span class="menu-text">Industry</span></a>
   </li>  
   <li class="nav-item">
@@ -112,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html"> 
+    <a class="nav-link active" href="./posts.html" aria-current="page"> 
 <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
@@ -127,13 +187,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UXVhcnRv">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Uk1hcmtkb3du">RMarkdown <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2dwbG90">ggplot <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Industry Experience</h1>
+<h1 class="title">My Blog</h1>
 </div>
 
 
@@ -150,22 +212,56 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="novartis-phd-fellow" class="level2">
-<h2 class="anchored" data-anchor-id="novartis-phd-fellow">Novartis PhD Fellow</h2>
-<p>See <a href="./research.html#multistate-and-joint-models">Multistate and Joint Models</a> for details about my 2 years of collaboration (Jan.&nbsp;2021 through May 2022, then March 2025 onward) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models.</p>
-</section>
-<section id="statistician-at-upmc" class="level2">
-<h2 class="anchored" data-anchor-id="statistician-at-upmc">Statistician at UPMC</h2>
-<p>At the <a href="https://karikarilab.org/">Karikari Laboratory</a> headed by Dr.&nbsp;Thomas K. Karikari, clinicians are studying the use of biomarkers in the blood as diagnostic tools for Alzheimer’s Disease. I’m one of a few statisticians helping design and implement statistical methodology to explore this fascinating biological data. I’ve been working here since January 2024.</p>
-</section>
-<section id="data-science-intern-at-highmark-health" class="level2">
-<h2 class="anchored" data-anchor-id="data-science-intern-at-highmark-health">Data Science Intern at Highmark Health</h2>
-<p>In the summer of 2022, I implemented a bi-level linear programming algorithm recently developed by a CMU PhD. The goal is to devise a health insurance network that can optimize patient utility while simultaneously minimizing costs.</p>
 
 
-</section>
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="UiUyQ2dncGxvdCUyQ1JNYXJrZG93biUyQ1F1YXJ0bw==" data-listing-date-sort="1748145600000" data-listing-file-modified-sort="1748208827555" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2266">
+<a href="./posts/2025-05-24-data-viz-pet-peeves/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/2025-05-24-data-viz-pet-peeves/gp_blog_final_colored.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+First Impressions in Data Science Matter
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Z2dwbG90'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Uk1hcmtkb3du'); return false;">
+RMarkdown
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">
+Quarto
+</div>
+</div>
+<div class="card-text listing-description">
+Modern data science libraries make professional presentation effortless. Let’s tackle my biggest pet peeves.
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Akshay Prasadan
+</div>
+<div class="listing-date">
+May 25, 2025
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
