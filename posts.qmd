@@ -1,10 +1,5 @@
 ---
-title: "Personal Blog"
-format: html
----
-
----
-title: "My Blog"
+title: "Just One More Plot"
 listing: 
   contents: posts
   type: grid 
