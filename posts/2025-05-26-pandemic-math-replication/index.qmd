@@ -37,7 +37,7 @@ of math and reading scores in the United States, among 8th and 4th graders, resp
 
 # Getting Started
 
-I have obtained the data from the NAEP, but it wasn't in a [tidy form](https://r4ds.hadley.nz/data-tidy.html). I did some data cleaning and saved it as a clean .csv file you can [access here](https://raw.githubusercontent.com/akprasadan/akprasadan.github.io/refs/heads/master/posts/2025-05-26-pandemic-math-replication/national_math_8th_reading_4th_scores_1990_to_2024_by_percentile.csv). Since this post isn't about data wrangling but data visualization, I will spare you the details. Let's start by making a basic plot. At each follow-up step, I will post an increasingly elaborate version of the same code, with comments added to some of the additions. You can skip to the end to see the final version. 
+I have obtained the data from the NAEP, but it wasn't in a [tidy form](https://r4ds.hadley.nz/data-tidy.html). I did some data cleaning and saved it as a clean .csv file you can [access from this URL](https://raw.githubusercontent.com/akprasadan/akprasadan.github.io/refs/heads/master/posts/2025-05-26-pandemic-math-replication/national_math_8th_reading_4th_scores_1990_to_2024_by_percentile.csv) or by downloading it [from my GitHub](https://github.com/akprasadan/akprasadan.github.io/tree/master/posts/2025-05-26-pandemic-math-replication). Since this post isn't about data wrangling but data visualization, I will spare you the details. Let's start by making a basic plot. At each follow-up step, I will post an increasingly elaborate version of the same code, with comments added to some of the additions. You can skip to the end to see the final version. 
 
 Our tibble has columns `Year`, `percentile` (10, 25, 50, 75, or 90), `score`, and `subject`. We will use the `geom_line()` and `geom_point()` geometries, with aesthetics `x = Year`, `y = score`, and `group = percentile`, and lastly we facet by `subject` (i.e., a separate plot per value of `subject`). Well, let's pause for a moment. We *could* facet by `subject`, but I realized later when creating this post that we lose the ability to easily set $y$-limits for each faceted panel separately. Instead, we will create *two* separate plot and put them together using the `cowplot` package. For now, let us just focus on the `subject = math` plot, since the code is the same. While we're loading in packages, I'm going to import the Libre Franklin font from Google Fonts as that resembles the font used by the New York Times. We'll actually change the fonts at the end.
 
@@ -53,6 +53,8 @@ library(showtext) # Changing plot font
 library(cowplot) # Combining ggplots in a grid
 
 font_add_google(name = 'Libre Franklin', family = 'franklin')
+
+# Access on Github
 filename = 'national_math_8th_reading_4th_scores_1990_to_2024_by_percentile.csv'
 
 df = read_csv(filename) |> 
@@ -334,7 +336,10 @@ modified using the `draw_plot()` arguments, which use relative scaling values (e
 ```{r}
 #| code-fold: show
 #| fig.cap: "Our first combo plot."
-df = read_csv('national_math_8th_reading_4th_scores_1990_to_2024_by_percentile.csv') 
+
+# Access on GitHub (see beginning of post for link)
+filename = 'national_math_8th_reading_4th_scores_1990_to_2024_by_percentile.csv'
+df = read_csv(filename)
 
 plot_math = plot_generator(df, 'math')
 plot_reading = plot_generator(df, 'reading')
@@ -347,6 +352,7 @@ caption_text <- paste(
   sep = "\n"
 )
 
+# Combine with cowplot
 plot <- ggdraw() +
   draw_plot(plot_math, x = 0, y = 0.10, width = 0.5, height = 0.85) +
   draw_plot(plot_reading, x = 0.5, y = 0.10, width = 0.5, height = 0.85) +
@@ -458,7 +464,6 @@ plot_generator_final = function(df, subject) {
 plot_math_final = plot_generator_final(df, 'math')
 plot_reading_final = plot_generator_final(df, 'reading')
 
-# Combine with cowplot
 plot_final <- ggdraw() +
   draw_plot(plot_math_final, x = 0, y = 0.12, width = 0.5, height = 0.85) +
   draw_plot(plot_reading_final, x = 0.5, y = 0.12, width = 0.5, height = 0.85) +
@@ -492,6 +497,13 @@ But this is an exercise in learning `ggplot`, not patience. My central goal was 
 #| code-fold: show
 #| eval: false
 
+library(tidyverse)
+library(ggtext) 
+library(glue)
+library(showtext) 
+library(cowplot) 
+
+font_add_google(name = 'Libre Franklin', family = 'franklin')
 showtext_opts(dpi = 300)
 showtext_auto()
 
@@ -577,7 +589,8 @@ plot_generator_final = function(df, subject) {
   return(plot)
 }
 
-df = read_csv('national_math_8th_reading_4th_scores_1990_to_2024_by_percentile.csv') 
+filename = 'national_math_8th_reading_4th_scores_1990_to_2024_by_percentile.csv'
+df = read_csv(filename) 
 
 caption_text <- paste(
   "Top scorers shown are at the 90th percentile; lowest scorers are at the 10th.",
@@ -599,8 +612,6 @@ plot <- ggdraw() +
              fontfamily = 'franklin',
              fontface = "plain", color = 'grey40')
 
-
-# Save
 ggsave("replicated_nyt.png", plot_final, width = 6.6, height = 6.1, dpi = 300, bg = 'white')
 ```
 
