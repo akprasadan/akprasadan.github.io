@@ -482,7 +482,7 @@ Looks pretty good, right? Let me repost below the original.
 
 A careful inspection reveals many additional deficiencies in my replication attempt. For example, it seems the author actually used `alpha` as an aesthetic for the column we called `is_extreme_score`, since the percentiles seem to change transparency for the 25th, 50th, and 75th levels. The fonts seem a bit thicker too for the extremes. It would probably be easiest to just manually annotate the plot for finer font control. At this point, I feel like I'm giving up reproducibility, D.R.Y. code, and other programming tenets, but haven't I turned from a programmer into a graphic designer at this point anyway?
 
-Moreover, I still do not fully understand the best way to fine-tune margins of the various plot objects, since practically every `theme` argument has its own margin argument. So the spacing certainly doesn't math the original. At a certain point, I basically gave up out of frustration. 
+Moreover, I still do not fully understand the best way to fine-tune margins of the various plot objects, since practically every `theme` argument has its own margin argument. So the spacing certainly doesn't match the original. At a certain point, I basically gave up out of frustration. 
 
 But this is an exercise in learning `ggplot`, not patience. My central goal was to prove that I, and more importantly, you, the reader, can build high quality graphics that belong in leading newspaper publications. Granted, all the credit goes to the New York Times and Francesca Paris for their original design. I look forward to some future exercises like this, perhaps with The Economist, Bloomberg, or Financial Times instead.
 
