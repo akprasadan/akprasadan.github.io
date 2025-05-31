@@ -588,3 +588,10 @@ ggsave(
 )
 ```
 
+# Takeaways
+
+The plot shows that the trend Tobias showed for HBCUs extends nationwide. Since the end of WWII, males went from nearly 71% of all college enrollments to only 42%. This has massive implications for electoral trends given the impact of education on political leanings. But I'll leave that for Fivethirtyeight or its remnants to discuss.
+
+The takeaway of this blog post: Use text customization feature to replace existing plot elements like legends that can take up valuable space or contribute to a sense of clutter. Obviously if there are many categories, this is not advisable. But for something as simple as male versus female trends, Tobias had the right idea. 
+
+I hope you also enjoyed the other tips and tricks with fonts, background images, dumbbell plot construction, and data cleaning Excel formats.
