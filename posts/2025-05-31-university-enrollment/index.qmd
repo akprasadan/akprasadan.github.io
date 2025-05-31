@@ -52,6 +52,7 @@ knitr::include_graphics("excel_screenshot.png")
 We'll need the `readxl` package. We can discard the first three rows with the `skip` argument of `read_xlsx()` . After that, we'll use one of my favorite functions which is `clean_names()` from the `janitor` package, which converts column names to snake_case. There are some footers in the Excel file which we can remove just by filtering for non-NA rows in the `male` column. We'll also discard row 5 of the original file, which just contains column numbers, by filtering for `year != "1"`.
 
 ```{r}
+#| code-fold: show
 library(tidyverse)
 library(readxl)
 library(janitor)
@@ -70,6 +71,7 @@ df = read_xlsx(table_filename, skip = 3) |>
 The next issue is the unnecessary `"\1\"` or `"\r\n"` strings that appear in the `year` column. We'll use `str_replace()` from the `stringr` package to remove that. Then `year` needs to converted to numeric once those non-numeric characters are removed. While we are using `mutate()`, I'll create a proportion male and proportional female column. Then I'll select `year` and the two proportion columns, since we no longer need the full counts.
 
 ```{r}
+#| code-fold: show
 df = df |>
   mutate(
     year = str_replace(year, '\\\\1\\\\', ""),
@@ -85,6 +87,7 @@ df = df |>
 I plan to only plot every other year for a simpler graphic. There change is relatively gradual so showing year to year changes doesn't really matter much. My data goes from 1947 to 2023, so using the odd years is sufficient. Also, we will later see that the trend is declining for males and rising for females, with a crossing point in 1979. I'd like to indicate this with a straight line at that point. I don't want to hard-code it, so I'll save this information as a one row tibble at this year called `final_male_df`. I'll do this calculation *before* I filter for odd years only, importantly.
 
 ```{r}
+#| code-fold: show
 final_male_df = df |>
   filter(prop_male > prop_female) |>
   slice_max(order_by = year)
@@ -95,6 +98,7 @@ df = df |> filter(year %in% seq(1947, 2023, by = 2))
 The last piece of data wrangling we need is reshaping `df` into a long format. We want a single $y$-axis column, say `enrollment_pct`, so we'll pivot the `prop_male` and `prop_female` into a `sex` and `enrollment_pct` pair of columns. The `"prop_"` will then become unnecessary, so we'll remove it with `names_prefix = "prop_"` .
 
 ```{r}
+#| code-fold: show
 long_df = df |>
   pivot_longer(
     cols = c(prop_male, prop_female),
@@ -112,6 +116,7 @@ We will start by adding points with `year` on the $x$ axis and `enrollment_pct` 
 
 
 ```{r}
+#| code-fold: show
 long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point() +
@@ -125,6 +130,7 @@ long_df |>
 The next step is to add the vertical line for the transition point where more females than males enroll. We will feed in a new dataset again, the `final_male_df` row we saved. I want the line to occur on the first year in which female enrollment is higher, so I add one to the year. Once again, we'll need to not inherit the aesthetics. The reason I used `geom_segment()` instead of `geom_vline()` is that I wanted finer control over where the line starts and ends.
 
 ```{r}
+#| code-fold: show
 long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point() +
@@ -145,6 +151,7 @@ long_df |>
 The last `geom_*()` I wish to add is `geom_image()`. The plot is fairly bare, so I wanted a transparent graphic representing education sitting in the bottom right. We'll have to load in the `ggimage` package. To add transparency, we [follow the technique here](https://stackoverflow.com/questions/60820565/is-there-a-way-to-add-an-alpha-value-within-geom-image-in-ggplot) and define a transparency function to pass into `geom_image()`.
 
 ```{r}
+#| code-fold: show
 library(ggimage)
 
 transparent <- function(img) {
@@ -179,6 +186,7 @@ long_df |>
 I'll add in some styling to these geoms.
 
 ```{r}
+#| code-fold: show
 long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point(size = 2.1) +
@@ -212,13 +220,14 @@ long_df |>
 
 ## Colors and Scales
 
-After consulting [Color Brewer 2.0](https://colorbrewer2.org), I settled on using [#7570b3]{style="background-color: #7570b3; color: white"} for male and [#1b9e77]{style="background-color: #1b9e77; color: white"} for female. For the bars, I used a transparent version of[#d95f02]{style="background-color: #d95f02; color: black"}. Let's create a manual color scale to use these instead. We will remove the legend by specifying `guide = 'none'`. 
+After consulting [Color Brewer 2.0](https://colorbrewer2.org), I settled on using [#7570b3]{style="background-color: #7570b3; color: white"} for male and [#1b9e77]{style="background-color: #1b9e77; color: white"} for female. For the bars, I used a transparent version of [#d95f02]{style="background-color: #d95f02; color: black"}. Let's create a manual color scale to use these instead. We will remove the legend by specifying `guide = 'none'`. 
 
 Along the way, we can specify the breaks for the $x$ and $y$ axes, and use `percent_format()` from the `scales` package to get nice percent signs. 
 
 
 
 ```{r}
+#| code-fold: show
 long_df |> 
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point(size = 2.1) +
@@ -256,6 +265,7 @@ Looks good. Let's fix up the labels. Importantly, I want to put the legend in th
 The same `ggtext` package lets me add line breaks to the caption as well, using `<br>`. We'll reposition the caption using the `plot.caption` and `plot.caption.position` arguments.
 
 ```{r}
+#| code-fold: show
 library(ggtext)
 
 long_df |> 
@@ -301,6 +311,7 @@ long_df |>
 The default theme looks ugly to me. Let's remove the grey background, customize which panel gridlines we want, and make other minor changes. The easiest way to do this is to add `theme_minimal()` and then put back what is of interest.
 
 ```{r}
+#| code-fold: show
 long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point(size = 2.1) +
@@ -371,6 +382,7 @@ long_df |>
 For our final customization, let's change the font to "Lato" from Google Fonts using the `showtext` package. We'll need to set the global size using `text = element_text(family = 'Lato', size = 5)`, since often times the default sizes will be way too big or small. For some weird reason, text that gets modified by `element_markdown()` sometimes loses their spaces, so to fix that, I added `family = ""` in the `plot.caption= element_markdown()` argument.
 
 ```{r}
+#| code-fold: show
 library(showtext)
 
 font_add_google("Lato")
@@ -446,6 +458,7 @@ long_df |>
 # All Together
 
 ```{r, eval = F}
+
 library(tidyverse)
 library(readxl)
 library(ggtext)

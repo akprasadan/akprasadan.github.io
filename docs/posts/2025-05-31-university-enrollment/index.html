@@ -292,7 +292,7 @@ window.Quarto = {
 </div>
 <p>We’ll need the <code>readxl</code> package. We can discard the first three rows with the <code>skip</code> argument of <code>read_xlsx()</code> . After that, we’ll use one of my favorite functions which is <code>clean_names()</code> from the <code>janitor</code> package, which converts column names to snake_case. There are some footers in the Excel file which we can remove just by filtering for non-NA rows in the <code>male</code> column. We’ll also discard row 5 of the original file, which just contains column numbers, by filtering for <code>year != "1"</code>.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
@@ -311,7 +311,7 @@ window.Quarto = {
 </div>
 <p>The next issue is the unnecessary <code>"\1\"</code> or <code>"\r\n"</code> strings that appear in the <code>year</code> column. We’ll use <code>str_replace()</code> from the <code>stringr</code> package to remove that. Then <code>year</code> needs to converted to numeric once those non-numeric characters are removed. While we are using <code>mutate()</code>, I’ll create a proportion male and proportional female column. Then I’ll select <code>year</code> and the two proportion columns, since we no longer need the full counts.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -326,7 +326,7 @@ window.Quarto = {
 </div>
 <p>I plan to only plot every other year for a simpler graphic. There change is relatively gradual so showing year to year changes doesn’t really matter much. My data goes from 1947 to 2023, so using the odd years is sufficient. Also, we will later see that the trend is declining for males and rising for females, with a crossing point in 1979. I’d like to indicate this with a straight line at that point. I don’t want to hard-code it, so I’ll save this information as a one row tibble at this year called <code>final_male_df</code>. I’ll do this calculation <em>before</em> I filter for odd years only, importantly.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>final_male_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop_male <span class="sc">&gt;</span> prop_female) <span class="sc">|&gt;</span></span>
@@ -337,7 +337,7 @@ window.Quarto = {
 </div>
 <p>The last piece of data wrangling we need is reshaping <code>df</code> into a long format. We want a single <span class="math inline">\(y\)</span>-axis column, say <code>enrollment_pct</code>, so we’ll pivot the <code>prop_male</code> and <code>prop_female</code> into a <code>sex</code> and <code>enrollment_pct</code> pair of columns. The <code>"prop_"</code> will then become unnecessary, so we’ll remove it with <code>names_prefix = "prop_"</code> .</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
@@ -355,7 +355,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="our-basic-geometries">Our basic Geometries</h2>
 <p>We will start by adding points with <code>year</code> on the <span class="math inline">\(x\)</span> axis and <code>enrollment_pct</code> on the <span class="math inline">\(y\)</span> axis colored by <code>sex</code>. Then we add a segment from the male to female values using <code>geom_segment()</code>. To do so, we actually feed in the <em>wide</em> dataset <code>df</code> because it takes in a <code>y</code> and <code>yend</code> aesthetic for which we will specify <code>prop_male</code> and <code>prop_female</code>, respectively. The long version of the dataset no longer has these columns. However, the <code>df</code> dataframe does not have a <code>sex</code> column, so we don’t want to feed in the previous aesthetics. Thus, we must include an <code>inherit.aes = F</code> argument to <code>geom_segment()</code>.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -376,7 +376,7 @@ window.Quarto = {
 </div>
 <p>The next step is to add the vertical line for the transition point where more females than males enroll. We will feed in a new dataset again, the <code>final_male_df</code> row we saved. I want the line to occur on the first year in which female enrollment is higher, so I add one to the year. Once again, we’ll need to not inherit the aesthetics. The reason I used <code>geom_segment()</code> instead of <code>geom_vline()</code> is that I wanted finer control over where the line starts and ends.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -404,7 +404,7 @@ window.Quarto = {
 </div>
 <p>The last <code>geom_*()</code> I wish to add is <code>geom_image()</code>. The plot is fairly bare, so I wanted a transparent graphic representing education sitting in the bottom right. We’ll have to load in the <code>ggimage</code> package. To add transparency, we <a href="https://stackoverflow.com/questions/60820565/is-there-a-way-to-add-an-alpha-value-within-geom-image-in-ggplot">follow the technique here</a> and define a transparency function to pass into <code>geom_image()</code>.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -446,7 +446,7 @@ window.Quarto = {
 </div>
 <p>I’ll add in some styling to these geoms.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -489,10 +489,10 @@ window.Quarto = {
 </section>
 <section id="colors-and-scales" class="level2">
 <h2 class="anchored" data-anchor-id="colors-and-scales">Colors and Scales</h2>
-<p>After consulting <a href="https://colorbrewer2.org">Color Brewer 2.0</a>, I settled on using <span style="background-color: #7570b3; color: white">#7570b3</span> for male and <span style="background-color: #1b9e77; color: white">#1b9e77</span> for female. For the bars, I used a transparent version of<span style="background-color: #d95f02; color: black">#d95f02</span>. Let’s create a manual color scale to use these instead. We will remove the legend by specifying <code>guide = 'none'</code>.</p>
+<p>After consulting <a href="https://colorbrewer2.org">Color Brewer 2.0</a>, I settled on using <span style="background-color: #7570b3; color: white">#7570b3</span> for male and <span style="background-color: #1b9e77; color: white">#1b9e77</span> for female. For the bars, I used a transparent version of <span style="background-color: #d95f02; color: black">#d95f02</span>. Let’s create a manual color scale to use these instead. We will remove the legend by specifying <code>guide = 'none'</code>.</p>
 <p>Along the way, we can specify the breaks for the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> axes, and use <code>percent_format()</code> from the <code>scales</code> package to get nice percent signs.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -536,7 +536,7 @@ window.Quarto = {
 <p>Looks good. Let’s fix up the labels. Importantly, I want to put the legend in the title itself. To do that, we use the <code>ggtext</code> package and add the HTML tags in the title. To render it properly, we must call <code>plot.title = element_markdown()</code> inside the <code>theme()</code> function. The HTML format is messy, but goes like this: <code>&lt;span style = 'color:{your-color};'&gt;{your-text}&lt;/span&gt;</code>.</p>
 <p>The same <code>ggtext</code> package lets me add line breaks to the caption as well, using <code>&lt;br&gt;</code>. We’ll reposition the caption using the <code>plot.caption</code> and <code>plot.caption.position</code> arguments.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -589,7 +589,7 @@ window.Quarto = {
 </div>
 <p>The default theme looks ugly to me. Let’s remove the grey background, customize which panel gridlines we want, and make other minor changes. The easiest way to do this is to add <code>theme_minimal()</code> and then put back what is of interest.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -668,7 +668,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="fonts">Fonts</h2>
 <p>For our final customization, let’s change the font to “Lato” from Google Fonts using the <code>showtext</code> package. We’ll need to set the global size using <code>text = element_text(family = 'Lato', size = 5)</code>, since often times the default sizes will be way too big or small. For some weird reason, text that gets modified by <code>element_markdown()</code> sometimes loses their spaces, so to fix that, I added <code>family = ""</code> in the <code>plot.caption= element_markdown()</code> argument.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1586,549 +1586,562 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>We'll need the <span class="in">`readxl`</span> package. We can discard the first three rows with the <span class="in">`skip`</span> argument of <span class="in">`read_xlsx()`</span> . After that, we'll use one of my favorite functions which is <span class="in">`clean_names()`</span> from the <span class="in">`janitor`</span> package, which converts column names to snake_case. There are some footers in the Excel file which we can remove just by filtering for non-NA rows in the <span class="in">`male`</span> column. We'll also discard row 5 of the original file, which just contains column numbers, by filtering for <span class="in">`year != "1"`</span>.</span>
 <span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>table_filename <span class="ot">=</span> <span class="st">'tabn303.10.xlsx'</span></span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">read_xlsx</span>(table_filename, <span class="at">skip =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, <span class="at">total =</span> total_enrollment, male, female) <span class="sc">|&gt;</span></span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Removes the footers</span></span>
-<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(male)) <span class="sc">|&gt;</span></span>
-<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove unnecessary column number header row</span></span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="st">"1"</span>)</span>
-<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>The next issue is the unnecessary <span class="in">`"\1\"`</span> or <span class="in">`"\r\n"`</span> strings that appear in the <span class="in">`year`</span> column. We'll use <span class="in">`str_replace()`</span> from the <span class="in">`stringr`</span> package to remove that. Then <span class="in">`year`</span> needs to converted to numeric once those non-numeric characters are removed. While we are using <span class="in">`mutate()`</span>, I'll create a proportion male and proportional female column. Then I'll select <span class="in">`year`</span> and the two proportion columns, since we no longer need the full counts.</span>
-<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
-<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">'</span><span class="sc">\\\\</span><span class="st">1</span><span class="sc">\\\\</span><span class="st">'</span>, <span class="st">""</span>),</span>
-<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">"</span><span class="sc">\\</span><span class="st">r</span><span class="sc">\\</span><span class="st">n"</span>, <span class="st">""</span>),</span>
-<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">as.numeric</span>(year),</span>
-<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_male =</span> male <span class="sc">/</span> total,</span>
-<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_female =</span> female <span class="sc">/</span> total</span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, <span class="fu">starts_with</span>(<span class="st">'prop'</span>))</span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>I plan to only plot every other year for a simpler graphic. There change is relatively gradual so showing year to year changes doesn't really matter much. My data goes from 1947 to 2023, so using the odd years is sufficient. Also, we will later see that the trend is declining for males and rising for females, with a crossing point in 1979. I'd like to indicate this with a straight line at that point. I don't want to hard-code it, so I'll save this information as a one row tibble at this year called <span class="in">`final_male_df`</span>. I'll do this calculation *before* I filter for odd years only, importantly.</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>table_filename <span class="ot">=</span> <span class="st">'tabn303.10.xlsx'</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">read_xlsx</span>(table_filename, <span class="at">skip =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, <span class="at">total =</span> total_enrollment, male, female) <span class="sc">|&gt;</span></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Removes the footers</span></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(male)) <span class="sc">|&gt;</span></span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove unnecessary column number header row</span></span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="st">"1"</span>)</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>The next issue is the unnecessary <span class="in">`"\1\"`</span> or <span class="in">`"\r\n"`</span> strings that appear in the <span class="in">`year`</span> column. We'll use <span class="in">`str_replace()`</span> from the <span class="in">`stringr`</span> package to remove that. Then <span class="in">`year`</span> needs to converted to numeric once those non-numeric characters are removed. While we are using <span class="in">`mutate()`</span>, I'll create a proportion male and proportional female column. Then I'll select <span class="in">`year`</span> and the two proportion columns, since we no longer need the full counts.</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">'</span><span class="sc">\\\\</span><span class="st">1</span><span class="sc">\\\\</span><span class="st">'</span>, <span class="st">""</span>),</span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">"</span><span class="sc">\\</span><span class="st">r</span><span class="sc">\\</span><span class="st">n"</span>, <span class="st">""</span>),</span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">as.numeric</span>(year),</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_male =</span> male <span class="sc">/</span> total,</span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_female =</span> female <span class="sc">/</span> total</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, <span class="fu">starts_with</span>(<span class="st">'prop'</span>))</span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>final_male_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
-<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop_male <span class="sc">&gt;</span> prop_female) <span class="sc">|&gt;</span></span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> year)</span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">1947</span>, <span class="dv">2023</span>, <span class="at">by =</span> <span class="dv">2</span>))</span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>I plan to only plot every other year for a simpler graphic. There change is relatively gradual so showing year to year changes doesn't really matter much. My data goes from 1947 to 2023, so using the odd years is sufficient. Also, we will later see that the trend is declining for males and rising for females, with a crossing point in 1979. I'd like to indicate this with a straight line at that point. I don't want to hard-code it, so I'll save this information as a one row tibble at this year called <span class="in">`final_male_df`</span>. I'll do this calculation *before* I filter for odd years only, importantly.</span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>final_male_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop_male <span class="sc">&gt;</span> prop_female) <span class="sc">|&gt;</span></span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> year)</span>
 <span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>The last piece of data wrangling we need is reshaping <span class="in">`df`</span> into a long format. We want a single $y$-axis column, say <span class="in">`enrollment_pct`</span>, so we'll pivot the <span class="in">`prop_male`</span> and <span class="in">`prop_female`</span> into a <span class="in">`sex`</span> and <span class="in">`enrollment_pct`</span> pair of columns. The <span class="in">`"prop_"`</span> will then become unnecessary, so we'll remove it with <span class="in">`names_prefix = "prop_"`</span> .</span>
-<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>long_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(prop_male, prop_female),</span>
-<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>,</span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"prop_"</span>,</span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"enrollment_pct"</span></span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a><span class="fu"># Plotting</span></span>
-<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Our basic Geometries</span></span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">1947</span>, <span class="dv">2023</span>, <span class="at">by =</span> <span class="dv">2</span>))</span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>The last piece of data wrangling we need is reshaping <span class="in">`df`</span> into a long format. We want a single $y$-axis column, say <span class="in">`enrollment_pct`</span>, so we'll pivot the <span class="in">`prop_male`</span> and <span class="in">`prop_female`</span> into a <span class="in">`sex`</span> and <span class="in">`enrollment_pct`</span> pair of columns. The <span class="in">`"prop_"`</span> will then become unnecessary, so we'll remove it with <span class="in">`names_prefix = "prop_"`</span> .</span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>long_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(prop_male, prop_female),</span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>,</span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"prop_"</span>,</span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"enrollment_pct"</span></span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>We will start by adding points with <span class="in">`year`</span> on the $x$ axis and <span class="in">`enrollment_pct`</span> on the $y$ axis colored by <span class="in">`sex`</span>. Then we add a segment from the male to female values using <span class="in">`geom_segment()`</span>. To do so, we actually feed in the *wide* dataset <span class="in">`df`</span> because it takes in a <span class="in">`y`</span> and <span class="in">`yend`</span> aesthetic for which we will specify <span class="in">`prop_male`</span> and <span class="in">`prop_female`</span>, respectively. The long version of the dataset no longer has these columns. However, the <span class="in">`df`</span> dataframe does not have a <span class="in">`sex`</span> column, so we don't want to feed in the previous aesthetics. Thus, we must include an <span class="in">`inherit.aes = F`</span> argument to <span class="in">`geom_segment()`</span>.</span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a><span class="fu"># Plotting</span></span>
 <span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
-<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
-<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>The next step is to add the vertical line for the transition point where more females than males enroll. We will feed in a new dataset again, the <span class="in">`final_male_df`</span> row we saved. I want the line to occur on the first year in which female enrollment is higher, so I add one to the year. Once again, we'll need to not inherit the aesthetics. The reason I used <span class="in">`geom_segment()`</span> instead of <span class="in">`geom_vline()`</span> is that I wanted finer control over where the line starts and ends.</span>
-<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
-<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
-<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
-<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
-<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a>The last <span class="in">`geom_*()`</span> I wish to add is <span class="in">`geom_image()`</span>. The plot is fairly bare, so I wanted a transparent graphic representing education sitting in the bottom right. We'll have to load in the <span class="in">`ggimage`</span> package. To add transparency, we <span class="co">[</span><span class="ot">follow the technique here</span><span class="co">](https://stackoverflow.com/questions/60820565/is-there-a-way-to-add-an-alpha-value-within-geom-image-in-ggplot)</span> and define a transparency function to pass into <span class="in">`geom_image()`</span>.</span>
-<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span>
-<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>transparent <span class="ot">&lt;-</span> <span class="cf">function</span>(img) {</span>
-<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>  magick<span class="sc">::</span><span class="fu">image_fx</span>(img, <span class="at">expression =</span> <span class="st">"0.5*a"</span>, <span class="at">channel =</span> <span class="st">"alpha"</span>)</span>
-<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
-<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
-<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
-<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Our basic Geometries</span></span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>We will start by adding points with <span class="in">`year`</span> on the $x$ axis and <span class="in">`enrollment_pct`</span> on the $y$ axis colored by <span class="in">`sex`</span>. Then we add a segment from the male to female values using <span class="in">`geom_segment()`</span>. To do so, we actually feed in the *wide* dataset <span class="in">`df`</span> because it takes in a <span class="in">`y`</span> and <span class="in">`yend`</span> aesthetic for which we will specify <span class="in">`prop_male`</span> and <span class="in">`prop_female`</span>, respectively. The long version of the dataset no longer has these columns. However, the <span class="in">`df`</span> dataframe does not have a <span class="in">`sex`</span> column, so we don't want to feed in the previous aesthetics. Thus, we must include an <span class="in">`inherit.aes = F`</span> argument to <span class="in">`geom_segment()`</span>.</span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a>The next step is to add the vertical line for the transition point where more females than males enroll. We will feed in a new dataset again, the <span class="in">`final_male_df`</span> row we saved. I want the line to occur on the first year in which female enrollment is higher, so I add one to the year. Once again, we'll need to not inherit the aesthetics. The reason I used <span class="in">`geom_segment()`</span> instead of <span class="in">`geom_vline()`</span> is that I wanted finer control over where the line starts and ends.</span>
+<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
+<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
+<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a>The last <span class="in">`geom_*()`</span> I wish to add is <span class="in">`geom_image()`</span>. The plot is fairly bare, so I wanted a transparent graphic representing education sitting in the bottom right. We'll have to load in the <span class="in">`ggimage`</span> package. To add transparency, we <span class="co">[</span><span class="ot">follow the technique here</span><span class="co">](https://stackoverflow.com/questions/60820565/is-there-a-way-to-add-an-alpha-value-within-geom-image-in-ggplot)</span> and define a transparency function to pass into <span class="in">`geom_image()`</span>.</span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span>
+<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>transparent <span class="ot">&lt;-</span> <span class="cf">function</span>(img) {</span>
+<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>  magick<span class="sc">::</span><span class="fu">image_fx</span>(img, <span class="at">expression =</span> <span class="st">"0.5*a"</span>, <span class="at">channel =</span> <span class="st">"alpha"</span>)</span>
+<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
+<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
+<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
 <span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
 <span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
-<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
-<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, </span>
-<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a>        <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
-<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
-<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a>I'll add in some styling to these geoms.</span>
-<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
-<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
-<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
-<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F,</span>
-<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
-<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span></span>
-<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
+<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
+<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
+<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
+<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, </span>
+<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a>        <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
+<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
+<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a>I'll add in some styling to these geoms.</span>
+<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
+<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
 <span id="cb14-213"><a href="#cb14-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
-<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
-<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span>,</span>
-<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
-<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
-<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
-<span id="cb14-225"><a href="#cb14-225" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
-<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
-<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
-<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a><span class="fu">## Colors and Scales</span></span>
-<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a>After consulting <span class="co">[</span><span class="ot">Color Brewer 2.0</span><span class="co">](https://colorbrewer2.org)</span>, I settled on using <span class="co">[</span><span class="ot">#7570b3</span><span class="co">]</span>{style="background-color: #7570b3; color: white"} for male and <span class="co">[</span><span class="ot">#1b9e77</span><span class="co">]</span>{style="background-color: #1b9e77; color: white"} for female. For the bars, I used a transparent version of<span class="co">[</span><span class="ot">#d95f02</span><span class="co">]</span>{style="background-color: #d95f02; color: black"}. Let's create a manual color scale to use these instead. We will remove the legend by specifying <span class="in">`guide = 'none'`</span>. </span>
-<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a>Along the way, we can specify the breaks for the $x$ and $y$ axes, and use <span class="in">`percent_format()`</span> from the <span class="in">`scales`</span> package to get nice percent signs. </span>
-<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
+<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F,</span>
+<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
+<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span></span>
+<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
+<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
+<span id="cb14-225"><a href="#cb14-225" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span>,</span>
+<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
+<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
+<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
+<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
+<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
+<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span> </span>
-<span id="cb14-245"><a href="#cb14-245" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
-<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df,</span>
-<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-249"><a href="#cb14-249" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F,</span>
-<span id="cb14-250"><a href="#cb14-250" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a>               <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
-<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>) <span class="sc">+</span></span>
-<span id="cb14-253"><a href="#cb14-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> final_male_df, </span>
-<span id="cb14-254"><a href="#cb14-254" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>), <span class="at">y =</span> <span class="fl">0.25</span>, <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
-<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
-<span id="cb14-257"><a href="#cb14-257" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
-<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
-<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span>year, </span>
-<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> enrollment_pct, </span>
-<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a>                 <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
-<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a>             <span class="at">image_fun =</span> transparent,</span>
-<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
-<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
-<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
-<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
-<span id="cb14-269"><a href="#cb14-269" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span><span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
-<span id="cb14-270"><a href="#cb14-270" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb14-271"><a href="#cb14-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
-<span id="cb14-272"><a href="#cb14-272" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
-<span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a>                                <span class="at">guide =</span> <span class="st">'none'</span>) </span>
-<span id="cb14-274"><a href="#cb14-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-275"><a href="#cb14-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-276"><a href="#cb14-276" aria-hidden="true" tabindex="-1"></a>Looks good. Let's fix up the labels. Importantly, I want to put the legend in the title itself. To do that, we use the <span class="in">`ggtext`</span> package and add the HTML tags in the title. To render it properly, we must call <span class="in">`plot.title = element_markdown()`</span> inside the <span class="in">`theme()`</span> function. The HTML format is messy, but goes like this: <span class="in">`&lt;span style = 'color:{your-color};'&gt;{your-text}&lt;/span&gt;`</span>. </span>
-<span id="cb14-277"><a href="#cb14-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-278"><a href="#cb14-278" aria-hidden="true" tabindex="-1"></a>The same <span class="in">`ggtext`</span> package lets me add line breaks to the caption as well, using <span class="in">`&lt;br&gt;`</span>. We'll reposition the caption using the <span class="in">`plot.caption`</span> and <span class="in">`plot.caption.position`</span> arguments.</span>
-<span id="cb14-279"><a href="#cb14-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-282"><a href="#cb14-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-283"><a href="#cb14-283" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
+<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Colors and Scales</span></span>
+<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a>After consulting <span class="co">[</span><span class="ot">Color Brewer 2.0</span><span class="co">](https://colorbrewer2.org)</span>, I settled on using <span class="co">[</span><span class="ot">#7570b3</span><span class="co">]</span>{style="background-color: #7570b3; color: white"} for male and <span class="co">[</span><span class="ot">#1b9e77</span><span class="co">]</span>{style="background-color: #1b9e77; color: white"} for female. For the bars, I used a transparent version of <span class="co">[</span><span class="ot">#d95f02</span><span class="co">]</span>{style="background-color: #d95f02; color: black"}. Let's create a manual color scale to use these instead. We will remove the legend by specifying <span class="in">`guide = 'none'`</span>. </span>
+<span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-245"><a href="#cb14-245" aria-hidden="true" tabindex="-1"></a>Along the way, we can specify the breaks for the $x$ and $y$ axes, and use <span class="in">`percent_format()`</span> from the <span class="in">`scales`</span> package to get nice percent signs. </span>
+<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-253"><a href="#cb14-253" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span> </span>
+<span id="cb14-254"><a href="#cb14-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
+<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df,</span>
+<span id="cb14-257"><a href="#cb14-257" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F,</span>
+<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a>               <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
+<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>) <span class="sc">+</span></span>
+<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> final_male_df, </span>
+<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>), <span class="at">y =</span> <span class="fl">0.25</span>, <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
+<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
+<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
+<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span>year, </span>
+<span id="cb14-269"><a href="#cb14-269" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> enrollment_pct, </span>
+<span id="cb14-270"><a href="#cb14-270" aria-hidden="true" tabindex="-1"></a>                 <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
+<span id="cb14-271"><a href="#cb14-271" aria-hidden="true" tabindex="-1"></a>             <span class="at">image_fun =</span> transparent,</span>
+<span id="cb14-272"><a href="#cb14-272" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
+<span id="cb14-274"><a href="#cb14-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
+<span id="cb14-275"><a href="#cb14-275" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
+<span id="cb14-276"><a href="#cb14-276" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb14-277"><a href="#cb14-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb14-278"><a href="#cb14-278" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span><span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
+<span id="cb14-279"><a href="#cb14-279" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb14-280"><a href="#cb14-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
+<span id="cb14-281"><a href="#cb14-281" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
+<span id="cb14-282"><a href="#cb14-282" aria-hidden="true" tabindex="-1"></a>                                <span class="at">guide =</span> <span class="st">'none'</span>) </span>
+<span id="cb14-283"><a href="#cb14-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-284"><a href="#cb14-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-285"><a href="#cb14-285" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span> </span>
-<span id="cb14-286"><a href="#cb14-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-287"><a href="#cb14-287" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
-<span id="cb14-288"><a href="#cb14-288" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df,</span>
-<span id="cb14-289"><a href="#cb14-289" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-290"><a href="#cb14-290" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F,</span>
-<span id="cb14-291"><a href="#cb14-291" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-292"><a href="#cb14-292" aria-hidden="true" tabindex="-1"></a>               <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
-<span id="cb14-293"><a href="#cb14-293" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>) <span class="sc">+</span></span>
-<span id="cb14-294"><a href="#cb14-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> final_male_df, </span>
-<span id="cb14-295"><a href="#cb14-295" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>), <span class="at">y =</span> <span class="fl">0.25</span>, <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
-<span id="cb14-296"><a href="#cb14-296" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb14-297"><a href="#cb14-297" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
-<span id="cb14-298"><a href="#cb14-298" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
-<span id="cb14-299"><a href="#cb14-299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
-<span id="cb14-300"><a href="#cb14-300" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span>year, </span>
-<span id="cb14-301"><a href="#cb14-301" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> enrollment_pct, </span>
-<span id="cb14-302"><a href="#cb14-302" aria-hidden="true" tabindex="-1"></a>                 <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
-<span id="cb14-303"><a href="#cb14-303" aria-hidden="true" tabindex="-1"></a>             <span class="at">image_fun =</span> transparent,</span>
-<span id="cb14-304"><a href="#cb14-304" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-305"><a href="#cb14-305" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
-<span id="cb14-306"><a href="#cb14-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
-<span id="cb14-307"><a href="#cb14-307" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
-<span id="cb14-308"><a href="#cb14-308" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb14-309"><a href="#cb14-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
-<span id="cb14-310"><a href="#cb14-310" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span><span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
-<span id="cb14-311"><a href="#cb14-311" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb14-312"><a href="#cb14-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
-<span id="cb14-313"><a href="#cb14-313" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
-<span id="cb14-314"><a href="#cb14-314" aria-hidden="true" tabindex="-1"></a>                     <span class="at">guide =</span> <span class="st">'none'</span>) <span class="sc">+</span></span>
-<span id="cb14-315"><a href="#cb14-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb14-316"><a href="#cb14-316" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>,</span>
-<span id="cb14-317"><a href="#cb14-317" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places."</span>,</span>
-<span id="cb14-318"><a href="#cb14-318" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Proportion of Fall Enrollment between 1947 and 2023 (odd years only)"</span>,</span>
-<span id="cb14-319"><a href="#cb14-319" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span>) <span class="sc">+</span></span>
-<span id="cb14-320"><a href="#cb14-320" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(),</span>
-<span id="cb14-321"><a href="#cb14-321" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption.position =</span> <span class="st">'plot'</span>,</span>
-<span id="cb14-322"><a href="#cb14-322" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>))</span>
-<span id="cb14-323"><a href="#cb14-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-324"><a href="#cb14-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-325"><a href="#cb14-325" aria-hidden="true" tabindex="-1"></a>The default theme looks ugly to me. Let's remove the grey background, customize which panel gridlines we want, and make other minor changes. The easiest way to do this is to add <span class="in">`theme_minimal()`</span> and then put back what is of interest.</span>
-<span id="cb14-326"><a href="#cb14-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-329"><a href="#cb14-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-330"><a href="#cb14-330" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
-<span id="cb14-331"><a href="#cb14-331" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-332"><a href="#cb14-332" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
-<span id="cb14-333"><a href="#cb14-333" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-334"><a href="#cb14-334" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
-<span id="cb14-335"><a href="#cb14-335" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-336"><a href="#cb14-336" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F,</span>
-<span id="cb14-337"><a href="#cb14-337" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-338"><a href="#cb14-338" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
-<span id="cb14-339"><a href="#cb14-339" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span></span>
-<span id="cb14-340"><a href="#cb14-340" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
-<span id="cb14-341"><a href="#cb14-341" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-342"><a href="#cb14-342" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
-<span id="cb14-343"><a href="#cb14-343" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb14-344"><a href="#cb14-344" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-345"><a href="#cb14-345" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
-<span id="cb14-346"><a href="#cb14-346" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span>,</span>
-<span id="cb14-347"><a href="#cb14-347" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
-<span id="cb14-348"><a href="#cb14-348" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb14-349"><a href="#cb14-349" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
-<span id="cb14-350"><a href="#cb14-350" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-351"><a href="#cb14-351" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-352"><a href="#cb14-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
-<span id="cb14-353"><a href="#cb14-353" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
-<span id="cb14-354"><a href="#cb14-354" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
-<span id="cb14-355"><a href="#cb14-355" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
-<span id="cb14-356"><a href="#cb14-356" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-357"><a href="#cb14-357" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-358"><a href="#cb14-358" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-359"><a href="#cb14-359" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb14-360"><a href="#cb14-360" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
-<span id="cb14-361"><a href="#cb14-361" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
-<span id="cb14-362"><a href="#cb14-362" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb14-363"><a href="#cb14-363" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-364"><a href="#cb14-364" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb14-365"><a href="#cb14-365" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
-<span id="cb14-366"><a href="#cb14-366" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
-<span id="cb14-367"><a href="#cb14-367" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb14-368"><a href="#cb14-368" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-369"><a href="#cb14-369" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb14-370"><a href="#cb14-370" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
-<span id="cb14-371"><a href="#cb14-371" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
-<span id="cb14-372"><a href="#cb14-372" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">'none'</span></span>
-<span id="cb14-373"><a href="#cb14-373" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-374"><a href="#cb14-374" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-375"><a href="#cb14-375" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb14-376"><a href="#cb14-376" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
-<span id="cb14-377"><a href="#cb14-377" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places."</span>,</span>
-<span id="cb14-378"><a href="#cb14-378" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Proportion of Fall Enrollment between 1947 and 2023 (odd years only)"</span>,</span>
-<span id="cb14-379"><a href="#cb14-379" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
-<span id="cb14-380"><a href="#cb14-380" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-381"><a href="#cb14-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb14-382"><a href="#cb14-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb14-383"><a href="#cb14-383" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb14-384"><a href="#cb14-384" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey90'</span>, <span class="at">linetype =</span> <span class="st">'dotted'</span>),</span>
-<span id="cb14-385"><a href="#cb14-385" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
-<span id="cb14-386"><a href="#cb14-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.length.x.bottom =</span> <span class="fu">unit</span>(<span class="dv">4</span>, <span class="at">units =</span> <span class="st">'pt'</span>),</span>
-<span id="cb14-387"><a href="#cb14-387" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x.bottom =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
-<span id="cb14-388"><a href="#cb14-388" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
-<span id="cb14-389"><a href="#cb14-389" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(),</span>
-<span id="cb14-390"><a href="#cb14-390" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption.position =</span> <span class="st">'plot'</span>,</span>
-<span id="cb14-391"><a href="#cb14-391" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>)</span>
-<span id="cb14-392"><a href="#cb14-392" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-393"><a href="#cb14-393" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-394"><a href="#cb14-394" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-395"><a href="#cb14-395" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fonts</span></span>
-<span id="cb14-396"><a href="#cb14-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-397"><a href="#cb14-397" aria-hidden="true" tabindex="-1"></a>For our final customization, let's change the font to "Lato" from Google Fonts using the <span class="in">`showtext`</span> package. We'll need to set the global size using <span class="in">`text = element_text(family = 'Lato', size = 5)`</span>, since often times the default sizes will be way too big or small. For some weird reason, text that gets modified by <span class="in">`element_markdown()`</span> sometimes loses their spaces, so to fix that, I added <span class="in">`family = ""`</span> in the <span class="in">`plot.caption= element_markdown()`</span> argument.</span>
-<span id="cb14-398"><a href="#cb14-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-401"><a href="#cb14-401" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-402"><a href="#cb14-402" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
-<span id="cb14-403"><a href="#cb14-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-404"><a href="#cb14-404" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Lato"</span>)</span>
-<span id="cb14-405"><a href="#cb14-405" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
-<span id="cb14-406"><a href="#cb14-406" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_opts</span>(<span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb14-285"><a href="#cb14-285" aria-hidden="true" tabindex="-1"></a>Looks good. Let's fix up the labels. Importantly, I want to put the legend in the title itself. To do that, we use the <span class="in">`ggtext`</span> package and add the HTML tags in the title. To render it properly, we must call <span class="in">`plot.title = element_markdown()`</span> inside the <span class="in">`theme()`</span> function. The HTML format is messy, but goes like this: <span class="in">`&lt;span style = 'color:{your-color};'&gt;{your-text}&lt;/span&gt;`</span>. </span>
+<span id="cb14-286"><a href="#cb14-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-287"><a href="#cb14-287" aria-hidden="true" tabindex="-1"></a>The same <span class="in">`ggtext`</span> package lets me add line breaks to the caption as well, using <span class="in">`&lt;br&gt;`</span>. We'll reposition the caption using the <span class="in">`plot.caption`</span> and <span class="in">`plot.caption.position`</span> arguments.</span>
+<span id="cb14-288"><a href="#cb14-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-291"><a href="#cb14-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-292"><a href="#cb14-292" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-293"><a href="#cb14-293" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
+<span id="cb14-294"><a href="#cb14-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-295"><a href="#cb14-295" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span> </span>
+<span id="cb14-296"><a href="#cb14-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-297"><a href="#cb14-297" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
+<span id="cb14-298"><a href="#cb14-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df,</span>
+<span id="cb14-299"><a href="#cb14-299" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-300"><a href="#cb14-300" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F,</span>
+<span id="cb14-301"><a href="#cb14-301" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-302"><a href="#cb14-302" aria-hidden="true" tabindex="-1"></a>               <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
+<span id="cb14-303"><a href="#cb14-303" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>) <span class="sc">+</span></span>
+<span id="cb14-304"><a href="#cb14-304" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> final_male_df, </span>
+<span id="cb14-305"><a href="#cb14-305" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>), <span class="at">y =</span> <span class="fl">0.25</span>, <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-306"><a href="#cb14-306" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">'#d95f02'</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb14-307"><a href="#cb14-307" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
+<span id="cb14-308"><a href="#cb14-308" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
+<span id="cb14-309"><a href="#cb14-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
+<span id="cb14-310"><a href="#cb14-310" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span>year, </span>
+<span id="cb14-311"><a href="#cb14-311" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> enrollment_pct, </span>
+<span id="cb14-312"><a href="#cb14-312" aria-hidden="true" tabindex="-1"></a>                 <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
+<span id="cb14-313"><a href="#cb14-313" aria-hidden="true" tabindex="-1"></a>             <span class="at">image_fun =</span> transparent,</span>
+<span id="cb14-314"><a href="#cb14-314" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-315"><a href="#cb14-315" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> F) <span class="sc">+</span></span>
+<span id="cb14-316"><a href="#cb14-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
+<span id="cb14-317"><a href="#cb14-317" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
+<span id="cb14-318"><a href="#cb14-318" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb14-319"><a href="#cb14-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb14-320"><a href="#cb14-320" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span><span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
+<span id="cb14-321"><a href="#cb14-321" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb14-322"><a href="#cb14-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
+<span id="cb14-323"><a href="#cb14-323" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
+<span id="cb14-324"><a href="#cb14-324" aria-hidden="true" tabindex="-1"></a>                     <span class="at">guide =</span> <span class="st">'none'</span>) <span class="sc">+</span></span>
+<span id="cb14-325"><a href="#cb14-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb14-326"><a href="#cb14-326" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb14-327"><a href="#cb14-327" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places."</span>,</span>
+<span id="cb14-328"><a href="#cb14-328" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Proportion of Fall Enrollment between 1947 and 2023 (odd years only)"</span>,</span>
+<span id="cb14-329"><a href="#cb14-329" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span>) <span class="sc">+</span></span>
+<span id="cb14-330"><a href="#cb14-330" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(),</span>
+<span id="cb14-331"><a href="#cb14-331" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption.position =</span> <span class="st">'plot'</span>,</span>
+<span id="cb14-332"><a href="#cb14-332" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>))</span>
+<span id="cb14-333"><a href="#cb14-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-334"><a href="#cb14-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-335"><a href="#cb14-335" aria-hidden="true" tabindex="-1"></a>The default theme looks ugly to me. Let's remove the grey background, customize which panel gridlines we want, and make other minor changes. The easiest way to do this is to add <span class="in">`theme_minimal()`</span> and then put back what is of interest.</span>
+<span id="cb14-336"><a href="#cb14-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-339"><a href="#cb14-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-340"><a href="#cb14-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-341"><a href="#cb14-341" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
+<span id="cb14-342"><a href="#cb14-342" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-343"><a href="#cb14-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
+<span id="cb14-344"><a href="#cb14-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-345"><a href="#cb14-345" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
+<span id="cb14-346"><a href="#cb14-346" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-347"><a href="#cb14-347" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F,</span>
+<span id="cb14-348"><a href="#cb14-348" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-349"><a href="#cb14-349" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
+<span id="cb14-350"><a href="#cb14-350" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span></span>
+<span id="cb14-351"><a href="#cb14-351" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb14-352"><a href="#cb14-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-353"><a href="#cb14-353" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
+<span id="cb14-354"><a href="#cb14-354" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-355"><a href="#cb14-355" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
+<span id="cb14-356"><a href="#cb14-356" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-357"><a href="#cb14-357" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span>,</span>
+<span id="cb14-358"><a href="#cb14-358" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb14-359"><a href="#cb14-359" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb14-360"><a href="#cb14-360" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
+<span id="cb14-361"><a href="#cb14-361" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-362"><a href="#cb14-362" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-363"><a href="#cb14-363" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
+<span id="cb14-364"><a href="#cb14-364" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
+<span id="cb14-365"><a href="#cb14-365" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
+<span id="cb14-366"><a href="#cb14-366" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
+<span id="cb14-367"><a href="#cb14-367" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-368"><a href="#cb14-368" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-369"><a href="#cb14-369" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-370"><a href="#cb14-370" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb14-371"><a href="#cb14-371" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
+<span id="cb14-372"><a href="#cb14-372" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
+<span id="cb14-373"><a href="#cb14-373" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb14-374"><a href="#cb14-374" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-375"><a href="#cb14-375" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb14-376"><a href="#cb14-376" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb14-377"><a href="#cb14-377" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
+<span id="cb14-378"><a href="#cb14-378" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb14-379"><a href="#cb14-379" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-380"><a href="#cb14-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb14-381"><a href="#cb14-381" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
+<span id="cb14-382"><a href="#cb14-382" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
+<span id="cb14-383"><a href="#cb14-383" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">'none'</span></span>
+<span id="cb14-384"><a href="#cb14-384" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-385"><a href="#cb14-385" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-386"><a href="#cb14-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb14-387"><a href="#cb14-387" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb14-388"><a href="#cb14-388" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places."</span>,</span>
+<span id="cb14-389"><a href="#cb14-389" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Proportion of Fall Enrollment between 1947 and 2023 (odd years only)"</span>,</span>
+<span id="cb14-390"><a href="#cb14-390" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
+<span id="cb14-391"><a href="#cb14-391" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-392"><a href="#cb14-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-393"><a href="#cb14-393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-394"><a href="#cb14-394" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-395"><a href="#cb14-395" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey90'</span>, <span class="at">linetype =</span> <span class="st">'dotted'</span>),</span>
+<span id="cb14-396"><a href="#cb14-396" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-397"><a href="#cb14-397" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.length.x.bottom =</span> <span class="fu">unit</span>(<span class="dv">4</span>, <span class="at">units =</span> <span class="st">'pt'</span>),</span>
+<span id="cb14-398"><a href="#cb14-398" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x.bottom =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-399"><a href="#cb14-399" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-400"><a href="#cb14-400" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(),</span>
+<span id="cb14-401"><a href="#cb14-401" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption.position =</span> <span class="st">'plot'</span>,</span>
+<span id="cb14-402"><a href="#cb14-402" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb14-403"><a href="#cb14-403" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-404"><a href="#cb14-404" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-405"><a href="#cb14-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-406"><a href="#cb14-406" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fonts</span></span>
 <span id="cb14-407"><a href="#cb14-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-408"><a href="#cb14-408" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
-<span id="cb14-409"><a href="#cb14-409" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb14-410"><a href="#cb14-410" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
-<span id="cb14-411"><a href="#cb14-411" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-412"><a href="#cb14-412" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
-<span id="cb14-413"><a href="#cb14-413" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
-<span id="cb14-414"><a href="#cb14-414" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F,</span>
-<span id="cb14-415"><a href="#cb14-415" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-416"><a href="#cb14-416" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
-<span id="cb14-417"><a href="#cb14-417" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span></span>
-<span id="cb14-418"><a href="#cb14-418" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-419"><a href="#cb14-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb14-420"><a href="#cb14-420" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
-<span id="cb14-421"><a href="#cb14-421" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb14-422"><a href="#cb14-422" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-423"><a href="#cb14-423" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
-<span id="cb14-424"><a href="#cb14-424" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span>,</span>
-<span id="cb14-425"><a href="#cb14-425" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
-<span id="cb14-426"><a href="#cb14-426" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb14-427"><a href="#cb14-427" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
-<span id="cb14-428"><a href="#cb14-428" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-429"><a href="#cb14-429" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-430"><a href="#cb14-430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
-<span id="cb14-431"><a href="#cb14-431" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
-<span id="cb14-432"><a href="#cb14-432" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
-<span id="cb14-433"><a href="#cb14-433" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
-<span id="cb14-434"><a href="#cb14-434" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
-<span id="cb14-435"><a href="#cb14-435" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
-<span id="cb14-436"><a href="#cb14-436" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-437"><a href="#cb14-437" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb14-438"><a href="#cb14-438" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
-<span id="cb14-439"><a href="#cb14-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
-<span id="cb14-440"><a href="#cb14-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb14-408"><a href="#cb14-408" aria-hidden="true" tabindex="-1"></a>For our final customization, let's change the font to "Lato" from Google Fonts using the <span class="in">`showtext`</span> package. We'll need to set the global size using <span class="in">`text = element_text(family = 'Lato', size = 5)`</span>, since often times the default sizes will be way too big or small. For some weird reason, text that gets modified by <span class="in">`element_markdown()`</span> sometimes loses their spaces, so to fix that, I added <span class="in">`family = ""`</span> in the <span class="in">`plot.caption= element_markdown()`</span> argument.</span>
+<span id="cb14-409"><a href="#cb14-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-412"><a href="#cb14-412" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-413"><a href="#cb14-413" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: show</span></span>
+<span id="cb14-414"><a href="#cb14-414" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb14-415"><a href="#cb14-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-416"><a href="#cb14-416" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Lato"</span>)</span>
+<span id="cb14-417"><a href="#cb14-417" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb14-418"><a href="#cb14-418" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_opts</span>(<span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb14-419"><a href="#cb14-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-420"><a href="#cb14-420" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
+<span id="cb14-421"><a href="#cb14-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-422"><a href="#cb14-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
+<span id="cb14-423"><a href="#cb14-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-424"><a href="#cb14-424" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
+<span id="cb14-425"><a href="#cb14-425" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-426"><a href="#cb14-426" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F,</span>
+<span id="cb14-427"><a href="#cb14-427" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-428"><a href="#cb14-428" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
+<span id="cb14-429"><a href="#cb14-429" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span></span>
+<span id="cb14-430"><a href="#cb14-430" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-431"><a href="#cb14-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-432"><a href="#cb14-432" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
+<span id="cb14-433"><a href="#cb14-433" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-434"><a href="#cb14-434" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
+<span id="cb14-435"><a href="#cb14-435" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-436"><a href="#cb14-436" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span>,</span>
+<span id="cb14-437"><a href="#cb14-437" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb14-438"><a href="#cb14-438" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb14-439"><a href="#cb14-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
+<span id="cb14-440"><a href="#cb14-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
 <span id="cb14-441"><a href="#cb14-441" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-442"><a href="#cb14-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb14-443"><a href="#cb14-443" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
-<span id="cb14-444"><a href="#cb14-444" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
-<span id="cb14-445"><a href="#cb14-445" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb14-446"><a href="#cb14-446" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-447"><a href="#cb14-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb14-448"><a href="#cb14-448" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
-<span id="cb14-449"><a href="#cb14-449" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
-<span id="cb14-450"><a href="#cb14-450" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">'none'</span></span>
-<span id="cb14-451"><a href="#cb14-451" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-452"><a href="#cb14-452" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-453"><a href="#cb14-453" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb14-454"><a href="#cb14-454" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
-<span id="cb14-455"><a href="#cb14-455" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places."</span>,</span>
-<span id="cb14-456"><a href="#cb14-456" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Proportion of Fall Enrollment between 1947 and 2023 (odd years only)"</span>,</span>
-<span id="cb14-457"><a href="#cb14-457" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
+<span id="cb14-442"><a href="#cb14-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
+<span id="cb14-443"><a href="#cb14-443" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
+<span id="cb14-444"><a href="#cb14-444" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
+<span id="cb14-445"><a href="#cb14-445" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
+<span id="cb14-446"><a href="#cb14-446" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-447"><a href="#cb14-447" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-448"><a href="#cb14-448" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-449"><a href="#cb14-449" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb14-450"><a href="#cb14-450" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
+<span id="cb14-451"><a href="#cb14-451" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
+<span id="cb14-452"><a href="#cb14-452" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb14-453"><a href="#cb14-453" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-454"><a href="#cb14-454" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb14-455"><a href="#cb14-455" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb14-456"><a href="#cb14-456" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
+<span id="cb14-457"><a href="#cb14-457" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
 <span id="cb14-458"><a href="#cb14-458" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-459"><a href="#cb14-459" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb14-460"><a href="#cb14-460" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb14-461"><a href="#cb14-461" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'Lato'</span>, <span class="at">size =</span> <span class="dv">7</span>),</span>
-<span id="cb14-462"><a href="#cb14-462" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb14-463"><a href="#cb14-463" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey90'</span>, <span class="at">linetype =</span> <span class="st">'dotted'</span>),</span>
-<span id="cb14-464"><a href="#cb14-464" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
-<span id="cb14-465"><a href="#cb14-465" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.length.x.bottom =</span> <span class="fu">unit</span>(<span class="dv">4</span>, <span class="at">units =</span> <span class="st">'pt'</span>),</span>
-<span id="cb14-466"><a href="#cb14-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x.bottom =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
-<span id="cb14-467"><a href="#cb14-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
-<span id="cb14-468"><a href="#cb14-468" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(),</span>
-<span id="cb14-469"><a href="#cb14-469" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption.position =</span> <span class="st">'plot'</span>,</span>
-<span id="cb14-470"><a href="#cb14-470" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">family =</span> <span class="st">""</span>)</span>
-<span id="cb14-471"><a href="#cb14-471" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-472"><a href="#cb14-472" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-473"><a href="#cb14-473" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-474"><a href="#cb14-474" aria-hidden="true" tabindex="-1"></a><span class="fu"># All Together</span></span>
-<span id="cb14-475"><a href="#cb14-475" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-476"><a href="#cb14-476" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = F}</span></span>
-<span id="cb14-477"><a href="#cb14-477" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb14-478"><a href="#cb14-478" aria-hidden="true" tabindex="-1"></a><span class="in">library(readxl)</span></span>
-<span id="cb14-479"><a href="#cb14-479" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggtext)</span></span>
-<span id="cb14-480"><a href="#cb14-480" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggimage)</span></span>
-<span id="cb14-481"><a href="#cb14-481" aria-hidden="true" tabindex="-1"></a><span class="in">library(showtext)</span></span>
-<span id="cb14-482"><a href="#cb14-482" aria-hidden="true" tabindex="-1"></a><span class="in">library(janitor)</span></span>
-<span id="cb14-483"><a href="#cb14-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-484"><a href="#cb14-484" aria-hidden="true" tabindex="-1"></a><span class="in">font_add_google("Lato")</span></span>
-<span id="cb14-485"><a href="#cb14-485" aria-hidden="true" tabindex="-1"></a><span class="in">showtext_auto()</span></span>
-<span id="cb14-486"><a href="#cb14-486" aria-hidden="true" tabindex="-1"></a><span class="in">showtext_opts(dpi = 300)</span></span>
+<span id="cb14-459"><a href="#cb14-459" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb14-460"><a href="#cb14-460" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
+<span id="cb14-461"><a href="#cb14-461" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
+<span id="cb14-462"><a href="#cb14-462" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">'none'</span></span>
+<span id="cb14-463"><a href="#cb14-463" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-464"><a href="#cb14-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-465"><a href="#cb14-465" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb14-466"><a href="#cb14-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb14-467"><a href="#cb14-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places."</span>,</span>
+<span id="cb14-468"><a href="#cb14-468" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Proportion of Fall Enrollment between 1947 and 2023 (odd years only)"</span>,</span>
+<span id="cb14-469"><a href="#cb14-469" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
+<span id="cb14-470"><a href="#cb14-470" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-471"><a href="#cb14-471" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-472"><a href="#cb14-472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-473"><a href="#cb14-473" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'Lato'</span>, <span class="at">size =</span> <span class="dv">7</span>),</span>
+<span id="cb14-474"><a href="#cb14-474" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-475"><a href="#cb14-475" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey90'</span>, <span class="at">linetype =</span> <span class="st">'dotted'</span>),</span>
+<span id="cb14-476"><a href="#cb14-476" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-477"><a href="#cb14-477" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.length.x.bottom =</span> <span class="fu">unit</span>(<span class="dv">4</span>, <span class="at">units =</span> <span class="st">'pt'</span>),</span>
+<span id="cb14-478"><a href="#cb14-478" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x.bottom =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-479"><a href="#cb14-479" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-480"><a href="#cb14-480" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(),</span>
+<span id="cb14-481"><a href="#cb14-481" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption.position =</span> <span class="st">'plot'</span>,</span>
+<span id="cb14-482"><a href="#cb14-482" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">family =</span> <span class="st">""</span>)</span>
+<span id="cb14-483"><a href="#cb14-483" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-484"><a href="#cb14-484" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-485"><a href="#cb14-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-486"><a href="#cb14-486" aria-hidden="true" tabindex="-1"></a><span class="fu"># All Together</span></span>
 <span id="cb14-487"><a href="#cb14-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-488"><a href="#cb14-488" aria-hidden="true" tabindex="-1"></a><span class="in">transparent &lt;- function(img) {</span></span>
-<span id="cb14-489"><a href="#cb14-489" aria-hidden="true" tabindex="-1"></a><span class="in">  magick::image_fx(img, expression = "0.5*a", channel = "alpha")</span></span>
-<span id="cb14-490"><a href="#cb14-490" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb14-491"><a href="#cb14-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-492"><a href="#cb14-492" aria-hidden="true" tabindex="-1"></a><span class="in">df = read_xlsx('tabn303.10.xlsx', skip = 3) |&gt;</span></span>
-<span id="cb14-493"><a href="#cb14-493" aria-hidden="true" tabindex="-1"></a><span class="in">  janitor::clean_names() |&gt;</span></span>
-<span id="cb14-494"><a href="#cb14-494" aria-hidden="true" tabindex="-1"></a><span class="in">  select(</span></span>
-<span id="cb14-495"><a href="#cb14-495" aria-hidden="true" tabindex="-1"></a><span class="in">    year,</span></span>
-<span id="cb14-496"><a href="#cb14-496" aria-hidden="true" tabindex="-1"></a><span class="in">    total = total_enrollment,</span></span>
-<span id="cb14-497"><a href="#cb14-497" aria-hidden="true" tabindex="-1"></a><span class="in">    male,</span></span>
-<span id="cb14-498"><a href="#cb14-498" aria-hidden="true" tabindex="-1"></a><span class="in">    female,</span></span>
-<span id="cb14-499"><a href="#cb14-499" aria-hidden="true" tabindex="-1"></a><span class="in">    full_time,</span></span>
-<span id="cb14-500"><a href="#cb14-500" aria-hidden="true" tabindex="-1"></a><span class="in">    part_time = part_time_4,</span></span>
-<span id="cb14-501"><a href="#cb14-501" aria-hidden="true" tabindex="-1"></a><span class="in">    public,</span></span>
-<span id="cb14-502"><a href="#cb14-502" aria-hidden="true" tabindex="-1"></a><span class="in">    private = total</span></span>
-<span id="cb14-503"><a href="#cb14-503" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
-<span id="cb14-504"><a href="#cb14-504" aria-hidden="true" tabindex="-1"></a><span class="in">  # Removes the footers</span></span>
-<span id="cb14-505"><a href="#cb14-505" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(male)) |&gt;</span></span>
-<span id="cb14-506"><a href="#cb14-506" aria-hidden="true" tabindex="-1"></a><span class="in">  # remove unnecessary column number header row</span></span>
-<span id="cb14-507"><a href="#cb14-507" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year != "1") |&gt;</span></span>
-<span id="cb14-508"><a href="#cb14-508" aria-hidden="true" tabindex="-1"></a><span class="in">  # Need to clean up some strings before we convert to numeric</span></span>
-<span id="cb14-509"><a href="#cb14-509" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb14-510"><a href="#cb14-510" aria-hidden="true" tabindex="-1"></a><span class="in">    # "---" = not available according to footnote</span></span>
-<span id="cb14-511"><a href="#cb14-511" aria-hidden="true" tabindex="-1"></a><span class="in">    full_time = str_replace(full_time, "---", NA_character_),</span></span>
-<span id="cb14-512"><a href="#cb14-512" aria-hidden="true" tabindex="-1"></a><span class="in">    part_time = str_replace(full_time, "---", NA_character_),</span></span>
-<span id="cb14-513"><a href="#cb14-513" aria-hidden="true" tabindex="-1"></a><span class="in">    # remove all the '\\1\\'  or '\r\n' strings.</span></span>
-<span id="cb14-514"><a href="#cb14-514" aria-hidden="true" tabindex="-1"></a><span class="in">    # We have to do some escaping of the backlashes though.</span></span>
-<span id="cb14-515"><a href="#cb14-515" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, '\\\\1\\\\', ""),</span></span>
-<span id="cb14-516"><a href="#cb14-516" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, "\\r\\n", "")</span></span>
-<span id="cb14-517"><a href="#cb14-517" aria-hidden="true" tabindex="-1"></a><span class="in">    # No other string oddities in year remain</span></span>
-<span id="cb14-518"><a href="#cb14-518" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
-<span id="cb14-519"><a href="#cb14-519" aria-hidden="true" tabindex="-1"></a><span class="in">  # Convert all columns to numeric</span></span>
-<span id="cb14-520"><a href="#cb14-520" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(across(everything(), as.numeric)) |&gt;</span></span>
-<span id="cb14-521"><a href="#cb14-521" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb14-522"><a href="#cb14-522" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_male = male / total,</span></span>
-<span id="cb14-523"><a href="#cb14-523" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_female = female / total,</span></span>
-<span id="cb14-524"><a href="#cb14-524" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_public = public / total,</span></span>
-<span id="cb14-525"><a href="#cb14-525" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_private = private / total</span></span>
-<span id="cb14-526"><a href="#cb14-526" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
-<span id="cb14-527"><a href="#cb14-527" aria-hidden="true" tabindex="-1"></a><span class="in">  select(year, starts_with('prop'))</span></span>
-<span id="cb14-528"><a href="#cb14-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-529"><a href="#cb14-529" aria-hidden="true" tabindex="-1"></a><span class="in"># Final year where male enrollment exceeded female enrollment</span></span>
-<span id="cb14-530"><a href="#cb14-530" aria-hidden="true" tabindex="-1"></a><span class="in">final_male_df = df |&gt;</span></span>
-<span id="cb14-531"><a href="#cb14-531" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(prop_male &gt; prop_female) |&gt;</span></span>
-<span id="cb14-532"><a href="#cb14-532" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(order_by = year)</span></span>
-<span id="cb14-533"><a href="#cb14-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-534"><a href="#cb14-534" aria-hidden="true" tabindex="-1"></a><span class="in">df = df |&gt;</span></span>
-<span id="cb14-535"><a href="#cb14-535" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year %in% seq(2023, 1947, by = -2))</span></span>
-<span id="cb14-536"><a href="#cb14-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-537"><a href="#cb14-537" aria-hidden="true" tabindex="-1"></a><span class="in">long_df = df |&gt;</span></span>
-<span id="cb14-538"><a href="#cb14-538" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(</span></span>
-<span id="cb14-539"><a href="#cb14-539" aria-hidden="true" tabindex="-1"></a><span class="in">    cols = c(prop_male, prop_female),</span></span>
-<span id="cb14-540"><a href="#cb14-540" aria-hidden="true" tabindex="-1"></a><span class="in">    names_to = "sex",</span></span>
-<span id="cb14-541"><a href="#cb14-541" aria-hidden="true" tabindex="-1"></a><span class="in">    names_prefix = "prop_",</span></span>
-<span id="cb14-542"><a href="#cb14-542" aria-hidden="true" tabindex="-1"></a><span class="in">    values_to = "enrollment_pct"</span></span>
-<span id="cb14-543"><a href="#cb14-543" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb14-544"><a href="#cb14-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-545"><a href="#cb14-545" aria-hidden="true" tabindex="-1"></a><span class="in">plot = long_df |&gt;</span></span>
-<span id="cb14-546"><a href="#cb14-546" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = year, y = enrollment_pct, color = sex)) +</span></span>
-<span id="cb14-547"><a href="#cb14-547" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size = 2.1) +</span></span>
-<span id="cb14-548"><a href="#cb14-548" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_segment(</span></span>
-<span id="cb14-549"><a href="#cb14-549" aria-hidden="true" tabindex="-1"></a><span class="in">    data = df,</span></span>
-<span id="cb14-550"><a href="#cb14-550" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year, y = prop_male, yend = prop_female),</span></span>
-<span id="cb14-551"><a href="#cb14-551" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F,</span></span>
-<span id="cb14-552"><a href="#cb14-552" aria-hidden="true" tabindex="-1"></a><span class="in">    alpha = 0.3,</span></span>
-<span id="cb14-553"><a href="#cb14-553" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 2.2,</span></span>
-<span id="cb14-554"><a href="#cb14-554" aria-hidden="true" tabindex="-1"></a><span class="in">    color = '#d95f02'</span></span>
-<span id="cb14-555"><a href="#cb14-555" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-556"><a href="#cb14-556" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_segment(</span></span>
-<span id="cb14-557"><a href="#cb14-557" aria-hidden="true" tabindex="-1"></a><span class="in">    data = final_male_df,</span></span>
-<span id="cb14-558"><a href="#cb14-558" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year + 1),</span></span>
-<span id="cb14-559"><a href="#cb14-559" aria-hidden="true" tabindex="-1"></a><span class="in">    y = 0.25,</span></span>
-<span id="cb14-560"><a href="#cb14-560" aria-hidden="true" tabindex="-1"></a><span class="in">    yend = 0.7,</span></span>
-<span id="cb14-561"><a href="#cb14-561" aria-hidden="true" tabindex="-1"></a><span class="in">    color = '#d95f02',</span></span>
-<span id="cb14-562"><a href="#cb14-562" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 1,</span></span>
-<span id="cb14-563"><a href="#cb14-563" aria-hidden="true" tabindex="-1"></a><span class="in">    alpha = 0.5,</span></span>
-<span id="cb14-564"><a href="#cb14-564" aria-hidden="true" tabindex="-1"></a><span class="in">    linetype = 'dotdash',</span></span>
-<span id="cb14-565"><a href="#cb14-565" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F</span></span>
-<span id="cb14-566"><a href="#cb14-566" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-567"><a href="#cb14-567" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_image(</span></span>
-<span id="cb14-568"><a href="#cb14-568" aria-hidden="true" tabindex="-1"></a><span class="in">    data = tibble(year = 1998, enrollment_pct = 0.32),</span></span>
-<span id="cb14-569"><a href="#cb14-569" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year, y = enrollment_pct, image = 'generic_students.png'),</span></span>
-<span id="cb14-570"><a href="#cb14-570" aria-hidden="true" tabindex="-1"></a><span class="in">    image_fun = transparent,</span></span>
-<span id="cb14-571"><a href="#cb14-571" aria-hidden="true" tabindex="-1"></a><span class="in">    size = 0.3,</span></span>
-<span id="cb14-572"><a href="#cb14-572" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F</span></span>
-<span id="cb14-573"><a href="#cb14-573" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-574"><a href="#cb14-574" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(</span></span>
-<span id="cb14-575"><a href="#cb14-575" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = scales::percent_format(),</span></span>
-<span id="cb14-576"><a href="#cb14-576" aria-hidden="true" tabindex="-1"></a><span class="in">    limits = c(0.25, 0.73),</span></span>
-<span id="cb14-577"><a href="#cb14-577" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = c(0, 0)</span></span>
-<span id="cb14-578"><a href="#cb14-578" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-579"><a href="#cb14-579" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(</span></span>
-<span id="cb14-580"><a href="#cb14-580" aria-hidden="true" tabindex="-1"></a><span class="in">    breaks = seq(1950, 2025, by = 10),</span></span>
-<span id="cb14-581"><a href="#cb14-581" aria-hidden="true" tabindex="-1"></a><span class="in">    limits = c(1945, 2024),</span></span>
-<span id="cb14-582"><a href="#cb14-582" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = c(0, 0)</span></span>
-<span id="cb14-583"><a href="#cb14-583" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-584"><a href="#cb14-584" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
-<span id="cb14-585"><a href="#cb14-585" aria-hidden="true" tabindex="-1"></a><span class="in">    breaks = c("male", "female"),</span></span>
-<span id="cb14-586"><a href="#cb14-586" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("#7570b3", '#1b9e77'),</span></span>
-<span id="cb14-587"><a href="#cb14-587" aria-hidden="true" tabindex="-1"></a><span class="in">    guide = 'none'</span></span>
-<span id="cb14-588"><a href="#cb14-588" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-589"><a href="#cb14-589" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb14-590"><a href="#cb14-590" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "",</span></span>
-<span id="cb14-591"><a href="#cb14-591" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "",</span></span>
-<span id="cb14-592"><a href="#cb14-592" aria-hidden="true" tabindex="-1"></a><span class="in">    title = "&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places.",</span></span>
-<span id="cb14-593"><a href="#cb14-593" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Proportion of Fall Enrollment between 1947 and 2023 (odd years only)",</span></span>
-<span id="cb14-594"><a href="#cb14-594" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
-<span id="cb14-595"><a href="#cb14-595" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-596"><a href="#cb14-596" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
-<span id="cb14-597"><a href="#cb14-597" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(</span></span>
-<span id="cb14-598"><a href="#cb14-598" aria-hidden="true" tabindex="-1"></a><span class="in">    text = element_text(family = 'Lato', size = 9),</span></span>
-<span id="cb14-599"><a href="#cb14-599" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid = element_blank(),</span></span>
-<span id="cb14-600"><a href="#cb14-600" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid.major.y = element_line(color = 'grey90', linetype = 'dotted'),</span></span>
-<span id="cb14-601"><a href="#cb14-601" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.ticks.x.bottom = element_line(color = 'black'),</span></span>
-<span id="cb14-602"><a href="#cb14-602" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.ticks.length.x.bottom = unit(4, units = 'pt'),</span></span>
-<span id="cb14-603"><a href="#cb14-603" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.x.bottom = element_text(color = 'black'),</span></span>
-<span id="cb14-604"><a href="#cb14-604" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.y.left = element_text(color = 'black'),</span></span>
-<span id="cb14-605"><a href="#cb14-605" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.title = element_markdown(),</span></span>
-<span id="cb14-606"><a href="#cb14-606" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.caption.position = 'plot',</span></span>
-<span id="cb14-607"><a href="#cb14-607" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.caption = element_markdown(hjust = 0, family = "")</span></span>
-<span id="cb14-608"><a href="#cb14-608" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb14-609"><a href="#cb14-609" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-610"><a href="#cb14-610" aria-hidden="true" tabindex="-1"></a><span class="in">ggsave(</span></span>
-<span id="cb14-611"><a href="#cb14-611" aria-hidden="true" tabindex="-1"></a><span class="in">  filename = "final_education_plot.png",</span></span>
-<span id="cb14-612"><a href="#cb14-612" aria-hidden="true" tabindex="-1"></a><span class="in">  dpi = 300,</span></span>
-<span id="cb14-613"><a href="#cb14-613" aria-hidden="true" tabindex="-1"></a><span class="in">  height = 5,</span></span>
-<span id="cb14-614"><a href="#cb14-614" aria-hidden="true" tabindex="-1"></a><span class="in">  width = 8,</span></span>
-<span id="cb14-615"><a href="#cb14-615" aria-hidden="true" tabindex="-1"></a><span class="in">  bg = "white"</span></span>
-<span id="cb14-616"><a href="#cb14-616" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb14-617"><a href="#cb14-617" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-618"><a href="#cb14-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-619"><a href="#cb14-619" aria-hidden="true" tabindex="-1"></a><span class="fu"># Takeaways</span></span>
-<span id="cb14-620"><a href="#cb14-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-621"><a href="#cb14-621" aria-hidden="true" tabindex="-1"></a>The plot shows that the trend Tobias showed for HBCUs extends nationwide. Since the end of WWII, males went from nearly 71% of all college enrollments to only 42%. This has massive implications for electoral trends given the impact of education on political leanings. But I'll leave that for Fivethirtyeight or its remnants to discuss.</span>
+<span id="cb14-488"><a href="#cb14-488" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = F}</span></span>
+<span id="cb14-489"><a href="#cb14-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-490"><a href="#cb14-490" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb14-491"><a href="#cb14-491" aria-hidden="true" tabindex="-1"></a><span class="in">library(readxl)</span></span>
+<span id="cb14-492"><a href="#cb14-492" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggtext)</span></span>
+<span id="cb14-493"><a href="#cb14-493" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggimage)</span></span>
+<span id="cb14-494"><a href="#cb14-494" aria-hidden="true" tabindex="-1"></a><span class="in">library(showtext)</span></span>
+<span id="cb14-495"><a href="#cb14-495" aria-hidden="true" tabindex="-1"></a><span class="in">library(janitor)</span></span>
+<span id="cb14-496"><a href="#cb14-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-497"><a href="#cb14-497" aria-hidden="true" tabindex="-1"></a><span class="in">font_add_google("Lato")</span></span>
+<span id="cb14-498"><a href="#cb14-498" aria-hidden="true" tabindex="-1"></a><span class="in">showtext_auto()</span></span>
+<span id="cb14-499"><a href="#cb14-499" aria-hidden="true" tabindex="-1"></a><span class="in">showtext_opts(dpi = 300)</span></span>
+<span id="cb14-500"><a href="#cb14-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-501"><a href="#cb14-501" aria-hidden="true" tabindex="-1"></a><span class="in">transparent &lt;- function(img) {</span></span>
+<span id="cb14-502"><a href="#cb14-502" aria-hidden="true" tabindex="-1"></a><span class="in">  magick::image_fx(img, expression = "0.5*a", channel = "alpha")</span></span>
+<span id="cb14-503"><a href="#cb14-503" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb14-504"><a href="#cb14-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-505"><a href="#cb14-505" aria-hidden="true" tabindex="-1"></a><span class="in">df = read_xlsx('tabn303.10.xlsx', skip = 3) |&gt;</span></span>
+<span id="cb14-506"><a href="#cb14-506" aria-hidden="true" tabindex="-1"></a><span class="in">  janitor::clean_names() |&gt;</span></span>
+<span id="cb14-507"><a href="#cb14-507" aria-hidden="true" tabindex="-1"></a><span class="in">  select(</span></span>
+<span id="cb14-508"><a href="#cb14-508" aria-hidden="true" tabindex="-1"></a><span class="in">    year,</span></span>
+<span id="cb14-509"><a href="#cb14-509" aria-hidden="true" tabindex="-1"></a><span class="in">    total = total_enrollment,</span></span>
+<span id="cb14-510"><a href="#cb14-510" aria-hidden="true" tabindex="-1"></a><span class="in">    male,</span></span>
+<span id="cb14-511"><a href="#cb14-511" aria-hidden="true" tabindex="-1"></a><span class="in">    female,</span></span>
+<span id="cb14-512"><a href="#cb14-512" aria-hidden="true" tabindex="-1"></a><span class="in">    full_time,</span></span>
+<span id="cb14-513"><a href="#cb14-513" aria-hidden="true" tabindex="-1"></a><span class="in">    part_time = part_time_4,</span></span>
+<span id="cb14-514"><a href="#cb14-514" aria-hidden="true" tabindex="-1"></a><span class="in">    public,</span></span>
+<span id="cb14-515"><a href="#cb14-515" aria-hidden="true" tabindex="-1"></a><span class="in">    private = total</span></span>
+<span id="cb14-516"><a href="#cb14-516" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
+<span id="cb14-517"><a href="#cb14-517" aria-hidden="true" tabindex="-1"></a><span class="in">  # Removes the footers</span></span>
+<span id="cb14-518"><a href="#cb14-518" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(male)) |&gt;</span></span>
+<span id="cb14-519"><a href="#cb14-519" aria-hidden="true" tabindex="-1"></a><span class="in">  # remove unnecessary column number header row</span></span>
+<span id="cb14-520"><a href="#cb14-520" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year != "1") |&gt;</span></span>
+<span id="cb14-521"><a href="#cb14-521" aria-hidden="true" tabindex="-1"></a><span class="in">  # Need to clean up some strings before we convert to numeric</span></span>
+<span id="cb14-522"><a href="#cb14-522" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb14-523"><a href="#cb14-523" aria-hidden="true" tabindex="-1"></a><span class="in">    # "---" = not available according to footnote</span></span>
+<span id="cb14-524"><a href="#cb14-524" aria-hidden="true" tabindex="-1"></a><span class="in">    full_time = str_replace(full_time, "---", NA_character_),</span></span>
+<span id="cb14-525"><a href="#cb14-525" aria-hidden="true" tabindex="-1"></a><span class="in">    part_time = str_replace(full_time, "---", NA_character_),</span></span>
+<span id="cb14-526"><a href="#cb14-526" aria-hidden="true" tabindex="-1"></a><span class="in">    # remove all the '\\1\\'  or '\r\n' strings.</span></span>
+<span id="cb14-527"><a href="#cb14-527" aria-hidden="true" tabindex="-1"></a><span class="in">    # We have to do some escaping of the backlashes though.</span></span>
+<span id="cb14-528"><a href="#cb14-528" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, '\\\\1\\\\', ""),</span></span>
+<span id="cb14-529"><a href="#cb14-529" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, "\\r\\n", "")</span></span>
+<span id="cb14-530"><a href="#cb14-530" aria-hidden="true" tabindex="-1"></a><span class="in">    # No other string oddities in year remain</span></span>
+<span id="cb14-531"><a href="#cb14-531" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
+<span id="cb14-532"><a href="#cb14-532" aria-hidden="true" tabindex="-1"></a><span class="in">  # Convert all columns to numeric</span></span>
+<span id="cb14-533"><a href="#cb14-533" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(across(everything(), as.numeric)) |&gt;</span></span>
+<span id="cb14-534"><a href="#cb14-534" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb14-535"><a href="#cb14-535" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_male = male / total,</span></span>
+<span id="cb14-536"><a href="#cb14-536" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_female = female / total,</span></span>
+<span id="cb14-537"><a href="#cb14-537" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_public = public / total,</span></span>
+<span id="cb14-538"><a href="#cb14-538" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_private = private / total</span></span>
+<span id="cb14-539"><a href="#cb14-539" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
+<span id="cb14-540"><a href="#cb14-540" aria-hidden="true" tabindex="-1"></a><span class="in">  select(year, starts_with('prop'))</span></span>
+<span id="cb14-541"><a href="#cb14-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-542"><a href="#cb14-542" aria-hidden="true" tabindex="-1"></a><span class="in"># Final year where male enrollment exceeded female enrollment</span></span>
+<span id="cb14-543"><a href="#cb14-543" aria-hidden="true" tabindex="-1"></a><span class="in">final_male_df = df |&gt;</span></span>
+<span id="cb14-544"><a href="#cb14-544" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(prop_male &gt; prop_female) |&gt;</span></span>
+<span id="cb14-545"><a href="#cb14-545" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(order_by = year)</span></span>
+<span id="cb14-546"><a href="#cb14-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-547"><a href="#cb14-547" aria-hidden="true" tabindex="-1"></a><span class="in">df = df |&gt;</span></span>
+<span id="cb14-548"><a href="#cb14-548" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year %in% seq(2023, 1947, by = -2))</span></span>
+<span id="cb14-549"><a href="#cb14-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-550"><a href="#cb14-550" aria-hidden="true" tabindex="-1"></a><span class="in">long_df = df |&gt;</span></span>
+<span id="cb14-551"><a href="#cb14-551" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(</span></span>
+<span id="cb14-552"><a href="#cb14-552" aria-hidden="true" tabindex="-1"></a><span class="in">    cols = c(prop_male, prop_female),</span></span>
+<span id="cb14-553"><a href="#cb14-553" aria-hidden="true" tabindex="-1"></a><span class="in">    names_to = "sex",</span></span>
+<span id="cb14-554"><a href="#cb14-554" aria-hidden="true" tabindex="-1"></a><span class="in">    names_prefix = "prop_",</span></span>
+<span id="cb14-555"><a href="#cb14-555" aria-hidden="true" tabindex="-1"></a><span class="in">    values_to = "enrollment_pct"</span></span>
+<span id="cb14-556"><a href="#cb14-556" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb14-557"><a href="#cb14-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-558"><a href="#cb14-558" aria-hidden="true" tabindex="-1"></a><span class="in">plot = long_df |&gt;</span></span>
+<span id="cb14-559"><a href="#cb14-559" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = year, y = enrollment_pct, color = sex)) +</span></span>
+<span id="cb14-560"><a href="#cb14-560" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size = 2.1) +</span></span>
+<span id="cb14-561"><a href="#cb14-561" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_segment(</span></span>
+<span id="cb14-562"><a href="#cb14-562" aria-hidden="true" tabindex="-1"></a><span class="in">    data = df,</span></span>
+<span id="cb14-563"><a href="#cb14-563" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year, y = prop_male, yend = prop_female),</span></span>
+<span id="cb14-564"><a href="#cb14-564" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F,</span></span>
+<span id="cb14-565"><a href="#cb14-565" aria-hidden="true" tabindex="-1"></a><span class="in">    alpha = 0.3,</span></span>
+<span id="cb14-566"><a href="#cb14-566" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 2.2,</span></span>
+<span id="cb14-567"><a href="#cb14-567" aria-hidden="true" tabindex="-1"></a><span class="in">    color = '#d95f02'</span></span>
+<span id="cb14-568"><a href="#cb14-568" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb14-569"><a href="#cb14-569" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_segment(</span></span>
+<span id="cb14-570"><a href="#cb14-570" aria-hidden="true" tabindex="-1"></a><span class="in">    data = final_male_df,</span></span>
+<span id="cb14-571"><a href="#cb14-571" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year + 1),</span></span>
+<span id="cb14-572"><a href="#cb14-572" aria-hidden="true" tabindex="-1"></a><span class="in">    y = 0.25,</span></span>
+<span id="cb14-573"><a href="#cb14-573" aria-hidden="true" tabindex="-1"></a><span class="in">    yend = 0.7,</span></span>
+<span id="cb14-574"><a href="#cb14-574" aria-hidden="true" tabindex="-1"></a><span class="in">    color = '#d95f02',</span></span>
+<span id="cb14-575"><a href="#cb14-575" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 1,</span></span>
+<span id="cb14-576"><a href="#cb14-576" aria-hidden="true" tabindex="-1"></a><span class="in">    alpha = 0.5,</span></span>
+<span id="cb14-577"><a href="#cb14-577" aria-hidden="true" tabindex="-1"></a><span class="in">    linetype = 'dotdash',</span></span>
+<span id="cb14-578"><a href="#cb14-578" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F</span></span>
+<span id="cb14-579"><a href="#cb14-579" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb14-580"><a href="#cb14-580" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_image(</span></span>
+<span id="cb14-581"><a href="#cb14-581" aria-hidden="true" tabindex="-1"></a><span class="in">    data = tibble(year = 1998, enrollment_pct = 0.32),</span></span>
+<span id="cb14-582"><a href="#cb14-582" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year, y = enrollment_pct, image = 'generic_students.png'),</span></span>
+<span id="cb14-583"><a href="#cb14-583" aria-hidden="true" tabindex="-1"></a><span class="in">    image_fun = transparent,</span></span>
+<span id="cb14-584"><a href="#cb14-584" aria-hidden="true" tabindex="-1"></a><span class="in">    size = 0.3,</span></span>
+<span id="cb14-585"><a href="#cb14-585" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F</span></span>
+<span id="cb14-586"><a href="#cb14-586" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb14-587"><a href="#cb14-587" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(</span></span>
+<span id="cb14-588"><a href="#cb14-588" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = scales::percent_format(),</span></span>
+<span id="cb14-589"><a href="#cb14-589" aria-hidden="true" tabindex="-1"></a><span class="in">    limits = c(0.25, 0.73),</span></span>
+<span id="cb14-590"><a href="#cb14-590" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = c(0, 0)</span></span>
+<span id="cb14-591"><a href="#cb14-591" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb14-592"><a href="#cb14-592" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(</span></span>
+<span id="cb14-593"><a href="#cb14-593" aria-hidden="true" tabindex="-1"></a><span class="in">    breaks = seq(1950, 2025, by = 10),</span></span>
+<span id="cb14-594"><a href="#cb14-594" aria-hidden="true" tabindex="-1"></a><span class="in">    limits = c(1945, 2024),</span></span>
+<span id="cb14-595"><a href="#cb14-595" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = c(0, 0)</span></span>
+<span id="cb14-596"><a href="#cb14-596" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb14-597"><a href="#cb14-597" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
+<span id="cb14-598"><a href="#cb14-598" aria-hidden="true" tabindex="-1"></a><span class="in">    breaks = c("male", "female"),</span></span>
+<span id="cb14-599"><a href="#cb14-599" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("#7570b3", '#1b9e77'),</span></span>
+<span id="cb14-600"><a href="#cb14-600" aria-hidden="true" tabindex="-1"></a><span class="in">    guide = 'none'</span></span>
+<span id="cb14-601"><a href="#cb14-601" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb14-602"><a href="#cb14-602" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb14-603"><a href="#cb14-603" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "",</span></span>
+<span id="cb14-604"><a href="#cb14-604" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "",</span></span>
+<span id="cb14-605"><a href="#cb14-605" aria-hidden="true" tabindex="-1"></a><span class="in">    title = "&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places.",</span></span>
+<span id="cb14-606"><a href="#cb14-606" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Proportion of Fall Enrollment between 1947 and 2023 (odd years only)",</span></span>
+<span id="cb14-607"><a href="#cb14-607" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
+<span id="cb14-608"><a href="#cb14-608" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb14-609"><a href="#cb14-609" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb14-610"><a href="#cb14-610" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(</span></span>
+<span id="cb14-611"><a href="#cb14-611" aria-hidden="true" tabindex="-1"></a><span class="in">    text = element_text(family = 'Lato', size = 9),</span></span>
+<span id="cb14-612"><a href="#cb14-612" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid = element_blank(),</span></span>
+<span id="cb14-613"><a href="#cb14-613" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid.major.y = element_line(color = 'grey90', linetype = 'dotted'),</span></span>
+<span id="cb14-614"><a href="#cb14-614" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.ticks.x.bottom = element_line(color = 'black'),</span></span>
+<span id="cb14-615"><a href="#cb14-615" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.ticks.length.x.bottom = unit(4, units = 'pt'),</span></span>
+<span id="cb14-616"><a href="#cb14-616" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.x.bottom = element_text(color = 'black'),</span></span>
+<span id="cb14-617"><a href="#cb14-617" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.y.left = element_text(color = 'black'),</span></span>
+<span id="cb14-618"><a href="#cb14-618" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.title = element_markdown(),</span></span>
+<span id="cb14-619"><a href="#cb14-619" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.caption.position = 'plot',</span></span>
+<span id="cb14-620"><a href="#cb14-620" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.caption = element_markdown(hjust = 0, family = "")</span></span>
+<span id="cb14-621"><a href="#cb14-621" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
 <span id="cb14-622"><a href="#cb14-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-623"><a href="#cb14-623" aria-hidden="true" tabindex="-1"></a>The takeaway of this blog post: Use text customization feature to replace existing plot elements like legends that can take up valuable space or contribute to a sense of clutter. Obviously if there are many categories, this is not advisable. But for something as simple as male versus female trends, Tobias had the right idea. </span>
-<span id="cb14-624"><a href="#cb14-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-625"><a href="#cb14-625" aria-hidden="true" tabindex="-1"></a>I hope you also enjoyed the other tips and tricks with fonts, background images, dumbbell plot construction, and data cleaning Excel formats.</span>
+<span id="cb14-623"><a href="#cb14-623" aria-hidden="true" tabindex="-1"></a><span class="in">ggsave(</span></span>
+<span id="cb14-624"><a href="#cb14-624" aria-hidden="true" tabindex="-1"></a><span class="in">  filename = "final_education_plot.png",</span></span>
+<span id="cb14-625"><a href="#cb14-625" aria-hidden="true" tabindex="-1"></a><span class="in">  dpi = 300,</span></span>
+<span id="cb14-626"><a href="#cb14-626" aria-hidden="true" tabindex="-1"></a><span class="in">  height = 5,</span></span>
+<span id="cb14-627"><a href="#cb14-627" aria-hidden="true" tabindex="-1"></a><span class="in">  width = 8,</span></span>
+<span id="cb14-628"><a href="#cb14-628" aria-hidden="true" tabindex="-1"></a><span class="in">  bg = "white"</span></span>
+<span id="cb14-629"><a href="#cb14-629" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb14-630"><a href="#cb14-630" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-631"><a href="#cb14-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-632"><a href="#cb14-632" aria-hidden="true" tabindex="-1"></a><span class="fu"># Takeaways</span></span>
+<span id="cb14-633"><a href="#cb14-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-634"><a href="#cb14-634" aria-hidden="true" tabindex="-1"></a>The plot shows that the trend Tobias showed for HBCUs extends nationwide. Since the end of WWII, males went from nearly 71% of all college enrollments to only 42%. This has massive implications for electoral trends given the impact of education on political leanings. But I'll leave that for Fivethirtyeight or its remnants to discuss.</span>
+<span id="cb14-635"><a href="#cb14-635" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-636"><a href="#cb14-636" aria-hidden="true" tabindex="-1"></a>The takeaway of this blog post: Use text customization feature to replace existing plot elements like legends that can take up valuable space or contribute to a sense of clutter. Obviously if there are many categories, this is not advisable. But for something as simple as male versus female trends, Tobias had the right idea. </span>
+<span id="cb14-637"><a href="#cb14-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-638"><a href="#cb14-638" aria-hidden="true" tabindex="-1"></a>I hope you also enjoyed the other tips and tricks with fonts, background images, dumbbell plot construction, and data cleaning Excel formats.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
