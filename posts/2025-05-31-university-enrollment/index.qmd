@@ -39,17 +39,31 @@ knitr::include_graphics("HBCU_trends_gender.png")
 
 In this post, I decided to find broader country-wide trends in university enrollments stratified by sex and make a similar plot. I visited the US government-ran [Digest of Education Statistics](https://nces.ed.gov/programs/digest/current_tables.asp) website ran by *The* *Institute of Education Sciences*. In Chapter 3, under section 303 (Total Fall Enrollment — General), I accessed Table 303.10 to see fall enrollment in the US from 1947 to 2023. The data also includes the breakdown of public versus private as well as full-time versus part-time. For now, I decided to just plot the entire time series, so I won't include the summary statistics in my plot that Tobias did (e.g., the mean is itself changing over time, so I'm not sure a global mean is very useful).
 
+Before I dive in, let me summarize some of the important `tidyverse` skills this post covers:
+
+- Read in Excel files with the `readxl` package, and ignoring extraneous rows/columns 
+- Cleaning column names with the `janitor` package and its `clean_names()` function
+- Making dumbbells and lollipops with `geom_segment()` 
+- Feeding in multiple tibbles in your various `ggplot` geometries (and the `inherit.aes` argument)
+- Adding transparent background images with `geom_image()` from the `ggimage` package
+- Adding color and formatting to text in the titles/captions using the `ggtext` package
+- Changing the font with the `showtext` package 
+
+
 # Data Cleaning
 
-I downloaded an `.xlsx` version of Table 303.10. Unfortunately, it comes in a fairly messy format, so we'll need to clean it.
+I downloaded an `.xlsx` version of Table 303.10. Unfortunately, it comes in a fairly messy format as is typical, so we'll need to clean it.
 
 ```{r}
 #| code-fold: false
 #| echo: false
+#| fig-cap: "Government datasets are rarely ready off the shelf."
 knitr::include_graphics("excel_screenshot.png")
 ```
 
-We'll need the `readxl` package. We can discard the first three rows with the `skip` argument of `read_xlsx()` . After that, we'll use one of my favorite functions which is `clean_names()` from the `janitor` package, which converts column names to snake_case. There are some footers in the Excel file which we can remove just by filtering for non-NA rows in the `male` column. We'll also discard row 5 of the original file, which just contains column numbers, by filtering for `year != "1"`.
+We'll need the `readxl` package. We can discard the first three rows with the `skip` argument of `read_xlsx()`. After that, we'll use one of my favorite functions which is `clean_names()` from the `janitor` package, which converts column names to snake_case. This has practical benefits beyond aesthetics: RStudio's autocompletion will fail if there are spaces in the column names. This will save you some typing! 
+
+There are some footers in the Excel file which we can remove just by filtering for non-NA rows in the `male` column. We'll also discard row 5 of the original file, which just contains column numbers, by filtering for `year != "1"`.
 
 ```{r}
 #| code-fold: show
@@ -59,8 +73,11 @@ library(janitor)
 
 table_filename = 'tabn303.10.xlsx'
 
-df = read_xlsx(table_filename, skip = 3) |>
-  clean_names() |>
+df =
+  # First 3 rows are unnecessary
+  readxl::read_xlsx(table_filename, skip = 3) |>
+  # convert title name to snake case
+  janitor::clean_names() |>
   select(year, total = total_enrollment, male, female) |>
   # Removes the footers
   filter(!is.na(male)) |>
@@ -68,7 +85,7 @@ df = read_xlsx(table_filename, skip = 3) |>
   filter(year != "1")
 ```
 
-The next issue is the unnecessary `"\1\"` or `"\r\n"` strings that appear in the `year` column. We'll use `str_replace()` from the `stringr` package to remove that. Then `year` needs to converted to numeric once those non-numeric characters are removed. While we are using `mutate()`, I'll create a proportion male and proportional female column. Then I'll select `year` and the two proportion columns, since we no longer need the full counts.
+The next issue is the unnecessary `"\1\"` or `"\r\n"` strings that appear in the `year` column. We'll use `str_replace()` from the `stringr` package to remove that. Then `year` needs to converted to numeric once those non-numeric characters are removed. While we are using `mutate()`, I'll create proportion male and proportional female columns. Then I'll select `year` and the two proportion columns, since we no longer need the full counts. I use the column selection helper  `starts_with()` from the `tidyselect` package, although with just 2 columns, this is not very useful. I'm highlighting its use for your more complex applications.
 
 ```{r}
 #| code-fold: show
@@ -80,18 +97,24 @@ df = df |>
     prop_male = male / total,
     prop_female = female / total
   ) |>
-  select(year, starts_with('prop'))
+  select(year, 
+         # selection helpers from the tidyselect package
+         starts_with('prop')) 
   
 ```
 
-I plan to only plot every other year for a simpler graphic. There change is relatively gradual so showing year to year changes doesn't really matter much. My data goes from 1947 to 2023, so using the odd years is sufficient. Also, we will later see that the trend is declining for males and rising for females, with a crossing point in 1979. I'd like to indicate this with a straight line at that point. I don't want to hard-code it, so I'll save this information as a one row tibble at this year called `final_male_df`. I'll do this calculation *before* I filter for odd years only, importantly.
+I plan to only plot every other year for a simpler graphic. There change is relatively gradual so showing year to year changes doesn't really matter much. My data goes from 1947 to 2023, so using the odd years is sufficient. 
+
+Also, we will later see that the trend is declining for males and rising for females, with a crossing point in 1979. I'd like to indicate this with a straight line at that point. I don't want to hard-code it, so I'll save this information as a one row tibble at this year called `final_male_df`. I'll do this calculation *before* I filter for odd years only, importantly.
 
 ```{r}
 #| code-fold: show
 final_male_df = df |>
   filter(prop_male > prop_female) |>
+  # Get maximal year in which male > female enrollment
   slice_max(order_by = year)
 
+# Odd years only
 df = df |> filter(year %in% seq(1947, 2023, by = 2))
 ```
 
@@ -103,6 +126,7 @@ long_df = df |>
   pivot_longer(
     cols = c(prop_male, prop_female),
     names_to = "sex",
+    # Remove 'prop_' from new row names in sex
     names_prefix = "prop_",
     values_to = "enrollment_pct"
   )
@@ -121,8 +145,10 @@ long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point() +
   geom_segment(
+    # Use df to access prop_male, prop_female
     data = df,
     aes(x = year, y = prop_male, yend = prop_female),
+    # df doesn't have a sex column
     inherit.aes = F
   ) 
 ```
@@ -140,6 +166,7 @@ long_df |>
     inherit.aes = F
   ) +
   geom_segment(
+    # this is why we saved a 1 row tibble, not just the year
     data = final_male_df,
     aes(x = year + 1),
     y = 0.25,
@@ -148,7 +175,7 @@ long_df |>
   ) 
 ```
 
-The last `geom_*()` I wish to add is `geom_image()`. The plot is fairly bare, so I wanted a transparent graphic representing education sitting in the bottom right. We'll have to load in the `ggimage` package. To add transparency, we [follow the technique here](https://stackoverflow.com/questions/60820565/is-there-a-way-to-add-an-alpha-value-within-geom-image-in-ggplot) and define a transparency function to pass into `geom_image()`.
+The last geometry I wish to add is `geom_image()`. The plot is fairly bare, so I wanted a transparent graphic representing education sitting in the bottom right. We'll have to load in the `ggimage` package. To add transparency, we [copy the technique here](https://stackoverflow.com/questions/60820565/is-there-a-way-to-add-an-alpha-value-within-geom-image-in-ggplot) and define a transparency function to pass into `geom_image()`.
 
 ```{r}
 #| code-fold: show
@@ -173,7 +200,8 @@ long_df |>
     yend = 0.7,
     inherit.aes = F
   ) +
-  geom_image(
+  ggimage::geom_image(
+    # create a temp. tibble to pass in aesthetics
     data = tibble(year = 1998, enrollment_pct = 0.32),
     aes(x = year, y = enrollment_pct, 
         image = 'generic_students.png'),
@@ -209,7 +237,7 @@ long_df |>
     linetype = 'dotdash',
     inherit.aes = F
   ) +
-  geom_image(
+  ggimage::geom_image(
     data = tibble(year = 1998, enrollment_pct = 0.32),
     aes(x = year, y = enrollment_pct, image = 'generic_students.png'),
     image_fun = transparent,
@@ -222,42 +250,59 @@ long_df |>
 
 After consulting [Color Brewer 2.0](https://colorbrewer2.org), I settled on using [#7570b3]{style="background-color: #7570b3; color: white"} for male and [#1b9e77]{style="background-color: #1b9e77; color: white"} for female. For the bars, I used a transparent version of [#d95f02]{style="background-color: #d95f02; color: black"}. Let's create a manual color scale to use these instead. We will remove the legend by specifying `guide = 'none'`. 
 
-Along the way, we can specify the breaks for the $x$ and $y$ axes, and use `percent_format()` from the `scales` package to get nice percent signs. 
+Along the way, we can specify the breaks for the $x$ and $y$ axes, and use `percent_format()` from the `scales` package to get nice percent signs. The `expand = c(0, 0)` argument removes the automatic space added to the axes, so we can customize the limits manually.
 
 
 
 ```{r}
 #| code-fold: show
-long_df |> 
+library(scales)
+
+long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point(size = 2.1) +
-  geom_segment(data = df,
-               aes(x = year, y = prop_male, yend = prop_female),
-               inherit.aes = F,
-               alpha = 0.3,
-               linewidth = 2.2,
-               color = '#d95f02') +
-  geom_segment(data = final_male_df, 
-               aes(x = year + 1), y = 0.25, yend = 0.7,
-               color = '#d95f02', linewidth = 1, alpha = 0.5,
-               linetype = 'dotdash',
-               inherit.aes = F) +
-  geom_image(data = tibble(year = 1998, enrollment_pct = 0.32),
-             aes(x =year, 
-                 y = enrollment_pct, 
-                 image = 'generic_students.png'),
-             image_fun = transparent,
-             size = 0.3,
-             inherit.aes = F) +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0.25, 0.73),
-                     expand = c(0,0)) +
-  scale_x_continuous(breaks = seq(1950, 2025, by = 10),
-                     limits =c(1945, 2024),
-                     expand = c(0,0)) +
-  scale_color_manual(breaks = c("male", "female"),
-                     values = c("#7570b3", '#1b9e77'),
-                                guide = 'none') 
+  geom_segment(
+    data = df,
+    aes(x = year, y = prop_male, yend = prop_female),
+    inherit.aes = F,
+    alpha = 0.3,
+    linewidth = 2.2,
+    color = '#d95f02'
+  ) +
+  geom_segment(
+    data = final_male_df,
+    aes(x = year + 1),
+    y = 0.25,
+    yend = 0.7,
+    color = '#d95f02',
+    linewidth = 1,
+    alpha = 0.5,
+    linetype = 'dotdash',
+    inherit.aes = F
+  ) +
+  ggimage::geom_image(
+    data =
+      tibble(year = 1998, enrollment_pct = 0.32),
+    aes(x = year, y = enrollment_pct, image = 'generic_students.png'),
+    image_fun = transparent,
+    size = 0.3,
+    inherit.aes = F
+  ) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    limits = c(0.25, 0.73),
+    expand = c(0, 0)
+  ) +
+  scale_x_continuous(
+    breaks = seq(1950, 2025, by = 10),
+    limits = c(1945, 2024),
+    expand = c(0, 0)
+  ) +
+  scale_color_manual(
+    breaks = c("male", "female"),
+    values = c("#7570b3", '#1b9e77'),
+    guide = 'none'
+  ) 
 ```
 
 Looks good. Let's fix up the labels. Importantly, I want to put the legend in the title itself. To do that, we use the `ggtext` package and add the HTML tags in the title. To render it properly, we must call `plot.title = element_markdown()` inside the `theme()` function. The HTML format is messy, but goes like this: `<span style = 'color:{your-color};'>{your-text}</span>`. 
@@ -268,44 +313,64 @@ The same `ggtext` package lets me add line breaks to the caption as well, using 
 #| code-fold: show
 library(ggtext)
 
-long_df |> 
+long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
   geom_point(size = 2.1) +
-  geom_segment(data = df,
-               aes(x = year, y = prop_male, yend = prop_female),
-               inherit.aes = F,
-               alpha = 0.3,
-               linewidth = 2.2,
-               color = '#d95f02') +
-  geom_segment(data = final_male_df, 
-               aes(x = year + 1), y = 0.25, yend = 0.7,
-               color = '#d95f02', linewidth = 1, alpha = 0.5,
-               linetype = 'dotdash',
-               inherit.aes = F) +
-  geom_image(data = tibble(year = 1998, enrollment_pct = 0.32),
-             aes(x =year, 
-                 y = enrollment_pct, 
-                 image = 'generic_students.png'),
-             image_fun = transparent,
-             size = 0.3,
-             inherit.aes = F) +
-  scale_y_continuous(labels = scales::percent_format(),
-                     limits = c(0.25, 0.73),
-                     expand = c(0,0)) +
-  scale_x_continuous(breaks = seq(1950, 2025, by = 10),
-                     limits =c(1945, 2024),
-                     expand = c(0,0)) +
-  scale_color_manual(breaks = c("male", "female"),
-                     values = c("#7570b3", '#1b9e77'),
-                     guide = 'none') +
-  labs(x = "",
-       y = "",
-       title = "<span style = 'color:#7570b3;'>**Male**</span> and <span style = 'color:#1b9e77;'>**Female**</span> University Enrollment has swapped places.",
-       subtitle = "Proportion of Fall Enrollment between 1947 and 2023 (odd years only)",
-       caption = "Data sourced from *The Institute of Education Sciences*.<br><br>Plot by Akshay Prasadan.") +
-  theme(plot.title = element_markdown(),
-        plot.caption.position = 'plot',
-        plot.caption = element_markdown(hjust = 0))
+  geom_segment(
+    data = df,
+    aes(x = year, y = prop_male, yend = prop_female),
+    inherit.aes = F,
+    alpha = 0.3,
+    linewidth = 2.2,
+    color = '#d95f02'
+  ) +
+  geom_segment(
+    data = final_male_df,
+    aes(x = year + 1),
+    y = 0.25,
+    yend = 0.7,
+    color = '#d95f02',
+    linewidth = 1,
+    alpha = 0.5,
+    linetype = 'dotdash',
+    inherit.aes = F
+  ) +
+  ggimage::geom_image(
+    data = tibble(year = 1998, enrollment_pct = 0.32),
+    aes(x = year, y = enrollment_pct, image = 'generic_students.png'),
+    image_fun = transparent,
+    size = 0.3,
+    inherit.aes = F
+  ) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    limits = c(0.25, 0.73),
+    expand = c(0, 0)
+  ) +
+  scale_x_continuous(
+    breaks = seq(1950, 2025, by = 10),
+    limits = c(1945, 2024),
+    expand = c(0, 0)
+  ) +
+  scale_color_manual(
+    breaks = c("male", "female"),
+    values = c("#7570b3", '#1b9e77'),
+    guide = 'none'
+  ) +
+  labs(
+    x = "",
+    y = "",
+    title = "<span style = 'color:#7570b3;'>**Male**</span> and <span style = 'color:#1b9e77;'>**Female**</span> University Enrollment has swapped places.",
+    subtitle = "Proportion of Fall Enrollment between 1947 and 2023 (odd years only)",
+    caption = "Data sourced from *The Institute of Education Sciences*.<br><br>Plot by Akshay Prasadan."
+  ) +
+  theme(
+    # use element_markdown() to tell ggtext to recognize the HTML
+    plot.title = ggtext::element_markdown(),
+    # Position caption on side of plot, not the graph panel
+    plot.caption.position = 'plot',
+    plot.caption = ggtext::element_markdown(hjust = 0) # move caption to left
+  )
 ```
 
 The default theme looks ugly to me. Let's remove the grey background, customize which panel gridlines we want, and make other minor changes. The easiest way to do this is to add `theme_minimal()` and then put back what is of interest.
@@ -322,7 +387,7 @@ long_df |>
     alpha = 0.3,
     linewidth = 2.2,
     color = '#d95f02'
-  )+
+  ) +
   geom_segment(
     data = final_male_df,
     aes(x = year + 1),
@@ -334,7 +399,7 @@ long_df |>
     linetype = 'dotdash',
     inherit.aes = F
   ) +
-  geom_image(
+  ggimage::geom_image(
     data = tibble(year = 1998, enrollment_pct = 0.32),
     aes(x = year, y = enrollment_pct, image = 'generic_students.png'),
     image_fun = transparent,
@@ -371,9 +436,9 @@ long_df |>
     axis.ticks.length.x.bottom = unit(4, units = 'pt'),
     axis.text.x.bottom = element_text(color = 'black'),
     axis.text.y.left = element_text(color = 'black'),
-    plot.title = element_markdown(),
+    plot.title = ggtext::element_markdown(),
     plot.caption.position = 'plot',
-    plot.caption = element_markdown(hjust = 0)
+    plot.caption = ggtext::element_markdown(hjust = 0)
   )
 ```
 
@@ -383,11 +448,13 @@ For our final customization, let's change the font to "Lato" from Google Fonts u
 
 ```{r}
 #| code-fold: show
+#| fig-cap: Our final version of the plot.
 library(showtext)
 
-font_add_google("Lato")
-showtext_auto()
-showtext_opts(dpi = 300)
+# sysfonts is loaded in by the showtext package
+sysfonts::font_add_google("Lato")
+showtext::showtext_auto()
+showtext::showtext_opts(dpi = 300)
 
 long_df |>
   ggplot(aes(x = year, y = enrollment_pct, color = sex)) +
@@ -411,7 +478,7 @@ long_df |>
     linetype = 'dotdash',
     inherit.aes = F
   ) +
-  geom_image(
+  ggimage::geom_image(
     data = tibble(year = 1998, enrollment_pct = 0.32),
     aes(x = year, y = enrollment_pct, image = 'generic_students.png'),
     image_fun = transparent,
@@ -442,76 +509,63 @@ long_df |>
   ) +
   theme_minimal() +
   theme(
+    # specify a global font size as a default
     text = element_text(family = 'Lato', size = 7),
     panel.grid = element_blank(),
-    panel.grid.major.y = element_line(color = 'grey90', linetype = 'dotted'),
+    panel.grid.major.y =
+      element_line(color = 'grey90', linetype = 'dotted'),
     axis.ticks.x.bottom = element_line(color = 'black'),
     axis.ticks.length.x.bottom = unit(4, units = 'pt'),
     axis.text.x.bottom = element_text(color = 'black'),
     axis.text.y.left = element_text(color = 'black'),
-    plot.title = element_markdown(),
+    plot.title = ggtext::element_markdown(),
     plot.caption.position = 'plot',
-    plot.caption = element_markdown(hjust = 0, family = "")
+    # add family = "" for some annoying bug with spaces
+    plot.caption = ggtext::element_markdown(hjust = 0, family = "")
   )
 ```
 
-# All Together
+
+# Full Code
+
+Here is the entire, self-contained code all in one place. I removed the comments but you can find them in the above code chunks.
 
 ```{r, eval = F}
-
 library(tidyverse)
 library(readxl)
-library(ggtext)
-library(ggimage)
-library(showtext)
 library(janitor)
+library(ggimage)
+library(scales)
+library(ggtext)
+library(showtext)
 
-font_add_google("Lato")
-showtext_auto()
-showtext_opts(dpi = 300)
+sysfonts::font_add_google("Lato")
+showtext::showtext_auto()
+showtext::showtext_opts(dpi = 300)
 
 transparent <- function(img) {
   magick::image_fx(img, expression = "0.5*a", channel = "alpha")
 }
 
-df = read_xlsx('tabn303.10.xlsx', skip = 3) |>
+df = readxl::read_xlsx(table_filename, skip = 3) |>
   janitor::clean_names() |>
-  select(
-    year,
-    total = total_enrollment,
-    male,
-    female,
-    full_time,
-    part_time = part_time_4,
-    public,
-    private = total
-  ) |>
-  # Removes the footers
+  select(year, total = total_enrollment, male, female) |>
   filter(!is.na(male)) |>
-  # remove unnecessary column number header row
-  filter(year != "1") |>
-  # Need to clean up some strings before we convert to numeric
+  filter(year != "1")
   mutate(
-    # "---" = not available according to footnote
-    full_time = str_replace(full_time, "---", NA_character_),
-    part_time = str_replace(full_time, "---", NA_character_),
-    # remove all the '\\1\\'  or '\r\n' strings.
-    # We have to do some escaping of the backlashes though.
     year = str_replace(year, '\\\\1\\\\', ""),
     year = str_replace(year, "\\r\\n", "")
-    # No other string oddities in year remain
   ) |>
-  # Convert all columns to numeric
-  mutate(across(everything(), as.numeric)) |>
   mutate(
+    year = str_replace(year, '\\\\1\\\\', ""),
+    year = str_replace(year, "\\r\\n", ""),
+    year = as.numeric(year),
     prop_male = male / total,
-    prop_female = female / total,
-    prop_public = public / total,
-    prop_private = private / total
+    prop_female = female / total
   ) |>
-  select(year, starts_with('prop'))
+  select(year, 
+         starts_with('prop')) 
 
-# Final year where male enrollment exceeded female enrollment
 final_male_df = df |>
   filter(prop_male > prop_female) |>
   slice_max(order_by = year)
@@ -549,7 +603,7 @@ plot = long_df |>
     linetype = 'dotdash',
     inherit.aes = F
   ) +
-  geom_image(
+  ggimage::geom_image(
     data = tibble(year = 1998, enrollment_pct = 0.32),
     aes(x = year, y = enrollment_pct, image = 'generic_students.png'),
     image_fun = transparent,
@@ -587,9 +641,9 @@ plot = long_df |>
     axis.ticks.length.x.bottom = unit(4, units = 'pt'),
     axis.text.x.bottom = element_text(color = 'black'),
     axis.text.y.left = element_text(color = 'black'),
-    plot.title = element_markdown(),
+    plot.title = ggtext::element_markdown(),
     plot.caption.position = 'plot',
-    plot.caption = element_markdown(hjust = 0, family = "")
+    plot.caption = ggtext::element_markdown(hjust = 0, family = "")
   )
 
 ggsave(
@@ -605,6 +659,6 @@ ggsave(
 
 The plot shows that the trend Tobias showed for HBCUs extends nationwide. Since the end of WWII, males went from nearly 71% of all college enrollments to only 42%. This has massive implications for electoral trends given the impact of education on political leanings. But I'll leave that for Fivethirtyeight or its remnants to discuss.
 
-The takeaway of this blog post: Use text customization feature to replace existing plot elements like legends that can take up valuable space or contribute to a sense of clutter. Obviously if there are many categories, this is not advisable. But for something as simple as male versus female trends, Tobias had the right idea. 
+The main takeaway of this blog post: Use text customization feature to replace existing plot elements like legends that can take up valuable space or contribute to a sense of clutter. Obviously if there are many categories, this is not advisable. But for something as simple as male versus female trends, Tobias had the right idea. 
 
 I hope you also enjoyed the other tips and tricks with fonts, background images, dumbbell plot construction, and data cleaning Excel formats.
