@@ -97,7 +97,7 @@ plot = df |>
     x = NULL,
     y = NULL,
     title = "Average US vehicle exhaust emissions have declined from 2000 levels",
-    subtitle = "Displaying gasoline/diesel fleet only. Updated annually using age distribution of fleet, regulatory standards, and driving behavior",
+    subtitle = "Displaying gasoline/diesel fleet only. Updated annually using age distribution of fleet, regulatory standards, and driving behavior.",
     color = NULL,
     caption = 'CO2 = carbon dioxide; CO = carbon monoxide; NOx = nitrogen oxides; PM 2.5" = particulate matter of diameter \U2264 2.5 micrometers.\nSource: U.S. Environmental Protection Agency, Office of Transportation and Air Quality.\nPlot by Akshay Prasadan'
   ) +

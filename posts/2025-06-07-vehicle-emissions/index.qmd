@@ -85,7 +85,7 @@ Is diesel still worse in nitrogen oxides? Unfortunately, so.
 knitr::include_graphics("NOx_plot_by_fuel_and_type.png")
 ```
 
-In all plots, buses (and large trucks) are the worst offenders. But to their credit, buses are far more efficient on a per person-mile basis. How many sedans can a single bus in an urban metro replace? Moreover, large trucks are likely transporting economically significant cargo for many people on routes not supported by rail.
+In all plots, buses and large trucks are the worst offenders. But to their credit, buses are far more efficient on a per person-mile basis. How many sedans can a single bus in an urban metro replace? Moreover, large trucks are likely transporting economically significant cargo  on routes not supported by rail and to the benefit of many people.
 
 # Final Remarks
 
