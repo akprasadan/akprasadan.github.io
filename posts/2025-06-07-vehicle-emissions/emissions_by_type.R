@@ -271,10 +271,10 @@ plot3 = df |> filter(pollutant == "NOx", fuel_type != "average") |>
            color =NA
   ) +
   annotate(geom = "text",
-           x = 2014, y = 20, angle = -5,
+           x = 2008, y = 3.5, angle = -5,
            label = "Average", family = 'fira') +
   annotate(geom = "text",
-           x = 1997.6, y = 31,
+           x = 1997.6, y = 27.5,
            label = "grams/mile",
            family = 'fira', size = 3) +
   scale_x_continuous(breaks = seq(2000, 2030, by = 5)) +
