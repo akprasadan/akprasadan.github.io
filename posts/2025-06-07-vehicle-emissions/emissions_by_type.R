@@ -7,17 +7,20 @@ font_add_google("Fira Sans", "fira")
 showtext_auto()
 showtext_opts(dpi = 300)
 
+average_string = "Average Emissions Per Vehicle: Gasoline and Diesel Fleet"
+
 vehicle_types = c(
   "Light-duty vehicles",
   "Light-duty trucks",
   "Buses",
   "Heavy-duty vehicles (other than buses)",
-  "Motorcyclesb"
+  "Motorcyclesb",
+  average_string
 )
 
-fuel_types = c("GASOLINE", "DIESEL", "ELECTRICc")
+fuel_types = c("GASOLINE", "DIESEL", "ELECTRICc", average_string)
 
-df = readxl::read_xlsx(
+df_processed = readxl::read_xlsx(
   'emissions_by_year.xlsx',
   skip = 2,
   col_names = c('header_row', 2000:2030),
@@ -28,13 +31,16 @@ df = readxl::read_xlsx(
       header_row == "GASOLINE" ~ "Gasoline",
       header_row == "DIESEL" ~ "Diesel",
       header_row == "ELECTRICc" ~ "Electric",
-      header_row == "Average Emissions Per Vehicle: Gasoline and Diesel Fleet" ~ "average",
+      header_row == average_string ~ "average",
       str_detect(header_row, "KEY") ~ "notes",
       TRUE ~ NA_character_
     ),
-    vehicle_type = case_when(header_row %in% vehicle_types ~ header_row, TRUE ~ NA_character_),
+    vehicle_type = case_when(header_row == average_string ~ "average",
+                             header_row %in% vehicle_types ~ header_row,
+                             TRUE ~ NA_character_),
     vehicle_type = ifelse(vehicle_type == "Motorcyclesb", "Motorcycle", vehicle_type)
   ) |>
+  select(header_row, fuel_type, vehicle_type, everything()) |>
   fill(fuel_type, vehicle_type, .direction = "down") |>
   filter(
     fuel_type != "notes",!(header_row %in% fuel_types),!(header_row %in% vehicle_types)
@@ -46,23 +52,24 @@ df = readxl::read_xlsx(
   # I combine these steps in a single, convoluted step
   mutate(across(starts_with("20"), ~ as.numeric(na_if(
     as.character(.), "N"
-  )))) |>
-  pivot_longer(
-    cols = !c(header_row, fuel_type, vehicle_type),
-    names_to = 'year',
-    values_to = 'grams_per_mile'
-  ) |>
+  ))),) |>
   rename(pollutant = header_row) |>
   # This next filter throws out electric vehicles, which have no exhaust emissions
   filter(str_detect(pollutant, "Exhaust")) |>
+  mutate(pollutant = str_remove(pollutant, "Exhaust "),
+         pollutant = ifelse(str_detect(pollutant, "PM2.5"), 'PM 2.5"', pollutant))
+
+write_csv(df_processed, file = "processed_emmissions_by_year.csv")
+
+df_plot = df_processed |> pivot_longer(
+    cols = !c(pollutant, fuel_type, vehicle_type),
+    names_to = 'year',
+    values_to = 'grams_per_mile'
+  ) |>
   filter(vehicle_type != "Motorcycle") |>
   mutate(
     year = as.numeric(year),
-    projected = ifelse(year >= 2022, "projected", "revised"),
-         pollutant = case_when(str_detect(pollutant, "CO2") ~ "CO2",
-                                     str_detect(pollutant, "CO") ~ "CO",
-                                     str_detect(pollutant, "NOx") ~ "NOx",
-                                     str_detect(pollutant, "PM2.5") ~ 'PM 2.5"')) |>
+    projected = ifelse(year >= 2022, "projected", "revised")) |>
   arrange(pollutant, fuel_type, vehicle_type, year) |>
   group_by(pollutant, fuel_type, vehicle_type) |>
   mutate(relative_reduction = grams_per_mile  / first(grams_per_mile ) -1) |>
@@ -84,7 +91,7 @@ annotation_df <- tibble(
   )
 
 
-plot = df |>
+plot = df_plot |>
   filter(fuel_type != "average") |>
   ggplot(aes(x = year, y = relative_reduction, color = pollutant)) +
   geom_hline(
@@ -167,10 +174,10 @@ plot |>
 
 # How about the actual levels? Let's look at actual CO2 emissions for gasoline by type, and then diesel by type
 
-plot2 = df |> filter(pollutant == "CO2", fuel_type != "average") |>
+plot2 = df_plot |> filter(pollutant == "CO2", fuel_type != "average") |>
   ggplot(aes(x = year, y = grams_per_mile, color = vehicle_type_short)) +
   geom_line(aes(linetype = fuel_type, alpha = projected), linewidth = 0.7) +
-  geom_line(data = df |> filter(pollutant == "CO2", fuel_type == "average"),
+  geom_line(data = df_plot |> filter(pollutant == "CO2", fuel_type == "average"),
             aes(x = year, y = grams_per_mile, alpha = projected), color = 'black',
             linewidth = 1.5) +
   theme_light() +
@@ -245,10 +252,10 @@ plot2 |>
     dpi = 300
   )
 
-plot3 = df |> filter(pollutant == "NOx", fuel_type != "average") |>
+plot3 = df_plot |> filter(pollutant == "NOx", fuel_type != "average") |>
   ggplot(aes(x = year, y = grams_per_mile, color = vehicle_type_short)) +
   geom_line(aes(linetype = fuel_type, alpha = projected), linewidth = 0.7) +
-  geom_line(data = df |> filter(pollutant == "NOx", fuel_type == "average"),
+  geom_line(data = df_plot |> filter(pollutant == "NOx", fuel_type == "average"),
             aes(x = year, y = grams_per_mile, alpha = projected), color = 'black',
             linewidth = 1.5) +
   theme_light() +
