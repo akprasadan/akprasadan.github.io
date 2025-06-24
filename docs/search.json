@@ -4,21 +4,21 @@
     "href": "teaching.html",
     "title": "Teaching Experience",
     "section": "",
-    "text": "I gained valuable experience as both a teaching assistant and instructor during my PhD. Teaching assistant responsibilities typically included grading and office hours. Occasionally, I was involved in preparing homeworks/exams with their solutions or proctoring exams. I TAed a total of 11 semesters (listed below), and I was awarded an Outstanding PhD TA Award for the 2024-5 academic year. I am currently the instructor for 36-315 in summer 2025, an undergraduate course on data visualization. I also privately tutored a fellow Statistics PhD student in the fall of 2021.\nI consider teaching opportunities very important: they force me to learn material I might otherwise skip over and reveal gaps in my own knowledge I didn’t even know existed—the creativity with which students craft questions never ceases to surprise me. Moreover, I built valuable communication skills by working with students whose background ranged from high school to PhD level."
-  },
-  {
-    "objectID": "teaching.html#teaching-assistant",
-    "href": "teaching.html#teaching-assistant",
-    "title": "Teaching Experience",
-    "section": "Teaching Assistant",
-    "text": "Teaching Assistant\n\n36-225: Introduction to Probability Theory\nFall 2020\n36-401: Modern Regression\nFall 2022 & Fall 2023 (Head TA in 2023)\n36-402: Advanced Methods for Data Analysis\nSpring 2025\n46-927: Machine Learning II\nSpring 2023 & Spring 2024\n46-929: Financial Time Series Analysis\nSpring 2023 & Spring 2024\nCMU Summer Undergraduate Research Experience (SURE)\nSummer 2023 & Summer 2024 (Head TA in 2024)\n36-700: Probability and Mathematical Statistics\nFall 2024 (Head TA)"
+    "text": "I gained valuable experience as both an instructor and teaching assistant (TA) during my PhD. I taught the undergraduate Statistical Graphics and Visualization course (36-315) in Summer 2025. I TAed for 11 semesters (listed below), and I was awarded an Outstanding PhD TA Award for the 2024-5 academic year. I also privately tutored a fellow Statistics PhD student.\nI consider teaching opportunities very important: they force me to learn material I might otherwise skip over and reveal gaps in my own knowledge I didn’t even know existed—the creativity with which students craft questions never ceases to surprise me. Moreover, I built valuable communication skills by working with students whose background ranged from high school to PhD level."
   },
   {
     "objectID": "teaching.html#instructor",
     "href": "teaching.html#instructor",
     "title": "Teaching Experience",
     "section": "Instructor",
-    "text": "Instructor\n\nStatistics & Data Science Camp for High-School Students\nSummer 2023\nGuest Lecturer, 36-401: Modern Regression\nSpring 2025\n36-315: Statistical Graphics & Visualization\nSummer 2025"
+    "text": "Instructor\n\n36-315: Statistical Graphics & Visualization\nSummer 2025\nGuest Lecturer, 36-401: Modern Regression\nSpring 2025\nStatistics & Data Science Camp for High-School Students\nSummer 2023"
+  },
+  {
+    "objectID": "teaching.html#teaching-assistant",
+    "href": "teaching.html#teaching-assistant",
+    "title": "Teaching Experience",
+    "section": "Teaching Assistant",
+    "text": "Teaching Assistant\n\n36-402: Advanced Methods for Data Analysis\nSpring 2025\n36-700: Probability and Mathematical Statistics\nFall 2024 (Head TA)\nCMU Summer Undergraduate Research Experience (SURE)\nSummer 2023 & Summer 2024 (Head TA in 2024)\n46-929: Financial Time Series Analysis\nSpring 2023 & Spring 2024\n46-927: Machine Learning II\nSpring 2023 & Spring 2024\n36-401: Modern Regression\nFall 2022 & Fall 2023 (Head TA in 2023)\n36-225: Introduction to Probability Theory\nFall 2020"
   },
   {
     "objectID": "publications.html",
@@ -165,14 +165,14 @@
     "href": "industry.html",
     "title": "Industry Experience",
     "section": "",
-    "text": "See Multistate and Joint Models for details about my 2 years of collaboration (Jan. 2021 through May 2022, then March 2025 onward) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models."
+    "text": "See Multistate and Joint Models for details about my 2 years of collaboration (Jan. 2021 through May 2022, then Spring 2025) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models."
   },
   {
     "objectID": "industry.html#novartis-phd-fellow",
     "href": "industry.html#novartis-phd-fellow",
     "title": "Industry Experience",
     "section": "",
-    "text": "See Multistate and Joint Models for details about my 2 years of collaboration (Jan. 2021 through May 2022, then March 2025 onward) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models."
+    "text": "See Multistate and Joint Models for details about my 2 years of collaboration (Jan. 2021 through May 2022, then Spring 2025) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models."
   },
   {
     "objectID": "industry.html#statistician-at-upmc",
@@ -242,7 +242,7 @@
     "href": "research.html#multistate-and-joint-models",
     "title": "Research",
     "section": "Multistate and Joint Models",
-    "text": "Multistate and Joint Models\nDuring my PhD, I joined a collaboration between CMU and Novartis to study the use of flexible survival analysis techniques to model the efficacy of immunotherapy for blood cancers. The treatment itself sounds straight out of a sci-fi novel: scientists bioengineer immune cells to modify their own outer cell structure so the cells learn to attack cancer cells.\nClassic survival analysis can be used to model the literal survival of a subject: the subject is either alive or dead, for example. But what if we wish to capture the dynamic trajectory of patients through different stages of sickness? For example, the patient might first see their condition worsening, then improving, then becoming fully cancer-free or reverting to total treatment failure. A multi-state model allows us to model a patient’s transitions between different states (of cancer), and thus is a powerful tool for evaluating cancer treatments.\nThe second theme of this work was joint models, which are a lot more exciting than their generic name suggests. The idea is to jointly model longitudinal and survival processes, when the longitudinal data is endogenous, or internal to the patient. Classic Cox proportional hazard models can handle time varying covariates, but they require exogeneity. This means, for example, that if the patient is censored (e.g., leaves the study or dies), then the existence of the longitudinal covariate should be unaffected. This is true if, for example, your longitudinal variable is the weather. But clearly it fails with biomarkers in your blood. With a joint model, we compute a posterior distribution over the longitudinal and survival processes that gives theoretically valid estimates unlike the regular Cox proportional hazard model.\nI used this work to satisfy our PhD program’s requirement of completing an “Advanced Data Analysis” project. I worked with Joel Greenhouse at CMU as well as a team of statisticians at Novartis for about 2 years. I also presented some of our work on joint models at the 2023 Joint Statistical Meetings in Toronto, and I am currently preparing a publication of this work with the same group.\n\nSelected Publications\n\nA. Prasadan et al. Assessing CAR-T Immunotherapy Outcomes using Multistate Models, Pharmacokinetics, and Tumor Burden, 2022. Novartis Technical Report"
+    "text": "Multistate and Joint Models\nDuring my PhD, I joined a collaboration between CMU and Novartis to study the use of flexible survival analysis techniques to model the efficacy of immunotherapy for blood cancers. The treatment itself sounds straight out of a sci-fi novel: scientists bioengineer immune cells to modify their own outer cell structure so the cells learn to attack cancer cells.\nClassic survival analysis can be used to model the literal survival of a subject: the subject is either alive or dead, for example. But what if we wish to capture the dynamic trajectory of patients through different stages of sickness? For example, the patient might first see their condition worsening, then improving, then becoming fully cancer-free or reverting to total treatment failure. A multi-state model allows us to model a patient’s transitions between different states (of cancer), and thus is a powerful tool for evaluating cancer treatments.\nThe second theme of this work was joint models, which are a lot more exciting than their generic name suggests. The idea is to jointly model longitudinal and survival processes, when the longitudinal data is endogenous, or internal to the patient. Classic Cox proportional hazard models can handle time varying covariates, but they require exogeneity. This means, for example, that if the patient is censored (e.g., leaves the study or dies), then the existence of the longitudinal covariate should be unaffected. This is true if, for example, your longitudinal variable is the weather. But clearly it fails with biomarkers in your blood. With a joint model, we compute a posterior distribution over the longitudinal and survival processes that gives theoretically valid estimates unlike the regular Cox proportional hazard model.\nI used this work to satisfy our PhD program’s requirement of completing an “Advanced Data Analysis” project. I worked with Joel Greenhouse at CMU as well as a team of statisticians at Novartis for about 2 years. I also presented some of our work on joint models at the 2023 Joint Statistical Meetings in Toronto.\n\nSelected Publications\n\nA. Prasadan et al. Assessing CAR-T Immunotherapy Outcomes using Multistate Models, Pharmacokinetics, and Tumor Burden, 2022. Novartis Technical Report"
   },
   {
     "objectID": "research.html#footnotes",
