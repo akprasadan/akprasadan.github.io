@@ -5,7 +5,7 @@ format: html
 
 ## Novartis PhD Fellow
 
-See [Multistate and Joint Models](research.qmd#multistate-and-joint-models) for details about my 2 years of collaboration (Jan. 2021 through May 2022, then March 2025 onward) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models.
+See [Multistate and Joint Models](research.qmd#multistate-and-joint-models) for details about my 2 years of collaboration (Jan. 2021 through May 2022, then Spring 2025) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models.
 
 ## Statistician at UPMC
 

@@ -49,7 +49,7 @@ Classic survival analysis can be used to model the literal survival of a subject
 
 The second theme of this work was *joint models*, which are a lot more exciting than their generic name suggests. The idea is to jointly model longitudinal and survival processes, when the longitudinal data is endogenous, or internal to the patient. Classic Cox proportional hazard models can handle time varying covariates, but they require exogeneity. This means, for example, that if the patient is censored (e.g., leaves the study or dies), then the existence of the longitudinal covariate should be unaffected. This is true if, for example, your longitudinal variable is the weather. But clearly it fails with biomarkers in your blood. With a joint model, we compute a posterior distribution over the longitudinal and survival processes that gives theoretically valid estimates unlike the regular Cox proportional hazard model.
 
-I used this work to satisfy our PhD program's requirement of completing an "Advanced Data Analysis" project. I worked with [Joel Greenhouse](https://www.stat.cmu.edu/~joel/) at CMU as well as a team of statisticians at Novartis for about 2 years. I also presented some of our work on joint models at the 2023 Joint Statistical Meetings in Toronto, and I am currently preparing a publication of this work with the same group.
+I used this work to satisfy our PhD program's requirement of completing an "Advanced Data Analysis" project. I worked with [Joel Greenhouse](https://www.stat.cmu.edu/~joel/) at CMU as well as a team of statisticians at Novartis for about 2 years. I also presented some of our work on joint models at the 2023 Joint Statistical Meetings in Toronto.
 
 ### Selected Publications
 
