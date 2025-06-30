@@ -3,20 +3,20 @@ title: "Publications"
 format: html
 ---
 
-
-- A. Prasadan and M. Neykov. *Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints*, 2024. [arXiv:2401.07968](https://arxiv.org/abs/2401.07968) [math.ST]. Under major revision with the *Electronic Journal of Statistics*.  
+- A. Prasadan and M. Neykov. *Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints*, 2024. [arXiv:2401.07968](https://arxiv.org/abs/2401.07968) [math.ST]. Under major revision at *Electronic Journal of Statistics*.  
 <br>
 
-- A. Prasadan and M. Neykov. *Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint*, 2024. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. In submission.  
+- A. Prasadan and M. Neykov. *Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint*, 2024. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Submitted.  
 <br>
 
-- A. Prasadan and M. Neykov. *Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints*, 2024. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Under major revision with *The Annals of Statistics*.  
+- A. Prasadan and M. Neykov. *Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints*, 2024. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Under major revision at *Annals of Statistics*.  
 <br>
 
-- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T Immunotherapy Outcomes using Multistate Models, Pharmacokinetics, and Tumor Burden*, 2022. *Novartis Technical Report*.  
+- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden*, 2022. *Novartis Technical Report*.  
 <br>
 
-- P. Sasan, A. Prasadan, and V. Q. Vu. *Computationally sufficient reductions for some sparse multiway and joint matrix estimators*, 2025. In submission.  
+- P. Sasan, A. Prasadan, and V. Q. Vu. *Computationally sufficient reductions for some sparse multiway and joint matrix estimators*, 2025. Submitted.  
 <br>
 
-- M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, T. K. Karikari. *Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort*, 2025. Under revision with Alzheimer's Research & Therapy.
+- M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, T. K. Karikari. *Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort*, 2025. To appear in *Alzheimer’s Research & Therapy*. 
+
