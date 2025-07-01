@@ -33,7 +33,7 @@ This thesis was ultimately one of many sequels to my advisor's original 2022 pap
 </figure>
 
 
-### Selected Publications
+### Featured Work
 
 - A. Prasadan and M. Neykov. *Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints*, 2024. [arXiv:2401.07968](https://arxiv.org/abs/2401.07968) [math.ST]. Under major revision at *Electronic Journal of Statistics*.  
 - A. Prasadan and M. Neykov. *Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint*, 2024. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Submitted. 
@@ -51,6 +51,7 @@ The second theme of this work was *joint models*, which are a lot more exciting 
 
 I used this work to satisfy our PhD program's requirement of completing an "Advanced Data Analysis" project. I worked with [Joel Greenhouse](https://www.stat.cmu.edu/~joel/) at CMU as well as a team of statisticians at Novartis for about 2 years. I also presented some of our work on joint models at the 2023 Joint Statistical Meetings in Toronto.
 
-### Selected Publications
+### Featured Work
 
-- A. Prasadan et al. *Assessing CAR-T Immunotherapy Outcomes using Multistate Models, Pharmacokinetics, and Tumor Burden*, 2022. *Novartis Technical Report*
+- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden*. Novartis Technical Report, 2022.   
+- Invited Topics Contributed Session, Joint Statistical Meetings (JSM), Toronto, 2023. *Joint modeling of transduced cellular kinetics, tumor size, and survival endpoints*.

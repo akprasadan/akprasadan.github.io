@@ -7,7 +7,7 @@ format:
     number-sections: false
 ---
 
-I gained valuable experience as both an instructor and teaching assistant (TA) during my PhD. I taught the undergraduate Statistical Graphics and Visualization course (36-315) in Summer 2025. I TAed for 11 semesters (listed below), and I was awarded an *Outstanding PhD TA Award* for the 2024-5 academic year. I also privately tutored a fellow Statistics PhD student.
+I gained valuable experience as both an instructor and teaching assistant (TA) during my PhD at CMU. I taught the undergraduate Statistical Graphics and Visualization course (36-315) in Summer 2025. I TAed for 11 semesters (listed below), and I was awarded an *Outstanding PhD TA Award* for the 2024-5 academic year. I also privately tutored a fellow Statistics PhD student in 2021.
 
 I consider teaching opportunities very important: they force me to learn material I might otherwise skip over and reveal gaps in my own knowledge I didn't even know existed---the creativity with which students craft questions never ceases to surprise me. Moreover, I built valuable communication skills by working with students whose background ranged from high school to PhD level.
 

@@ -7,9 +7,18 @@ format: html
 
 See [Multistate and Joint Models](research.qmd#multistate-and-joint-models) for details about my 2 years of collaboration (Jan. 2021 through May 2022, then Spring 2025) with Novartis statisticians to model the efficacy of a cutting edge blood cancer immunotherapy using multistate and joint models.
 
+### Featured Work
+
+- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden*. Novartis Technical Report, 2022.   
+- Invited Topics Contributed Session, Joint Statistical Meetings (JSM), Toronto, 2023. *Joint modeling of transduced cellular kinetics, tumor size, and survival endpoints*.
+
 ## Statistician at UPMC
 
-At the [Karikari Laboratory](https://karikarilab.org/) headed by Dr. Thomas K. Karikari, clinicians are studying the use of biomarkers in the blood as diagnostic tools for Alzheimer's Disease. I'm one of a few statisticians helping design and implement statistical methodology to explore this fascinating biological data. I've been working here since January 2024.
+At the [Karikari Laboratory](https://karikarilab.org/) headed by Dr. Thomas K. Karikari, clinicians are studying the use of biomarkers in the blood as diagnostic tools for Alzheimer's Disease (AD). These biomarkers offer a  more cost-effective and less invasive way to evaluate large populations for AD. While existing studies tend to sample from economically privileged populations, this study followed a socioeconomically disadvantaged cohort to broaden our understanding of the disease. I was one of a few statisticians helping design and implement statistical methods to explore this rich clinical data. I worked at the lab from 2024 through Summer 2025.
+
+### Featured Work
+
+- M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, T. K. Karikari. *Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort*, 2025. To appear in *Alzheimer’s Research & Therapy*. 
 
 ## Data Science Intern at Highmark Health
 

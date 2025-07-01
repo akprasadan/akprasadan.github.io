@@ -12,7 +12,7 @@ format: html
 - A. Prasadan and M. Neykov. *Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints*, 2024. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Under major revision at *Annals of Statistics*.  
 <br>
 
-- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden*, 2022. *Novartis Technical Report*.  
+- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden*. Novartis Technical Report, 2022.   
 <br>
 
 - P. Sasan, A. Prasadan, and V. Q. Vu. *Computationally sufficient reductions for some sparse multiway and joint matrix estimators*, 2025. Submitted.  
