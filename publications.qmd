@@ -3,7 +3,7 @@ title: "Publications"
 format: html
 ---
 
-- A. Prasadan and M. Neykov. *Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints*, 2024. [arXiv:2401.07968](https://arxiv.org/abs/2401.07968) [math.ST]. To appear in  *Electronic Journal of Statistics*.  
+- A. Prasadan and M. Neykov. *Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints*, 2025. [arXiv:2401.07968](https://arxiv.org/abs/2401.07968) [math.ST]. To appear in  *Electronic Journal of Statistics*.  
 <br>
 
 - A. Prasadan and M. Neykov. *Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint*, 2024. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Submitted.  
