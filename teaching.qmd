@@ -5,6 +5,8 @@ format:
     toc: true
     toc-depth: 2
     number-sections: false
+execute:
+  freeze: auto  
 ---
 
 I gained valuable experience as both an instructor and teaching assistant (TA) during my PhD at CMU. I taught the undergraduate Statistical Graphics and Visualization course (36-315) in Summer 2025. I TAed for 11 semesters (listed below), and I was awarded an *Outstanding PhD TA Award* for the 2024-5 academic year. I also privately tutored a fellow Statistics PhD student in 2021.
