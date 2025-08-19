@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-05-31">
 <meta name="description" content="The bells and whistles of a dumbbell plot on trends in university enrollment.">
 
-<title>Make your title legendary – Akshay Prasadan</title>
+<title>Akshay Prasadan - Make your title legendary</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -36,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -72,25 +72,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-f3c2ea88cadbcfb37ba28ffa2c97cfc1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-ae2d0dcda2edce4ab590422bb373b64f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -99,43 +93,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -143,49 +108,49 @@ window.Quarto = {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
+      <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Akshay Prasadan</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../research.html"> 
-<span class="menu-text">Research</span></a>
+    <a class="nav-link" href="../../research.html" rel="" target="">
+ <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../publications.html"> 
-<span class="menu-text">Publications</span></a>
+    <a class="nav-link" href="../../publications.html" rel="" target="">
+ <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../industry.html"> 
-<span class="menu-text">Industry</span></a>
+    <a class="nav-link" href="../../industry.html" rel="" target="">
+ <span class="menu-text">Industry</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../teaching.html"> 
-<span class="menu-text">Teaching</span></a>
+    <a class="nav-link" href="../../teaching.html" rel="" target="">
+ <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../posts.html"> 
-<span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../posts.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools ms-auto">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
+          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -214,12 +179,12 @@ window.Quarto = {
       <div class="quarto-title-meta-contents">
       <p class="author"><a href="https://akprasadan.github.io/">Akshay Prasadan</a> </p>
     </div>
-    <div class="quarto-title-meta-contents">
+      <div class="quarto-title-meta-contents">
           <p class="affiliation">
               PhD in Statistics &amp; Data Science from Carnegie Mellon University
             </p>
         </div>
-    </div>
+      </div>
 
   <div class="quarto-title-meta">
 
@@ -262,7 +227,6 @@ window.Quarto = {
 
 
 
-
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>I was recently browsing the excellent <a href="https://r-graph-gallery.com/">R Graph Gallery</a> website and came across a gorgeous <a href="https://r-graph-gallery.com/web-extended-dumbbell-plot-ggplot2.html">dumbbell plot</a> made by Tobias Stalder for TidyTuesday.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> A dumbbell plot is a two-sided extension of a lollipop plot, which is in turn a substitute for the familiar but bland bar chart. The bar is replaced with a single line, and a point is added to the end. Tobias Stalder’s submission showed the large gap in university enrollment between men and women at Historically Black Colleges and Universities (HBCU). I especially liked his choice of using color in the subtitle rather than having a legend taking up unnecessary space.</p>
@@ -271,7 +235,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="HBCU_trends_gender.png" class="img-fluid figure-img" width="1181"></p>
-<figcaption>Tobias Stalder’s TidyTuesday submission</figcaption>
+<figcaption class="figure-caption">Tobias Stalder’s TidyTuesday submission</figcaption>
 </figure>
 </div>
 </div>
@@ -296,7 +260,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="excel_screenshot.png" class="img-fluid figure-img" width="785"></p>
-<figcaption>Government datasets are rarely ready off the shelf.</figcaption>
+<figcaption class="figure-caption">Government datasets are rarely ready off the shelf.</figcaption>
 </figure>
 </div>
 </div>
@@ -304,7 +268,7 @@ window.Quarto = {
 <p>We’ll need the <code>readxl</code> package. We can discard the first three rows with the <code>skip</code> argument of <code>read_xlsx()</code>. After that, we’ll use one of my favorite functions which is <code>clean_names()</code> from the <code>janitor</code> package, which converts column names to snake_case. This has practical benefits beyond aesthetics: RStudio’s autocompletion will fail if there are spaces in the column names. This will save you some typing!</p>
 <p>There are some footers in the Excel file which we can remove just by filtering for non-NA rows in the <code>male</code> column. We’ll also discard row 5 of the original file, which just contains column numbers, by filtering for <code>year != "1"</code>.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
@@ -326,7 +290,7 @@ window.Quarto = {
 </div>
 <p>The next issue is the unnecessary <code>"\1\"</code> or <code>"\r\n"</code> strings that appear in the <code>year</code> column. We’ll use <code>str_replace()</code> from the <code>stringr</code> package to remove that. Then <code>year</code> needs to converted to numeric once those non-numeric characters are removed. While we are using <code>mutate()</code>, I’ll create proportion male and proportional female columns. Then I’ll select <code>year</code> and the two proportion columns, since we no longer need the full counts. I use the column selection helper <code>starts_with()</code> from the <code>tidyselect</code> package, although with just 2 columns, this is not very useful. I’m highlighting its use for your more complex applications.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -344,7 +308,7 @@ window.Quarto = {
 <p>I plan to only plot every other year for a simpler graphic. There change is relatively gradual so showing year to year changes doesn’t really matter much. My data goes from 1947 to 2023, so using the odd years is sufficient.</p>
 <p>Also, we will later see that the trend is declining for males and rising for females, with a crossing point in 1979. I’d like to indicate this with a straight line at that point. I don’t want to hard-code it, so I’ll save this information as a one row tibble at this year called <code>final_male_df</code>. I’ll do this calculation <em>before</em> I filter for odd years only, importantly.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>final_male_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop_male <span class="sc">&gt;</span> prop_female) <span class="sc">|&gt;</span></span>
@@ -357,7 +321,7 @@ window.Quarto = {
 </div>
 <p>The last piece of data wrangling we need is reshaping <code>df</code> into a long format. We want a single <span class="math inline">\(y\)</span>-axis column, say <code>enrollment_pct</code>, so we’ll pivot the <code>prop_male</code> and <code>prop_female</code> into a <code>sex</code> and <code>enrollment_pct</code> pair of columns. The <code>"prop_"</code> will then become unnecessary, so we’ll remove it with <code>names_prefix = "prop_"</code> .</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
@@ -376,7 +340,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="our-basic-geometries">Our basic Geometries</h2>
 <p>We will start by adding points with <code>year</code> on the <span class="math inline">\(x\)</span> axis and <code>enrollment_pct</code> on the <span class="math inline">\(y\)</span> axis colored by <code>sex</code>. Then we add a segment from the male to female values using <code>geom_segment()</code>. To do so, we actually feed in the <em>wide</em> dataset <code>df</code> because it takes in a <code>y</code> and <code>yend</code> aesthetic for which we will specify <code>prop_male</code> and <code>prop_female</code>, respectively. The long version of the dataset no longer has these columns. However, the <code>df</code> dataframe does not have a <code>sex</code> column, so we don’t want to feed in the previous aesthetics. Thus, we must include an <code>inherit.aes = F</code> argument to <code>geom_segment()</code>.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -390,16 +354,12 @@ window.Quarto = {
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The next step is to add the vertical line for the transition point where more females than males enroll. We will feed in a new dataset again, the <code>final_male_df</code> row we saved. I want the line to occur on the first year in which female enrollment is higher, so I add one to the year. Once again, we’ll need to not inherit the aesthetics. The reason I used <code>geom_segment()</code> instead of <code>geom_vline()</code> is that I wanted finer control over where the line starts and ends.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -419,16 +379,12 @@ window.Quarto = {
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The last geometry I wish to add is <code>geom_image()</code>. The plot is fairly bare, so I wanted a transparent graphic representing education sitting in the bottom right. We’ll have to load in the <code>ggimage</code> package. To add transparency, we <a href="https://stackoverflow.com/questions/60820565/is-there-a-way-to-add-an-alpha-value-within-geom-image-in-ggplot">copy the technique here</a> and define a transparency function to pass into <code>geom_image()</code>.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -462,16 +418,12 @@ window.Quarto = {
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>I’ll add in some styling to these geoms.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -504,11 +456,7 @@ window.Quarto = {
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -517,7 +465,7 @@ window.Quarto = {
 <p>After consulting <a href="https://colorbrewer2.org">Color Brewer 2.0</a>, I settled on using <span style="background-color: #7570b3; color: white">#7570b3</span> for male and <span style="background-color: #1b9e77; color: white">#1b9e77</span> for female. For the bars, I used a transparent version of <span style="background-color: #d95f02; color: black">#d95f02</span>. Let’s create a manual color scale to use these instead. We will remove the legend by specifying <code>guide = 'none'</code>.</p>
 <p>Along the way, we can specify the breaks for the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> axes, and use <code>percent_format()</code> from the <code>scales</code> package to get nice percent signs. The <code>expand = c(0, 0)</code> argument removes the automatic space added to the axes, so we can customize the limits manually.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -568,17 +516,13 @@ window.Quarto = {
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Looks good. Let’s fix up the labels. Importantly, I want to put the legend in the title itself. To do that, we use the <code>ggtext</code> package and add the HTML tags in the title. To render it properly, we must call <code>plot.title = element_markdown()</code> inside the <code>theme()</code> function. The HTML format is messy, but goes like this: <code>&lt;span style = 'color:{your-color};'&gt;{your-text}&lt;/span&gt;</code>.</p>
 <p>The same <code>ggtext</code> package lets me add line breaks to the caption as well, using <code>&lt;br&gt;</code>. We’ll reposition the caption using the <code>plot.caption</code> and <code>plot.caption.position</code> arguments.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -642,16 +586,12 @@ window.Quarto = {
 <span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The default theme looks ugly to me. Let’s remove the grey background, customize which panel gridlines we want, and make other minor changes. The easiest way to do this is to add <code>theme_minimal()</code> and then put back what is of interest.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -718,11 +658,7 @@ window.Quarto = {
 <span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -730,7 +666,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="fonts">Fonts</h2>
 <p>For our final customization, let’s change the font to “Lato” from Google Fonts using the <code>showtext</code> package. We’ll need to set the global size using <code>text = element_text(family = 'Lato', size = 5)</code>, since often times the default sizes will be way too big or small. For some weird reason, text that gets modified by <code>element_markdown()</code> sometimes loses their spaces, so to fix that, I added <code>family = ""</code> in the <code>plot.caption= element_markdown()</code> argument.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details open="">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -811,7 +747,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Our final version of the plot.</figcaption>
+<figcaption class="figure-caption">Our final version of the plot.</figcaption>
 </figure>
 </div>
 </div>
@@ -822,7 +758,7 @@ window.Quarto = {
 <h1>Full Code</h1>
 <p>Here is the entire, self-contained code all in one place. I removed the comments but you can find them in the above code chunks.</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
@@ -966,7 +902,7 @@ window.Quarto = {
 <ol>
 <li id="fn1"><p><a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a> is a weekly community ‘event’ (and podcast) in which data enthusiasts around the world share their data cleaning, visualizations and modelling techniques for that week’s data release.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-prasadan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-prasadan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Prasadan, Akshay. 2025. <span>“Make Your Title Legendary.”</span> May
 31, 2025. <a href="https://akprasadan.github.io/posts/2025-05-31-university-enrollment/">https://akprasadan.github.io/posts/2025-05-31-university-enrollment/</a>.
 </div></div></section></div></main> <!-- /main -->
@@ -1011,33 +947,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -1106,15 +1015,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1149,7 +1056,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1181,27 +1099,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -1253,27 +1151,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1283,17 +1164,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1305,129 +1177,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1471,7 +1221,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1497,32 +1246,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2115,128 +1838,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-559"><a href="#cb14-559" aria-hidden="true" tabindex="-1"></a>Here is the entire, self-contained code all in one place. I removed the comments but you can find them in the above code chunks.</span>
 <span id="cb14-560"><a href="#cb14-560" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-561"><a href="#cb14-561" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = F}</span></span>
-<span id="cb14-562"><a href="#cb14-562" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb14-563"><a href="#cb14-563" aria-hidden="true" tabindex="-1"></a><span class="in">library(readxl)</span></span>
-<span id="cb14-564"><a href="#cb14-564" aria-hidden="true" tabindex="-1"></a><span class="in">library(janitor)</span></span>
-<span id="cb14-565"><a href="#cb14-565" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggimage)</span></span>
-<span id="cb14-566"><a href="#cb14-566" aria-hidden="true" tabindex="-1"></a><span class="in">library(scales)</span></span>
-<span id="cb14-567"><a href="#cb14-567" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggtext)</span></span>
-<span id="cb14-568"><a href="#cb14-568" aria-hidden="true" tabindex="-1"></a><span class="in">library(showtext)</span></span>
+<span id="cb14-562"><a href="#cb14-562" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb14-563"><a href="#cb14-563" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb14-564"><a href="#cb14-564" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb14-565"><a href="#cb14-565" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span>
+<span id="cb14-566"><a href="#cb14-566" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb14-567"><a href="#cb14-567" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
+<span id="cb14-568"><a href="#cb14-568" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
 <span id="cb14-569"><a href="#cb14-569" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-570"><a href="#cb14-570" aria-hidden="true" tabindex="-1"></a><span class="in">sysfonts::font_add_google("Lato")</span></span>
-<span id="cb14-571"><a href="#cb14-571" aria-hidden="true" tabindex="-1"></a><span class="in">showtext::showtext_auto()</span></span>
-<span id="cb14-572"><a href="#cb14-572" aria-hidden="true" tabindex="-1"></a><span class="in">showtext::showtext_opts(dpi = 300)</span></span>
+<span id="cb14-570"><a href="#cb14-570" aria-hidden="true" tabindex="-1"></a>sysfonts<span class="sc">::</span><span class="fu">font_add_google</span>(<span class="st">"Lato"</span>)</span>
+<span id="cb14-571"><a href="#cb14-571" aria-hidden="true" tabindex="-1"></a>showtext<span class="sc">::</span><span class="fu">showtext_auto</span>()</span>
+<span id="cb14-572"><a href="#cb14-572" aria-hidden="true" tabindex="-1"></a>showtext<span class="sc">::</span><span class="fu">showtext_opts</span>(<span class="at">dpi =</span> <span class="dv">300</span>)</span>
 <span id="cb14-573"><a href="#cb14-573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-574"><a href="#cb14-574" aria-hidden="true" tabindex="-1"></a><span class="in">transparent &lt;- function(img) {</span></span>
-<span id="cb14-575"><a href="#cb14-575" aria-hidden="true" tabindex="-1"></a><span class="in">  magick::image_fx(img, expression = "0.5*a", channel = "alpha")</span></span>
-<span id="cb14-576"><a href="#cb14-576" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb14-574"><a href="#cb14-574" aria-hidden="true" tabindex="-1"></a>transparent <span class="ot">&lt;-</span> <span class="cf">function</span>(img) {</span>
+<span id="cb14-575"><a href="#cb14-575" aria-hidden="true" tabindex="-1"></a>  magick<span class="sc">::</span><span class="fu">image_fx</span>(img, <span class="at">expression =</span> <span class="st">"0.5*a"</span>, <span class="at">channel =</span> <span class="st">"alpha"</span>)</span>
+<span id="cb14-576"><a href="#cb14-576" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb14-577"><a href="#cb14-577" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-578"><a href="#cb14-578" aria-hidden="true" tabindex="-1"></a><span class="in">df = readxl::read_xlsx(table_filename, skip = 3) |&gt;</span></span>
-<span id="cb14-579"><a href="#cb14-579" aria-hidden="true" tabindex="-1"></a><span class="in">  janitor::clean_names() |&gt;</span></span>
-<span id="cb14-580"><a href="#cb14-580" aria-hidden="true" tabindex="-1"></a><span class="in">  select(year, total = total_enrollment, male, female) |&gt;</span></span>
-<span id="cb14-581"><a href="#cb14-581" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(male)) |&gt;</span></span>
-<span id="cb14-582"><a href="#cb14-582" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year != "1")</span></span>
-<span id="cb14-583"><a href="#cb14-583" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb14-584"><a href="#cb14-584" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, '\\\\1\\\\', ""),</span></span>
-<span id="cb14-585"><a href="#cb14-585" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, "\\r\\n", "")</span></span>
-<span id="cb14-586"><a href="#cb14-586" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
-<span id="cb14-587"><a href="#cb14-587" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb14-588"><a href="#cb14-588" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, '\\\\1\\\\', ""),</span></span>
-<span id="cb14-589"><a href="#cb14-589" aria-hidden="true" tabindex="-1"></a><span class="in">    year = str_replace(year, "\\r\\n", ""),</span></span>
-<span id="cb14-590"><a href="#cb14-590" aria-hidden="true" tabindex="-1"></a><span class="in">    year = as.numeric(year),</span></span>
-<span id="cb14-591"><a href="#cb14-591" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_male = male / total,</span></span>
-<span id="cb14-592"><a href="#cb14-592" aria-hidden="true" tabindex="-1"></a><span class="in">    prop_female = female / total</span></span>
-<span id="cb14-593"><a href="#cb14-593" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
-<span id="cb14-594"><a href="#cb14-594" aria-hidden="true" tabindex="-1"></a><span class="in">  select(year, </span></span>
-<span id="cb14-595"><a href="#cb14-595" aria-hidden="true" tabindex="-1"></a><span class="in">         starts_with('prop')) </span></span>
+<span id="cb14-578"><a href="#cb14-578" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(table_filename, <span class="at">skip =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-579"><a href="#cb14-579" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-580"><a href="#cb14-580" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, <span class="at">total =</span> total_enrollment, male, female) <span class="sc">|&gt;</span></span>
+<span id="cb14-581"><a href="#cb14-581" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(male)) <span class="sc">|&gt;</span></span>
+<span id="cb14-582"><a href="#cb14-582" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="st">"1"</span>)</span>
+<span id="cb14-583"><a href="#cb14-583" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-584"><a href="#cb14-584" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">'</span><span class="sc">\\\\</span><span class="st">1</span><span class="sc">\\\\</span><span class="st">'</span>, <span class="st">""</span>),</span>
+<span id="cb14-585"><a href="#cb14-585" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">"</span><span class="sc">\\</span><span class="st">r</span><span class="sc">\\</span><span class="st">n"</span>, <span class="st">""</span>)</span>
+<span id="cb14-586"><a href="#cb14-586" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-587"><a href="#cb14-587" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-588"><a href="#cb14-588" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">'</span><span class="sc">\\\\</span><span class="st">1</span><span class="sc">\\\\</span><span class="st">'</span>, <span class="st">""</span>),</span>
+<span id="cb14-589"><a href="#cb14-589" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">str_replace</span>(year, <span class="st">"</span><span class="sc">\\</span><span class="st">r</span><span class="sc">\\</span><span class="st">n"</span>, <span class="st">""</span>),</span>
+<span id="cb14-590"><a href="#cb14-590" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">as.numeric</span>(year),</span>
+<span id="cb14-591"><a href="#cb14-591" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_male =</span> male <span class="sc">/</span> total,</span>
+<span id="cb14-592"><a href="#cb14-592" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_female =</span> female <span class="sc">/</span> total</span>
+<span id="cb14-593"><a href="#cb14-593" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-594"><a href="#cb14-594" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, </span>
+<span id="cb14-595"><a href="#cb14-595" aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">'prop'</span>)) </span>
 <span id="cb14-596"><a href="#cb14-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-597"><a href="#cb14-597" aria-hidden="true" tabindex="-1"></a><span class="in">final_male_df = df |&gt;</span></span>
-<span id="cb14-598"><a href="#cb14-598" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(prop_male &gt; prop_female) |&gt;</span></span>
-<span id="cb14-599"><a href="#cb14-599" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(order_by = year)</span></span>
+<span id="cb14-597"><a href="#cb14-597" aria-hidden="true" tabindex="-1"></a>final_male_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
+<span id="cb14-598"><a href="#cb14-598" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop_male <span class="sc">&gt;</span> prop_female) <span class="sc">|&gt;</span></span>
+<span id="cb14-599"><a href="#cb14-599" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> year)</span>
 <span id="cb14-600"><a href="#cb14-600" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-601"><a href="#cb14-601" aria-hidden="true" tabindex="-1"></a><span class="in">df = df |&gt;</span></span>
-<span id="cb14-602"><a href="#cb14-602" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year %in% seq(2023, 1947, by = -2))</span></span>
+<span id="cb14-601"><a href="#cb14-601" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
+<span id="cb14-602"><a href="#cb14-602" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">2023</span>, <span class="dv">1947</span>, <span class="at">by =</span> <span class="sc">-</span><span class="dv">2</span>))</span>
 <span id="cb14-603"><a href="#cb14-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-604"><a href="#cb14-604" aria-hidden="true" tabindex="-1"></a><span class="in">long_df = df |&gt;</span></span>
-<span id="cb14-605"><a href="#cb14-605" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(</span></span>
-<span id="cb14-606"><a href="#cb14-606" aria-hidden="true" tabindex="-1"></a><span class="in">    cols = c(prop_male, prop_female),</span></span>
-<span id="cb14-607"><a href="#cb14-607" aria-hidden="true" tabindex="-1"></a><span class="in">    names_to = "sex",</span></span>
-<span id="cb14-608"><a href="#cb14-608" aria-hidden="true" tabindex="-1"></a><span class="in">    names_prefix = "prop_",</span></span>
-<span id="cb14-609"><a href="#cb14-609" aria-hidden="true" tabindex="-1"></a><span class="in">    values_to = "enrollment_pct"</span></span>
-<span id="cb14-610"><a href="#cb14-610" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb14-604"><a href="#cb14-604" aria-hidden="true" tabindex="-1"></a>long_df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
+<span id="cb14-605"><a href="#cb14-605" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb14-606"><a href="#cb14-606" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(prop_male, prop_female),</span>
+<span id="cb14-607"><a href="#cb14-607" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"sex"</span>,</span>
+<span id="cb14-608"><a href="#cb14-608" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"prop_"</span>,</span>
+<span id="cb14-609"><a href="#cb14-609" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"enrollment_pct"</span></span>
+<span id="cb14-610"><a href="#cb14-610" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb14-611"><a href="#cb14-611" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-612"><a href="#cb14-612" aria-hidden="true" tabindex="-1"></a><span class="in">plot = long_df |&gt;</span></span>
-<span id="cb14-613"><a href="#cb14-613" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = year, y = enrollment_pct, color = sex)) +</span></span>
-<span id="cb14-614"><a href="#cb14-614" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size = 2.1) +</span></span>
-<span id="cb14-615"><a href="#cb14-615" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_segment(</span></span>
-<span id="cb14-616"><a href="#cb14-616" aria-hidden="true" tabindex="-1"></a><span class="in">    data = df,</span></span>
-<span id="cb14-617"><a href="#cb14-617" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year, y = prop_male, yend = prop_female),</span></span>
-<span id="cb14-618"><a href="#cb14-618" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F,</span></span>
-<span id="cb14-619"><a href="#cb14-619" aria-hidden="true" tabindex="-1"></a><span class="in">    alpha = 0.3,</span></span>
-<span id="cb14-620"><a href="#cb14-620" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 2.2,</span></span>
-<span id="cb14-621"><a href="#cb14-621" aria-hidden="true" tabindex="-1"></a><span class="in">    color = '#d95f02'</span></span>
-<span id="cb14-622"><a href="#cb14-622" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-623"><a href="#cb14-623" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_segment(</span></span>
-<span id="cb14-624"><a href="#cb14-624" aria-hidden="true" tabindex="-1"></a><span class="in">    data = final_male_df,</span></span>
-<span id="cb14-625"><a href="#cb14-625" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year + 1),</span></span>
-<span id="cb14-626"><a href="#cb14-626" aria-hidden="true" tabindex="-1"></a><span class="in">    y = 0.25,</span></span>
-<span id="cb14-627"><a href="#cb14-627" aria-hidden="true" tabindex="-1"></a><span class="in">    yend = 0.7,</span></span>
-<span id="cb14-628"><a href="#cb14-628" aria-hidden="true" tabindex="-1"></a><span class="in">    color = '#d95f02',</span></span>
-<span id="cb14-629"><a href="#cb14-629" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 1,</span></span>
-<span id="cb14-630"><a href="#cb14-630" aria-hidden="true" tabindex="-1"></a><span class="in">    alpha = 0.5,</span></span>
-<span id="cb14-631"><a href="#cb14-631" aria-hidden="true" tabindex="-1"></a><span class="in">    linetype = 'dotdash',</span></span>
-<span id="cb14-632"><a href="#cb14-632" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F</span></span>
-<span id="cb14-633"><a href="#cb14-633" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-634"><a href="#cb14-634" aria-hidden="true" tabindex="-1"></a><span class="in">  ggimage::geom_image(</span></span>
-<span id="cb14-635"><a href="#cb14-635" aria-hidden="true" tabindex="-1"></a><span class="in">    data = tibble(year = 1998, enrollment_pct = 0.32),</span></span>
-<span id="cb14-636"><a href="#cb14-636" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = year, y = enrollment_pct, image = 'generic_students.png'),</span></span>
-<span id="cb14-637"><a href="#cb14-637" aria-hidden="true" tabindex="-1"></a><span class="in">    image_fun = transparent,</span></span>
-<span id="cb14-638"><a href="#cb14-638" aria-hidden="true" tabindex="-1"></a><span class="in">    size = 0.3,</span></span>
-<span id="cb14-639"><a href="#cb14-639" aria-hidden="true" tabindex="-1"></a><span class="in">    inherit.aes = F</span></span>
-<span id="cb14-640"><a href="#cb14-640" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-641"><a href="#cb14-641" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(</span></span>
-<span id="cb14-642"><a href="#cb14-642" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = scales::percent_format(),</span></span>
-<span id="cb14-643"><a href="#cb14-643" aria-hidden="true" tabindex="-1"></a><span class="in">    limits = c(0.25, 0.73),</span></span>
-<span id="cb14-644"><a href="#cb14-644" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = c(0, 0)</span></span>
-<span id="cb14-645"><a href="#cb14-645" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-646"><a href="#cb14-646" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(</span></span>
-<span id="cb14-647"><a href="#cb14-647" aria-hidden="true" tabindex="-1"></a><span class="in">    breaks = seq(1950, 2025, by = 10),</span></span>
-<span id="cb14-648"><a href="#cb14-648" aria-hidden="true" tabindex="-1"></a><span class="in">    limits = c(1945, 2024),</span></span>
-<span id="cb14-649"><a href="#cb14-649" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = c(0, 0)</span></span>
-<span id="cb14-650"><a href="#cb14-650" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-651"><a href="#cb14-651" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(</span></span>
-<span id="cb14-652"><a href="#cb14-652" aria-hidden="true" tabindex="-1"></a><span class="in">    breaks = c("male", "female"),</span></span>
-<span id="cb14-653"><a href="#cb14-653" aria-hidden="true" tabindex="-1"></a><span class="in">    values = c("#7570b3", '#1b9e77'),</span></span>
-<span id="cb14-654"><a href="#cb14-654" aria-hidden="true" tabindex="-1"></a><span class="in">    guide = 'none'</span></span>
-<span id="cb14-655"><a href="#cb14-655" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-656"><a href="#cb14-656" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb14-657"><a href="#cb14-657" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "",</span></span>
-<span id="cb14-658"><a href="#cb14-658" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "",</span></span>
-<span id="cb14-659"><a href="#cb14-659" aria-hidden="true" tabindex="-1"></a><span class="in">    title = "&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places.",</span></span>
-<span id="cb14-660"><a href="#cb14-660" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Proportion of Fall Enrollment between 1947 and 2023 (odd years only)",</span></span>
-<span id="cb14-661"><a href="#cb14-661" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
-<span id="cb14-662"><a href="#cb14-662" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb14-663"><a href="#cb14-663" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
-<span id="cb14-664"><a href="#cb14-664" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(</span></span>
-<span id="cb14-665"><a href="#cb14-665" aria-hidden="true" tabindex="-1"></a><span class="in">    text = element_text(family = 'Lato', size = 9),</span></span>
-<span id="cb14-666"><a href="#cb14-666" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid = element_blank(),</span></span>
-<span id="cb14-667"><a href="#cb14-667" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid.major.y = element_line(color = 'grey90', linetype = 'dotted'),</span></span>
-<span id="cb14-668"><a href="#cb14-668" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.ticks.x.bottom = element_line(color = 'black'),</span></span>
-<span id="cb14-669"><a href="#cb14-669" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.ticks.length.x.bottom = unit(4, units = 'pt'),</span></span>
-<span id="cb14-670"><a href="#cb14-670" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.x.bottom = element_text(color = 'black'),</span></span>
-<span id="cb14-671"><a href="#cb14-671" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.y.left = element_text(color = 'black'),</span></span>
-<span id="cb14-672"><a href="#cb14-672" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.title = ggtext::element_markdown(),</span></span>
-<span id="cb14-673"><a href="#cb14-673" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.caption.position = 'plot',</span></span>
-<span id="cb14-674"><a href="#cb14-674" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.caption = ggtext::element_markdown(hjust = 0, family = "")</span></span>
-<span id="cb14-675"><a href="#cb14-675" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb14-612"><a href="#cb14-612" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">=</span> long_df <span class="sc">|&gt;</span></span>
+<span id="cb14-613"><a href="#cb14-613" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb14-614"><a href="#cb14-614" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.1</span>) <span class="sc">+</span></span>
+<span id="cb14-615"><a href="#cb14-615" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-616"><a href="#cb14-616" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
+<span id="cb14-617"><a href="#cb14-617" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> prop_male, <span class="at">yend =</span> prop_female),</span>
+<span id="cb14-618"><a href="#cb14-618" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F,</span>
+<span id="cb14-619"><a href="#cb14-619" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-620"><a href="#cb14-620" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">2.2</span>,</span>
+<span id="cb14-621"><a href="#cb14-621" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span></span>
+<span id="cb14-622"><a href="#cb14-622" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-623"><a href="#cb14-623" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb14-624"><a href="#cb14-624" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> final_male_df,</span>
+<span id="cb14-625"><a href="#cb14-625" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-626"><a href="#cb14-626" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">0.25</span>,</span>
+<span id="cb14-627"><a href="#cb14-627" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-628"><a href="#cb14-628" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">'#d95f02'</span>,</span>
+<span id="cb14-629"><a href="#cb14-629" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb14-630"><a href="#cb14-630" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb14-631"><a href="#cb14-631" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">'dotdash'</span>,</span>
+<span id="cb14-632"><a href="#cb14-632" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-633"><a href="#cb14-633" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-634"><a href="#cb14-634" aria-hidden="true" tabindex="-1"></a>  ggimage<span class="sc">::</span><span class="fu">geom_image</span>(</span>
+<span id="cb14-635"><a href="#cb14-635" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1998</span>, <span class="at">enrollment_pct =</span> <span class="fl">0.32</span>),</span>
+<span id="cb14-636"><a href="#cb14-636" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> enrollment_pct, <span class="at">image =</span> <span class="st">'generic_students.png'</span>),</span>
+<span id="cb14-637"><a href="#cb14-637" aria-hidden="true" tabindex="-1"></a>    <span class="at">image_fun =</span> transparent,</span>
+<span id="cb14-638"><a href="#cb14-638" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb14-639"><a href="#cb14-639" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> F</span>
+<span id="cb14-640"><a href="#cb14-640" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-641"><a href="#cb14-641" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb14-642"><a href="#cb14-642" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(),</span>
+<span id="cb14-643"><a href="#cb14-643" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.73</span>),</span>
+<span id="cb14-644"><a href="#cb14-644" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb14-645"><a href="#cb14-645" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-646"><a href="#cb14-646" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb14-647"><a href="#cb14-647" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb14-648"><a href="#cb14-648" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1945</span>, <span class="dv">2024</span>),</span>
+<span id="cb14-649"><a href="#cb14-649" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb14-650"><a href="#cb14-650" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-651"><a href="#cb14-651" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb14-652"><a href="#cb14-652" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>),</span>
+<span id="cb14-653"><a href="#cb14-653" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#7570b3"</span>, <span class="st">'#1b9e77'</span>),</span>
+<span id="cb14-654"><a href="#cb14-654" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">'none'</span></span>
+<span id="cb14-655"><a href="#cb14-655" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-656"><a href="#cb14-656" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-657"><a href="#cb14-657" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb14-658"><a href="#cb14-658" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb14-659"><a href="#cb14-659" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"&lt;span style = 'color:#7570b3;'&gt;**Male**&lt;/span&gt; and &lt;span style = 'color:#1b9e77;'&gt;**Female**&lt;/span&gt; University Enrollment has swapped places."</span>,</span>
+<span id="cb14-660"><a href="#cb14-660" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Proportion of Fall Enrollment between 1947 and 2023 (odd years only)"</span>,</span>
+<span id="cb14-661"><a href="#cb14-661" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data sourced from *The Institute of Education Sciences*.&lt;br&gt;&lt;br&gt;Plot by Akshay Prasadan."</span></span>
+<span id="cb14-662"><a href="#cb14-662" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-663"><a href="#cb14-663" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-664"><a href="#cb14-664" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-665"><a href="#cb14-665" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'Lato'</span>, <span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb14-666"><a href="#cb14-666" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-667"><a href="#cb14-667" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey90'</span>, <span class="at">linetype =</span> <span class="st">'dotted'</span>),</span>
+<span id="cb14-668"><a href="#cb14-668" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-669"><a href="#cb14-669" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.length.x.bottom =</span> <span class="fu">unit</span>(<span class="dv">4</span>, <span class="at">units =</span> <span class="st">'pt'</span>),</span>
+<span id="cb14-670"><a href="#cb14-670" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x.bottom =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-671"><a href="#cb14-671" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">'black'</span>),</span>
+<span id="cb14-672"><a href="#cb14-672" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
+<span id="cb14-673"><a href="#cb14-673" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption.position =</span> <span class="st">'plot'</span>,</span>
+<span id="cb14-674"><a href="#cb14-674" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">family =</span> <span class="st">""</span>)</span>
+<span id="cb14-675"><a href="#cb14-675" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb14-676"><a href="#cb14-676" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-677"><a href="#cb14-677" aria-hidden="true" tabindex="-1"></a><span class="in">ggsave(</span></span>
-<span id="cb14-678"><a href="#cb14-678" aria-hidden="true" tabindex="-1"></a><span class="in">  filename = "final_education_plot.png",</span></span>
-<span id="cb14-679"><a href="#cb14-679" aria-hidden="true" tabindex="-1"></a><span class="in">  dpi = 300,</span></span>
-<span id="cb14-680"><a href="#cb14-680" aria-hidden="true" tabindex="-1"></a><span class="in">  height = 5,</span></span>
-<span id="cb14-681"><a href="#cb14-681" aria-hidden="true" tabindex="-1"></a><span class="in">  width = 8,</span></span>
-<span id="cb14-682"><a href="#cb14-682" aria-hidden="true" tabindex="-1"></a><span class="in">  bg = "white"</span></span>
-<span id="cb14-683"><a href="#cb14-683" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb14-677"><a href="#cb14-677" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb14-678"><a href="#cb14-678" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"final_education_plot.png"</span>,</span>
+<span id="cb14-679"><a href="#cb14-679" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span>,</span>
+<span id="cb14-680"><a href="#cb14-680" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">5</span>,</span>
+<span id="cb14-681"><a href="#cb14-681" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb14-682"><a href="#cb14-682" aria-hidden="true" tabindex="-1"></a>  <span class="at">bg =</span> <span class="st">"white"</span></span>
+<span id="cb14-683"><a href="#cb14-683" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-684"><a href="#cb14-684" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-685"><a href="#cb14-685" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-686"><a href="#cb14-686" aria-hidden="true" tabindex="-1"></a><span class="fu"># Takeaways</span></span>
@@ -2246,10 +1969,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-690"><a href="#cb14-690" aria-hidden="true" tabindex="-1"></a>The main takeaway of this blog post: Use text customization feature to replace existing plot elements like legends that can take up valuable space or contribute to a sense of clutter. Obviously if there are many categories, this is not advisable. But for something as simple as male versus female trends, Tobias had the right idea. </span>
 <span id="cb14-691"><a href="#cb14-691" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-692"><a href="#cb14-692" aria-hidden="true" tabindex="-1"></a>I hope you also enjoyed the other tips and tricks with fonts, background images, dumbbell plot construction, and data cleaning Excel formats.</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-
 
 
 

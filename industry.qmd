@@ -20,7 +20,7 @@ At the [Karikari Laboratory](https://karikarilab.org/) headed by Dr. Thomas K. K
 
 ### Featured Work
 
-- M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, vol. 17, no. 1, p. 173, Jul. 2025. DOI: 10.1186/s13195-025-01803-w 
+- M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, 17, no. 173, Jul. 2025. DOI: 10.1186/s13195-025-01803-w 
 
 ## Data Science Intern at Highmark Health
 
