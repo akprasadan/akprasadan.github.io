@@ -11,8 +11,8 @@ format:
 
 [3] P. Sasan, A. Prasadan, and V. Q. Vu, “Computationally sufficient reductions for some sparse multiway and joint matrix estimators,” 2024. Submitted.
 
-[4] A. Prasadan and M. Neykov, “Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints,” *arXiv:2412.03832*, 2024. Under minor revision at Annals of Statistics.
+[4] A. Prasadan and M. Neykov. “Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints”, 2024. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Under minor revision at *Annals of Statistics*. 
 
-[5] A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” *arXiv:2406.05911*, 2024.
+[5] A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” 2024. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Accepted at *IEEE Transactions on Information Theory.* 
 
 [6] A. Prasadan, D. A. James, and J. Greenhouse, “Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden,” Technical Report, Novartis, 2022.
