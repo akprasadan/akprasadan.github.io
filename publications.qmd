@@ -5,14 +5,15 @@ format:
 ---
 
 
-[1] A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,”  *Electronic Journal of Statistics*, 19(2), pp. 3449-3488, 2025.
+[1] A. Prasadan and M. Neykov. “Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints,” 2025. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Accepted at *Annals of Statistics*. 
 
-[2] M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, 17, no. 173, Jul. 2025. DOI: 10.1186/s13195-025-01803-w
+[2] A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” 2025. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Accepted at *IEEE Transactions on Information Theory.* 
 
-[3] P. Sasan, A. Prasadan, and V. Q. Vu, “Computationally sufficient reductions for some sparse multiway and joint matrix estimators,” 2024. Submitted.
+[3] A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,”  *Electronic Journal of Statistics*, 19(2), pp. 3449-3488, 2025.
 
-[4] A. Prasadan and M. Neykov. “Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints,” 2024. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Under minor revision at *Annals of Statistics*. 
+[4] M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, 17, no. 173, Jul. 2025. DOI: 10.1186/s13195-025-01803-w
 
-[5] A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” 2024. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Accepted at *IEEE Transactions on Information Theory.* 
+
+[5] P. Sasan, A. Prasadan, and V. Q. Vu, “Computationally sufficient reductions for some sparse multiway and joint matrix estimators,” 2024. Submitted.
 
 [6] A. Prasadan, D. A. James, and J. Greenhouse, “Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden,” Technical Report, Novartis, 2022.
