@@ -7,11 +7,11 @@ format:
 
 [1] A. Prasadan and M. Neykov. “Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints,” 2025. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Accepted at *Annals of Statistics*. 
 
-[2] A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” 2025. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Accepted at *IEEE Transactions on Information Theory.* 
+[2] A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” IEEE Transactions on Information Theory, pp. 1–1, 2025, doi: 10.1109/TIT.2025.3605342.
 
-[3] A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,”  *Electronic Journal of Statistics*, 19(2), pp. 3449-3488, 2025.
+[3] A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,” *Electronic Journal of Statistics*, vol. 19, no. 2, pp. 3449–3488, 2025, doi: 10.1214/25-EJS2419.
 
-[4] M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, 17, no. 173, Jul. 2025. DOI: 10.1186/s13195-025-01803-w
+[4] M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, vol. 17, no. 1, p. 173, 2025–7, doi: 10.1186/s13195-025-01803-w.
 
 
 [5] P. Sasan, A. Prasadan, and V. Q. Vu, “Computationally sufficient reductions for some sparse multiway and joint matrix estimators,” 2024. Submitted.

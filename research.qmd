@@ -38,8 +38,8 @@ This thesis was ultimately one of many sequels to my advisor's original 2022 pap
 ### Featured Work
 
 - A. Prasadan and M. Neykov. “Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints,” 2025. [arXiv:2412.03832](https://arxiv.org/abs/2412.03832) [math.ST]. Accepted at *Annals of Statistics*. 
-- A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” 2025. [arXiv:2406.05911](https://arxiv.org/abs/2406.05911) [math.ST]. Accepted at *IEEE Transactions on Information Theory.* 
-- A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,”  *Electronic Journal of Statistics*, 19(2), pp. 3449-3488, 2025.
+- A. Prasadan and M. Neykov, “Some facts about the optimality of the LSE in the Gaussian sequence model with convex constraint,” *IEEE Transactions on Information Theory*, pp. 1–1, 2025, doi: 10.1109/TIT.2025.3605342.
+- A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,” *Electronic Journal of Statistics*, vol. 19, no. 2, pp. 3449–3488, 2025, doi: 10.1214/25-EJS2419.
 
 ---
 
