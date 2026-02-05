@@ -1,0 +1,53 @@
+---
+title: "An Easy Proof of SLLN with Hoeffding"
+description: "A more accessible proof using tools seen in applied statistics, ML, or computer science courses."
+author:
+  - name: Akshay Prasadan
+    url: https://akprasadan.github.io/
+    affiliation: Postdoctoral Fellow at Simon Fraser University
+date: 2-4-2026
+categories: [probability] # self-defined categories
+citation: 
+  url: https://akprasadan.github.io/posts/2026-02-04-SLLN-Hoeffding
+appendix-cite-as: display
+format:
+  html: 
+    anchor-sections: true
+    toc: true
+knitr:
+  opts_chunk: 
+    message: false
+    warning: false
+bibliography: ref.bib
+---
+
+# Introduction
+
+Given IID $X_1,\cdots,X_n$ random variables (RVs) with mean $\mu$ and variance $\sigma^2$, an easy consequence of Chebyshev's inequality is the Weak Law of Large Numbers, namely, that $n^{-1}\sum_{i=1}^n X_i$ converges in probability in $\mu$. This proof is often presented in introductory probability and statistics coursework. However, the stronger result that $n^{-1}\sum_{i=1}^n X_i$ converges *almost surely* to $\mu$ is skipped.
+
+Recently, I discovered for myself that we can simply use any of various exponential tail bounds for an easy proof of the Strong Law of Large Numbers (SLLN), one that doesn't involve tedious algebra involving the first four moments of the $X_i$. However, it does impose some additional distribution assumptions. I am highly skeptical of the originality of this idea, and I wonder if the only reason it's not presented is that it's obvious to probabilists, and if you're going to go into the measure theory required for defining almost sure convergence, you might as well prove the most general version of the SLLN. Nevertheless, I'm going to present it because I found it interesting.
+
+I'm going to require that the $X_i$ are sub-Gaussian, but the idea can be extended to a much broader set of RVs. All we need is a tail bound of the form $P(|\overline{X}_n-\mu|> \varepsilon)\le \exp(- f(n)g(\varepsilon))$ for functions $f$ and $g$  such that $\sum_{n=1}^{\infty}\exp(-f(n)g(\varepsilon))<\infty$. Sub-Gaussian is enough to include all Gaussians and all bounded RVs (Bernoulli, uniform, etc.). We can also include sub-exponential ones, such as exponential, Poisson, Chi-squared, Gamma, and any product of two sub-Gaussian RVs. We can also relax the IID assumption so long as the sub-Gaussian or sub-exponential parameters don't `grow' quickly with $n$.
+
+
+# Statement
+
+Suppose $\{X_i\}_{i=1}^n$ is an IID sequence of sub-Gaussian random variables with mean $\mu$. Then $\overline{X}_n$ converges almost surely to $\mu$.
+
+# Proof
+
+Let $\sigma^2$ be the sub-Gaussian variance parameter of the $X_i$. By Hoeffding's inequality [@Wainwright_2019, Proposition 2.5], $$P\left( |\overline{X}_n-\mu| > \varepsilon\right) \le 2\exp\left(-\frac{n\varepsilon^2}{2\sigma^2}\right).$$  {#eq-hoeffding} Thus, $\sum_{n=1}^{\infty}P\left( |\overline{X}_n-\mu| > \varepsilon\right) <\infty$. By the Borel Cantelli lemma, $$P\left(|\overline{X}_n-\mu| > \varepsilon \text{ infinitely often}\right)=0.$$ This is equivalent to $\overline{X}_n$ converging almost surely to $\mu$ [see, e.g., @ramble, Theorem 13.1.1].
+
+# Extensions
+
+The key requirement is summability of @eq-hoeffding so that we may apply the Borel-Cantelli Lemma. This suggests some easy extensions, to either sub-exponential or non-IID RVs.
+
+Suppose each $X_i$ is an independent sub-Gaussian RV with parameter $\sigma_i^2$. Then Hoeffding again yields $$P\left( |\overline{X}_n-\mu| > \varepsilon\right) \le 2\exp\left(-\frac{n^2\varepsilon^2}{2\sum_{i=1}^n\sigma_i^2}\right).$$ So long as  $\sum_{n=1}^{\infty} \exp\left(-\frac{n^2\varepsilon^2}{2\sum_{i=1}^n\sigma_i^2}\right)<\infty$, the same result follows.
+
+If each $X_i$ is sub-exponential with parameter $(\nu_i,\alpha_i)$, then we get a tail bound of $$P\left( |\overline{X}_n-\mu| > \varepsilon\right) \le 2\exp\left(-\frac{1}{2}\min\left(\frac{n^2\varepsilon^2}{\sum_{i=1}^n \nu_i^2}, \frac{n\varepsilon}{\max_{i=1}^n \alpha_i}\right)\right)$$ [see @Wainwright_2019, Equation (2.18)]. Again, we can pick the $\alpha_i$ and $\nu_i$ so that the summability property in $n$ holds.
+
+# Reflection
+
+Hoeffding's inequality and others are taught in many applied classes across statistics, computer science, machine learning, and others. It might make sense to take advantage of this and offer students an easy proof of an often ignored result.
+
+Unfortunately, it does require a tricky step where the usual definition of almost sure convergence, that $P(\lim_n X_n=\mu)=0$ is shown to be equivalent to $P\left(|X_n-\mu| > \varepsilon \text{ infinitely often}\right)=0$ for all $\varepsilon>0$.
