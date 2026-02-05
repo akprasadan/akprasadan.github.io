@@ -8,6 +8,7 @@ project:
     - .nojekyll
 website:
   title: Akshay Prasadan
+  google-analytics: "G-94H6G93NGK"
   navbar:
     left:
       - href: index.qmd
