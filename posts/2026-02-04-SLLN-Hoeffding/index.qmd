@@ -10,6 +10,7 @@ categories: [probability] # self-defined categories
 citation: 
   url: https://akprasadan.github.io/posts/2026-02-04-SLLN-Hoeffding
 appendix-cite-as: display
+image: lln_plot.png
 format:
   html: 
     anchor-sections: true
