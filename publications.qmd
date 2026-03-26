@@ -4,16 +4,17 @@ format:
   html
 ---
 
+[1] A. Prasadan, D. Estep, and D. Bingham (2026). Continuity of the Solution of a Non-Parametric Bayesian Statistical Calibration Procedure. *arXiv preprint arXiv:2603.20665.*
 
-[1] A. Prasadan and M. Neykov, "Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints," *The Annals of Statistics*, vol. 54, no. 1, pp. 490–515, 2026, doi: 10.1214/25-AOS2576.
+[2] A. Prasadan and M. Neykov, "Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints," *The Annals of Statistics*, vol. 54, no. 1, pp. 490–515, 2026, doi: 10.1214/25-AOS2576.
 
-[2] A. Prasadan and M. Neykov, "Some Facts About the Optimality of the LSE in the Gaussian Sequence Model With Convex Constraint," *IEEE Transactions on Information Theory*, vol. 71, no. 11, pp. 8928-8958, Nov. 2025, doi: 10.1109/TIT.2025.3605342. 
+[3] A. Prasadan and M. Neykov, "Some Facts About the Optimality of the LSE in the Gaussian Sequence Model With Convex Constraint," *IEEE Transactions on Information Theory*, vol. 71, no. 11, pp. 8928-8958, Nov. 2025, doi: 10.1109/TIT.2025.3605342. 
 
-[3] A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,” *Electronic Journal of Statistics*, vol. 19, no. 2, pp. 3449–3488, 2025, doi: 10.1214/25-EJS2419.
+[4] A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,” *Electronic Journal of Statistics*, vol. 19, no. 2, pp. 3449–3488, 2025, doi: 10.1214/25-EJS2419.
 
-[4] M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, vol. 17, no. 1, p. 173, 2025–7, doi: 10.1186/s13195-025-01803-w.
+[5] M. T. Dresse, P. C. L. Ferreira, A. Prasadan, J. L. Diaz, X. Zeng, B. Bellaver, G. Povala, V. L. Villemagne, M. I. Kamboh, A. D. Cohen, T. A. Pascoal, M. Ganguli, B. E. Snitz, C. E. Shaaban, and T. K. Karikari, “Plasma biomarkers identify brain ATN abnormalities in a dementia-free population-based cohort,” *Alzheimer’s Research & Therapy*, vol. 17, no. 1, p. 173, 2025–7, doi: 10.1186/s13195-025-01803-w.
 
 
-[5] P. Sasan, A. Prasadan, and V. Q. Vu, “Computationally sufficient reductions for some sparse multiway and joint matrix estimators,” 2024. Submitted.
+[6] P. Sasan, A. Prasadan, and V. Q. Vu, “Computationally sufficient reductions for some sparse multiway and joint matrix estimators,” 2024. Submitted.
 
-[6] A. Prasadan, D. A. James, and J. Greenhouse, “Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden,” Technical Report, Novartis, 2022.
+[7] A. Prasadan, D. A. James, and J. Greenhouse, “Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden,” Technical Report, Novartis, 2022.
