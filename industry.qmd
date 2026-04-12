@@ -11,8 +11,8 @@ See [Multistate and Joint Models](research.qmd#multistate-and-joint-models) for 
 
 ### Featured Work
 
-- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden*. Novartis Technical Report, 2022.   
-- Invited Topics Contributed Session, Joint Statistical Meetings (JSM), Toronto, 2023. *Joint modeling of transduced cellular kinetics, tumor size, and survival endpoints*.
+- Prasadan, A., James, D. A.,  & Greenhouse, J. (2022) "Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden." *Novartis Technical Report*.  
+- Invited Topics Contributed Session, Joint Statistical Meetings (JSM), Toronto, 2023. "Joint modeling of transduced cellular kinetics, tumor size, and survival endpoints."
 
 ## Statistician at UPMC
 

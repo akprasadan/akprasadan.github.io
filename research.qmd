@@ -7,7 +7,7 @@ format:
     number-sections: false
 execute:
   freeze: auto  
-bibliography: refs.bib
+bibliography: ref.bib
 ---
 
 This page summarizes my ongoing postdoctoral research supervised by [Donald Estep](https://canssi.ca/don-estep/), Director of the Canadian Statistical Sciences Institute, as well as past work during my PhD with my advisor [Matey Neykov](https://mateyneykov.com/). A full list of the resulting publications can be found on my [Publications page](publications.qmd). 
@@ -33,7 +33,7 @@ $$\inf_{\hat{\mu}} \sup_{\mu \in K} \mathbb{E}\|\hat{\mu}(\vec{Y}) - \mu\|_2^2,$
 
 In this work, we devised minimax optimal techniques to estimate means when the underlying set was *star-shaped* (see below), a generalization of convexity. We extended this work to a non-parametric regression setting, i.e., observing $Y_i=f^{\ast}(X_i)+\xi_i$ and trying to find $f^{\ast}$. We also allowed for adversarial contamination of some fraction $\epsilon<1/2$ of the data. In each of these problems, we generalized our assumptions on $\xi_i$ to permit sub-Gaussian noise, which is a rich class of probability distributions whose tails are 'lighter' than Gaussians.
 
-This thesis was ultimately one of many sequels to my advisor's paper [@neykov_2023] which studied a convex-constrained mean estimation problem. The framework continues to inspire work, including applications in heavy-tailed noise (forthcoming) and density estimation with contamination.
+This thesis was ultimately one of many sequels to my advisor's paper [@neykov_2023] which studied a convex-constrained mean estimation problem. The framework continues to inspire work, including applications in heavy-tailed noise and density estimation with contamination.
 
 <figure style="text-align: center;">
   <img src="media/star_shaped_dark_mode.png" alt="Star-shaped set illustration" width="60%">
@@ -46,9 +46,10 @@ This thesis was ultimately one of many sequels to my advisor's paper [@neykov_20
 
 ### Featured Work
 
-- A. Prasadan and M. Neykov, "Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints," *The Annals of Statistics*, vol. 54, no. 1, pp. 490–515, 2026, doi: 10.1214/25-AOS2576.
-- A. Prasadan and M. Neykov, "Some Facts About the Optimality of the LSE in the Gaussian Sequence Model With Convex Constraint," *IEEE Transactions on Information Theory*, vol. 71, no. 11, pp. 8928-8958, Nov. 2025, doi: 10.1109/TIT.2025.3605342. 
-- A. Prasadan and M. Neykov, “Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints,” *Electronic Journal of Statistics*, vol. 19, no. 2, pp. 3449–3488, 2025, doi: 10.1214/25-EJS2419.
+- Peng, T., Prasadan, A., & Neykov, M. (2026). Robust mean estimation under star-shaped constraints with heavy-tailed noise. *arXiv preprint arXiv:2604.05063*.
+- Prasadan, A., & Neykov, M. (2026). Information theoretic limits of robust sub-Gaussian mean estimation under star-shaped constraints. *The Annals of Statistics*, 54(1):490 – 515.
+- Prasadan, A., & Neykov, M. (2025). Some facts about the optimality of the lse in the gaussian sequence model with convex constraint. *IEEE Transactions on Information Theory*, 71(11):8928–8958.
+- Prasadan, A., & Neykov, M. (2025). Characterizing the minimax rate of nonparametric regression under bounded star-shaped constraints. *Electronic Journal of Statistics*, 19(2), 3449-3488.
 
 ---
 
@@ -64,5 +65,5 @@ I used this work to satisfy our PhD program's requirement of completing an "Adva
 
 ### Featured Work
 
-- A. Prasadan, D. A. James, and J. Greenhouse. *Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden*. Novartis Technical Report, 2022.   
-- Invited Topics Contributed Session, Joint Statistical Meetings (JSM), Toronto, 2023. *Joint modeling of transduced cellular kinetics, tumor size, and survival endpoints*.
+- Prasadan, A., James, D. A.,  & Greenhouse, J. (2022) "Assessing CAR-T immunotherapy outcomes using multistate models, pharmacokinetics, and tumor burden." *Novartis Technical Report*.   
+- Invited Topics Contributed Session, Joint Statistical Meetings (JSM), Toronto, 2023. "Joint modeling of transduced cellular kinetics, tumor size, and survival endpoints."
