@@ -7,7 +7,7 @@ format:
     number-sections: false
 execute:
   freeze: auto  
-bibliography: ref.bib
+bibliography: refs.bib
 ---
 
 This page summarizes my ongoing postdoctoral research supervised by [Donald Estep](https://canssi.ca/don-estep/), Director of the Canadian Statistical Sciences Institute, as well as past work during my PhD with my advisor [Matey Neykov](https://mateyneykov.com/). A full list of the resulting publications can be found on my [Publications page](publications.qmd). 
