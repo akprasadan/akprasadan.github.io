@@ -1,6 +1,6 @@
 ---
 title: "Akshay Prasadan"
-image: media/ghibli_profile.jpeg
+image: media/fiver_sketch.png
 toc: false
 about:
     template: solana
