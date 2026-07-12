@@ -18,7 +18,7 @@ At SFU, I'm studying properties of a non-parametric Bayesian approach to calibra
 
 ### Featured Work
 
-- Prasadan, A., Estep, D., & Bingham, D. (2026). Continuity of the Solution of a Non-Parametric Bayesian Statistical Calibration Procedure. *arXiv preprint arXiv:2603.20665.*
+- Prasadan, A., Estep, D., & Bingham, D. (2026). Continuity of the Solution of a Non-Parametric Bayesian Statistical Calibration Procedure. *arXiv preprint arXiv:2603.20665.* In revision with the *SIAM/ASA Journal of Uncertainty Quantification.*
 
 ## Shape-Constrained Mean Estimation
 
