@@ -1,6 +1,7 @@
 This repository contains the source code for my personal website, built using [Quarto](https://quarto.org/) and hosted via GitHub Pages. The website highlights my ongoing postdoctoral research as well as PhD work in:
 
 - Inverse Problems and Uncertainty Quantification
+- Bayesian Computer Model Calibration
 - Disintegration of Measure
 - Shape-constrained inference
 - Minimax Theory
