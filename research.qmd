@@ -23,7 +23,7 @@ Currently, I'm studying how surrogate models can speed up the SCP algorithm. I'm
 ### Featured Work
 
 - Prasadan, A., Estep, D., & Bingham, D. (2026). Continuity of a Non-Parametric  Statistical Calibration Procedure. *arXiv preprint arXiv:2603.20665.* In revision with the *SIAM/ASA Journal of Uncertainty Quantification.*
-- Prasadan, A., Basu, S., Yazdi, F., Bingham, D., & Estep, D. (2026). Non-Parametric Model Calibration with Stochastic Control Parameters. *arXiv preprint arXiv:2607.16975.*
+- Prasadan, A., Basu, S., Yazdi, F., Bingham, D., & Estep, D. (2026). Non-Parametric Model Calibration with Stochastic Control Parameters. *arXiv preprint arXiv:2607.16975.* In revision with the *International Journal of Uncertainty Quantification.*
 
 ## Shape-Constrained Mean Estimation
 
